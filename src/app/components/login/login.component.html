@@ -1,0 +1,96 @@
+<div class="p-grid">
+  <div class="p-col-8 p-offset-2">
+    <form
+      [formGroup]="loginForm"
+      #f="ngForm"
+      novalidate
+      (ngSubmit)="onSubmit()"
+    >
+      <p-panel>
+        <p-header>
+          <div style="text-align: center;">
+            <b>
+              Iniciar Sesion
+            </b>
+          </div>
+        </p-header>
+        <div class="p-fluid">
+          <div class="p-field p-grid">
+            <label for="firstname" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Usuario *:</label>
+            <div class="p-col-7 p-md-6">
+              <input
+                pInputText
+                type="text"
+                formControlName="username"
+                placeholder="Requerido"
+                pTooltip="Ingrese su nombre de Usuario"
+              />
+            </div>
+            <div class="p-col-5 p-md-4">
+              <p-message
+                severity="error"
+                text="Ingrese un nombre de Usuario"
+                *ngIf="
+                  !loginForm.controls['username'].valid &&
+                  loginForm.controls['username'].dirty
+                "
+              ></p-message>
+            </div>
+          </div>
+          <div class="p-field p-grid">
+             <label for="firstname" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Contraseña *:</label>
+            <div class="p-col-7 p-md-6">
+              <input
+                pInputText
+                type="password"
+                formControlName="password"
+                placeholder="Requerida - Min(6)"
+                pTooltip="Ingrese su contraseña"
+              />
+            </div>
+            <div class="p-col-5 p-md-4">
+              <p-message
+                severity="error"
+                [text]="
+                  loginForm.controls['password'].errors['required']
+                    ? 'Contraseña es requerida'
+                    : loginForm.controls['password'].errors['minlength']
+                    ? 'Deberia tener al menos 6 caracteres'
+                    : ''
+                "
+                *ngIf="
+                  !loginForm.controls['password'].valid &&
+                  loginForm.controls['password'].dirty
+                "
+              ></p-message>
+            </div>
+          </div>
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-2"></div>
+            <div class="ui-grid-col-6">
+              <button
+                pButton
+                type="submit"
+                label="Aceptar"
+                [disabled]="!loginForm.valid"
+              ></button>
+            </div>
+            <div class="ui-grid-col-4"></div>
+          </div>
+        </div>
+        <!-- <p-footer>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-plus"
+              label="Registrarse"
+              class="ui-button-info"
+              style="margin-right: 0.25em;"
+              pTooltip="Registrarse Como nuevo Usuario"
+              (click)="navigateRegister()"
+            ></button>
+          </p-footer> -->
+      </p-panel>
+    </form>
+  </div>
+</div>
