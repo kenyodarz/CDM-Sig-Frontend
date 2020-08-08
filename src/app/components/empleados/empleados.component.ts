@@ -8,8 +8,10 @@ import { MenuItem } from 'primeng/api';
 // Services
 import { AuthService } from 'src/app/services/auth.service';
 import { EmpleadoService } from 'src/app/services/empleado.service';
+import { EpsService } from 'src/app/services/eps.service';
 // Modelos
 import { Empleado } from 'src/app/models/Empleado';
+import { Eps } from 'src/app/models/Eps';
 
 @Component({
   selector: 'app-empleados',
@@ -20,15 +22,20 @@ export class EmpleadosComponent implements OnInit {
   empleados: Empleado[];
   empleado: Empleado;
   selectedEmpleado: Empleado;
+  eps: Eps[];
+  selectedFoto: File;
   items: MenuItem[];
   empleadoForm: FormGroup;
   errorMessage: string = '';
   displayModal: boolean = false;
+  generos: any;
+  es: any;
 
   titulo = 'Listado De Trabajadores';
 
   constructor(
     private empleadoService: EmpleadoService,
+    private epsService: EpsService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private authService: AuthService,
@@ -59,18 +66,79 @@ export class EmpleadosComponent implements OnInit {
       }
     );
   }
+  obtenerEPS() {
+    this.epsService.getAll().subscribe(
+      (result: Eps[]) => {
+        let eps: Eps[] = [];
+        for (let index = 0; index < result.length; index++) {
+          let element = result[index] as Eps;
+          eps.push(element);
+        }
+        this.eps = eps.sort(function (a, b) {
+          if (a.nombre > b.nombre) {
+            return 1;
+          }
+          if (a.nombre < b.nombre) {
+            return -1;
+          }
+          return 0;
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
   guardarEmpleado() {
-    this.empleadoService.save(this.empleado).subscribe((result: Empleado) => {
-      this.messageService.add({
-        severity: 'success',
-        summary: '¡Correcto!',
-        detail:
-          'El empleado: ' + result.cedula + ' ha sido guardado correctamente',
+    if (!this.selectedFoto) {
+      this.empleadoService.save(this.empleado).subscribe((result: Empleado) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: '¡Correcto!',
+          detail:
+            'El empleado: ' + result.cedula + ' ha sido guardado correctamente',
+        });
+        this.displayModal = false;
+        this.validarEmpleado(result);
       });
-      this.displayModal = false;
-      this.validarEmpleado(result);
-    });
+    } else {
+      this.empleadoService
+        .crearConFoto(this.empleado, this.selectedFoto)
+        .subscribe((result: Empleado) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: '¡Correcto!',
+            detail:
+              'El empleado: ' +
+              result.cedula +
+              ' ha sido guardado correctamente',
+          });
+          this.displayModal = false;
+          this.validarEmpleado(result);
+        });
+    }
+  }
+
+  editarConFoto() {
+    if (!this.selectedFoto) {
+      this.guardarEmpleado();
+    } else {
+      this.empleadoService
+        .editarConFoto(this.empleado, this.selectedFoto)
+        .subscribe((result: Empleado) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: '¡Correcto!',
+            detail:
+              'El empleado: ' +
+              result.cedula +
+              ' ha sido Editado correctamente',
+          });
+          this.displayModal = false;
+          this.validarEmpleado(result);
+        });
+    }
   }
 
   validarEmpleado(empleado: Empleado) {
@@ -107,6 +175,7 @@ export class EmpleadosComponent implements OnInit {
 
   onGuardar() {
     this.empleado = this.empleadoForm.value;
+    console.log(this.empleado)
     this.guardarEmpleado();
   }
 
@@ -148,23 +217,33 @@ export class EmpleadosComponent implements OnInit {
     }
   }
 
+  seleccionarFoto(event): void {
+    this.selectedFoto = event.target.files[0];
+    console.info(this.selectedFoto);
+  }
+
   ngOnInit(): void {
     this.obtenerEmpleados();
+    this.obtenerEPS();
+    this.generos = [
+      { label: 'Masculino', value: 'Masculino' },
+      { label: 'Femenino', value: 'Femenino' },
+    ];
     this.empleadoForm = this.fb.group({
       cedula: new FormControl(null, Validators.required),
       nombres: new FormControl(null, Validators.required),
       apellidos: new FormControl(null, Validators.required),
       genero: new FormControl(null, Validators.required),
       fechaNacimiento: new FormControl(null, Validators.required),
-      direccion: new FormControl(null, Validators.required),
+      direccion: new FormControl(),
       telefono: new FormControl(null, Validators.required),
       eps: new FormControl(null, Validators.required),
-      afp: new FormControl(null, Validators.required),
+      afp: new FormControl(),
       arl: new FormControl(null, Validators.required),
-      cajaComFamiliar: new FormControl(null, Validators.required),
-      alergia: new FormControl(null, Validators.required),
-      medimentos: new FormControl(null, Validators.required),
-      EnCasoEmergencia: new FormControl(null, Validators.required)
+      cajaComFamiliar: new FormControl(),
+      alergia: new FormControl(),
+      medimentos: new FormControl(),
+      enCasoEmergencia: new FormControl(),
     });
     this.selectedEmpleado = null;
     this.items = [
@@ -189,5 +268,49 @@ export class EmpleadosComponent implements OnInit {
         command: () => this.obtenerEmpleados(),
       },
     ];
+    this.es = {
+      firstDayOfWeek: 1,
+      dayNames: [
+        'domingo',
+        'lunes',
+        'martes',
+        'miércoles',
+        'jueves',
+        'viernes',
+        'sábado',
+      ],
+      dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+      dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+      monthNames: [
+        'enero',
+        'febrero',
+        'marzo',
+        'abril',
+        'mayo',
+        'junio',
+        'julio',
+        'agosto',
+        'septiembre',
+        'octubre',
+        'noviembre',
+        'diciembre',
+      ],
+      monthNamesShort: [
+        'ene',
+        'feb',
+        'mar',
+        'abr',
+        'may',
+        'jun',
+        'jul',
+        'ago',
+        'sep',
+        'oct',
+        'nov',
+        'dic',
+      ],
+      today: 'Hoy',
+      clear: 'Borrar',
+    };
   }
 }

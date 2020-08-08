@@ -11,8 +11,15 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { PanelModule } from 'primeng/panel';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
+import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { FileUploadModule } from 'primeng/fileupload';
 
 const myModule = [
   ToolbarModule,
@@ -24,8 +31,15 @@ const myModule = [
   MessageModule,
   ConfirmDialogModule,
   PanelModule,
+  ScrollPanelModule,
   InputTextModule,
   MenubarModule,
+  TableModule,
+  PaginatorModule,
+  DialogModule,
+  DropdownModule,
+  CalendarModule,
+  FileUploadModule,
 ];
 
 

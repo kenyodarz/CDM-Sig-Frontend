@@ -13,7 +13,7 @@ export class Empleado {
            public cajaComFamiliar: string = null,
            public alergia: string = null,
            public medimentos: string = null,
-           public EnCasoEmergencia: string = null,
+           public enCasoEmergencia: string = null,
            public fotoHashCode: number = null
          ) {}
        }

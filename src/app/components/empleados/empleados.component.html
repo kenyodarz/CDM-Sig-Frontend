@@ -17,5 +17,391 @@
         ></button>
       </div>
     </p-menubar>
+    <p-table
+      [paginator]="true"
+      selectionMode="single"
+      [(selection)]="selectedEmpleado"
+      dataKey="cedula"
+      [rows]="10"
+      [value]="empleados"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Cedula</th>
+          <th>Foto</th>
+          <th>Apellidos</th>
+          <th>Nombres</th>
+          <th>Fecha de Nacimiento</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-empleado>
+        <tr [pSelectableRow]="empleado">
+          <td>{{ empleado.cedula }}</td>
+          <td>
+            <img
+              *ngIf="empleado.fotoHashCode"
+              [src]="
+                'http://localhost:8080/api/empleados/uploads/img/' +
+                empleado.cedula
+              "
+              class="img-thumbnail rounded"
+              style="width: 128px; cursor: pointer;"
+            />
+          </td>
+          <td>{{ empleado.apellidos }}</td>
+          <td>{{ empleado.nombres }}</td>
+          <td>{{ empleado.fechaNacimiento | date: "yyyy-MM-dd" }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div style="text-align: left;">
+          Trabajador Seleccionado:
+          {{
+            selectedEmpleado
+              ? selectedEmpleado.cedula +
+                " - " +
+                selectedEmpleado.apellidos +
+                " " +
+                selectedEmpleado.nombres
+              : "Ninguno"
+          }}
+        </div>
+      </ng-template>
+    </p-table>
   </p-panel>
 </div>
+<!-- 
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ----------------------------------------Modal Detalle-------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+ -->
+
+<p-dialog
+  [(visible)]="displayModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000"
+>
+  <p-header>
+    <b>Detalle Trabajador</b>
+  </p-header>
+  <p-scrollPanel [style]="{ width: '100%', height: '100%' }">
+    <form [formGroup]="empleadoForm" (submit)="onGuardar()">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Cedula *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="cedula"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="La Cedula Es Requerida"
+            *ngIf="
+              !empleadoForm.controls['cedula'].valid &&
+              empleadoForm.controls['cedula'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Apellidos *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="apellidos"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="El Campo Apellido Es Requerido"
+            *ngIf="
+              !empleadoForm.controls['apellidos'].valid &&
+              empleadoForm.controls['apellidos'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Nombres *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="nombres"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="El Campo Nombre Es Requerido"
+            *ngIf="
+              !empleadoForm.controls['nombres'].valid &&
+              empleadoForm.controls['nombres'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Genero *</div>
+          <p-dropdown
+            [options]="generos"
+            formControlName="genero"
+            placeholder="Seleccione el Genero"
+          >
+          </p-dropdown>
+          <p-message
+            severity="error"
+            text="Seleccione un Genero"
+            *ngIf="
+              !empleadoForm.controls['genero'].valid &&
+              empleadoForm.controls['genero'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Fecha de Nacimiento *</div>
+          <p-calendar
+            formControlName="fechaNacimiento"
+            [locale]="es"
+            dateFormat="yy-mm-dd"
+            dataType="string"
+            [monthNavigator]="true"
+            [yearNavigator]="true"
+            yearRange="1930:2030"
+          ></p-calendar>
+          <p-message
+            severity="error"
+            text="Seleccione una fecha"
+            *ngIf="
+              !empleadoForm.controls['fechaNacimiento'].valid &&
+              empleadoForm.controls['fechaNacimiento'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Direccion *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="direccion"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="El Campo direccion Es Requerido"
+            *ngIf="
+              !empleadoForm.controls['direccion'].valid &&
+              empleadoForm.controls['direccion'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Telefono *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="telefono"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="El Campo telefono Es Requerido"
+            *ngIf="
+              !empleadoForm.controls['telefono'].valid &&
+              empleadoForm.controls['telefono'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>EPS *</div>
+          <p-dropdown
+            [options]="eps"
+            formControlName="eps"
+            optionLabel="nombre"
+            placeholder="Seleccione una EPS"
+          ></p-dropdown>
+          <p-message
+            severity="error"
+            text="El Campo Nombre Es Requerido"
+            *ngIf="
+              !empleadoForm.controls['eps'].valid &&
+              empleadoForm.controls['eps'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>AFP *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="afp"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="El Campo AFP Es Requerido"
+            *ngIf="
+              !empleadoForm.controls['afp'].valid &&
+              empleadoForm.controls['afp'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>ARL *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="arl"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="El Campo ARL Es Requerido"
+            *ngIf="
+              !empleadoForm.controls['arl'].valid &&
+              empleadoForm.controls['arl'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Caja De Compensacion Familiar *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="cajaComFamiliar"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="El Campo cajaComFamiliar Es Requerido"
+            *ngIf="
+              !empleadoForm.controls['cajaComFamiliar'].valid &&
+              empleadoForm.controls['cajaComFamiliar'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Alergia *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="alergia"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="El Campo alergia Es Requerido"
+            *ngIf="
+              !empleadoForm.controls['alergia'].valid &&
+              empleadoForm.controls['alergia'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Medimentos *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="medimentos"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="El Campo medimentos Es Requerido"
+            *ngIf="
+              !empleadoForm.controls['medimentos'].valid &&
+              empleadoForm.controls['medimentos'].dirty
+            "
+          ></p-message>
+        </div>
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+          <div>
+            <div>En caso de emergencia llamar A: *</div>
+            <input
+              pInputText
+              type="text"
+              formControlName="enCasoEmergencia"
+              placeholder="Requerido"
+            />
+            <p-message
+              severity="error"
+              text="El Campo EnCasoEmergencia Es Requerido"
+              *ngIf="
+                !empleadoForm.controls['enCasoEmergencia'].valid &&
+                empleadoForm.controls['enCasoEmergencia'].dirty
+              "
+            ></p-message>
+          </div>
+        </div>
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+          <div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFileAddon01"
+                  >Upload</span
+                >
+              </div>
+              <div class="custom-file">
+                <input
+                  (change)="seleccionarFoto($event)"
+                  type="file"
+                  class="custom-file-input"
+                  id="inputGroupFile01"
+                  aria-describedby="inputGroupFileAddon01"
+                />
+                <label class="custom-file-label" for="inputGroupFile01"
+                  >Seleccionar Archivo</label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <p-footer>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-check"
+        (click)="displayModal = false; onGuardar()"
+        label="Aceptar"
+        [disabled]="!empleadoForm.valid"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-times"
+        (click)="displayModal = false; empleadoForm.reset()"
+        label="Cancelar"
+        class="ui-button-secondary"
+      ></button>
+    </p-footer>
+  </p-scrollPanel>
+</p-dialog>
