@@ -36,14 +36,13 @@ export class EmpleadoService {
 
   crearConFoto(empleado: Empleado, archivo: File): Observable<Empleado> {
     const formData = new FormData();
-    const date = new Date(empleado.fechaNacimiento);
     console.log(empleado);
     formData.append('archivo', archivo);
     formData.append('cedula', empleado.cedula);
     formData.append('nombres', empleado.nombres);
     formData.append('apellidos', empleado.apellidos);
     formData.append('genero', empleado.genero);
-    formData.append('fechaNacimiento', date.toUTCString());
+    formData.append('fechaNacimiento', empleado.fechaNacimiento);
     formData.append('direccion', empleado.direccion);
     formData.append('telefono', empleado.telefono);
     formData.append('eps', empleado.eps['nit']);
@@ -63,7 +62,7 @@ export class EmpleadoService {
     formData.append('nombres', empleado.nombres);
     formData.append('apellidos', empleado.apellidos);
     formData.append('genero', empleado.genero);
-    formData.append('fechaNacimiento', empleado.fechaNacimiento.toDateString());
+    formData.append('fechaNacimiento', empleado.fechaNacimiento);
     formData.append('direccion', empleado.direccion);
     formData.append('telefono', empleado.telefono);
     formData.append('eps', empleado.eps['nit']);

@@ -1,4 +1,5 @@
 <div class="p-grid-fluid p-nogutter">
+  <p-toast key="trabajador" position="bottom-center"></p-toast>
   <p-panel>
     <p-header>
       <div style="text-align: center;">
@@ -7,7 +8,12 @@
     </p-header>
     <p-menubar [model]="items">
       <div>
-        <input type="text" pInputText placeholder="Search" />
+        <input
+          type="text"
+          pInputText
+          (input)="dt.filterGlobal($event.target.value, 'contains')"
+          placeholder="Buscar"
+        />
         <button
           type="button"
           pButton
@@ -24,19 +30,27 @@
       dataKey="cedula"
       [rows]="10"
       [value]="empleados"
+      #dt
+      [globalFilterFields]="[
+        'cedula',
+        'apellidos',
+        'nombres',
+        'fechaNacimiento'
+      ]"
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Cedula</th>
-          <th>Foto</th>
-          <th>Apellidos</th>
-          <th>Nombres</th>
-          <th>Fecha de Nacimiento</th>
+          <th style="text-align: center;">Cedula</th>
+          <th style="text-align: center;">Foto</th>
+          <th style="text-align: center;">Apellidos</th>
+          <th style="text-align: center;">Nombres</th>
+          <th style="text-align: center;">Fecha de Nacimiento</th>
+          <th style="width: 4rem; text-align: center;">Ver</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-empleado>
         <tr [pSelectableRow]="empleado">
-          <td>{{ empleado.cedula }}</td>
+          <td style="text-align: center;">{{ empleado.cedula }}</td>
           <td>
             <img
               *ngIf="empleado.fotoHashCode"
@@ -48,9 +62,18 @@
               style="width: 128px; cursor: pointer;"
             />
           </td>
-          <td>{{ empleado.apellidos }}</td>
-          <td>{{ empleado.nombres }}</td>
-          <td>{{ empleado.fechaNacimiento | date: "yyyy-MM-dd" }}</td>
+          <td style="text-align: center;">{{ empleado.apellidos }}</td>
+          <td style="text-align: center;">{{ empleado.nombres }}</td>
+          <td style="text-align: center;">{{ empleado.fechaNacimiento }}</td>
+          <td style="align-content: center;">
+            <button
+              type="button"
+              pButton
+              pRipple
+              icon="pi pi-search"
+              (click)="selectTrabajador(empleado); displayDetalle = true"
+            ></button>
+          </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="summary">
@@ -405,3 +428,202 @@
     </p-footer>
   </p-scrollPanel>
 </p-dialog>
+
+<!-- 
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ----------------------------------------SideBar Detalle-----------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+ -->
+
+<p-sidebar [(visible)]="displayDetalle" blockScroll="true" [fullScreen]="true">
+  <div class="p-grid">
+    <div class="p-col-8">
+      <div class="p-grid">
+        <div class="p-col-6">
+          <div class="p-fluid">
+            <div class="p-field">
+              <label for="nombres">Nombres: </label>
+              <input
+                id="nombres"
+                readonly="true"
+                value="{{ selectedEmpleado2.nombres }}"
+                type="text"
+                pInputText
+              />
+            </div>
+          </div>
+        </div>
+        <div class="p-col-6">
+          <div class="p-fluid">
+            <div class="p-field">
+              <label for="apellidos">Apellidos: </label>
+              <input
+                id="apellidos"
+                readonly="true"
+                value="{{ selectedEmpleado2.apellidos }}"
+                type="text"
+                pInputText
+              />
+            </div>
+          </div>
+        </div>
+        <div class="p-col-6">
+          <div class="p-fluid">
+            <div class="p-field">
+              <label for="cedula">Cedula: </label>
+              <input
+                id="cedula"
+                readonly="true"
+                value="{{ selectedEmpleado2.cedula }}"
+                type="text"
+                pInputText
+              />
+            </div>
+          </div>
+        </div>
+        <div class="p-col-6">
+          <div class="p-fluid">
+            <div class="p-field">
+              <label for="fechaNacimiento">Fecha de Nacimiento: </label>
+              <input
+                id="fechaNacimiento"
+                readonly="true"
+                value="{{ selectedEmpleado2.fechaNacimiento }}"
+                type="text"
+                pInputText
+              />
+            </div>
+          </div>
+        </div>
+        <div class="p-col-6">
+          <div class="p-fluid">
+            <div class="p-field">
+              <label for="direccion">Direccion: </label>
+              <input
+                id="direccion"
+                readonly="true"
+                value="{{ selectedEmpleado2.direccion }}"
+                type="text"
+                pInputText
+              />
+            </div>
+          </div>
+        </div>
+        <div class="p-col-6">
+          <div class="p-fluid">
+            <div class="p-field">
+              <label for="telefono">Telefono: </label>
+              <input
+                id="telefono"
+                readonly="true"
+                value="{{ selectedEmpleado2.telefono }}"
+                type="text"
+                pInputText
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-col-4">
+      <img
+        *ngIf="selectedEmpleado2.cedula !== null"
+        [src]="
+          'http://localhost:8080/api/empleados/uploads/img/' +
+          selectedEmpleado2.cedula
+        "
+        class="img-thumbnail rounded"
+        style="width: 256px; cursor: pointer;"
+      />
+    </div>
+    <div class="p-col-6">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="eps">E.P.S: </label>
+          <input
+            *ngIf="selectedEmpleado2.cedula !== null"
+            id="eps"
+            readonly="true"
+            value="{{ selectedEmpleado2.eps['nombre'] }}"
+            type="text"
+            pInputText
+          />
+        </div>
+      </div>
+    </div>
+    <div class="p-col-6">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="afp">Afiliacion a Fondo de Pension: </label>
+          <input
+            id="afp"
+            readonly="true"
+            value="{{ selectedEmpleado2.afp }}"
+            type="text"
+            pInputText
+          />
+        </div>
+      </div>
+    </div>
+    <div class="p-col-6">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="cajaComFamiliar">Caja de Compensacion Familiar: </label>
+          <input
+            id="cajaComFamiliar"
+            readonly="true"
+            value="{{ selectedEmpleado2.cajaComFamiliar }}"
+            type="text"
+            pInputText
+          />
+        </div>
+      </div>
+    </div>
+    <div class="p-col-6">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="alergia">Alergias: </label>
+          <input
+            id="alergia"
+            readonly="true"
+            value="{{ selectedEmpleado2.alergia }}"
+            type="text"
+            pInputText
+          />
+        </div>
+      </div>
+    </div>
+    <div class="p-col-6">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="medimentos">Medimentos: </label>
+          <input
+            id="medimentos"
+            readonly="true"
+            value="{{ selectedEmpleado2.medimentos }}"
+            type="text"
+            pInputText
+          />
+        </div>
+      </div>
+    </div>
+    <div class="p-col-6">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="enCasoEmergencia">En Caso de Emergencia Llamar a: </label>
+          <input
+            id="enCasoEmergencia"
+            readonly="true"
+            value="{{ selectedEmpleado2.enCasoEmergencia }}"
+            type="text"
+            pInputText
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</p-sidebar>

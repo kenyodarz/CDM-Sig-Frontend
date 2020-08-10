@@ -1,5 +1,7 @@
 // Angular
 import { Component, OnInit } from '@angular/core';
+import { trigger, state, style } from '@angular/animations';
+import { transition, animate } from '@angular/animations';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators, FormBuilder } from '@angular/forms';
 // PrimeNG
@@ -17,17 +19,60 @@ import { Eps } from 'src/app/models/Eps';
   selector: 'app-empleados',
   templateUrl: './empleados.component.html',
   styleUrls: ['./empleados.component.css'],
+  animations: [
+    trigger('animation', [
+      state(
+        'visible',
+        style({
+          transform: 'translateX(0)',
+          opacity: 1,
+        })
+      ),
+      transition('void => *', [
+        style({ transform: 'translateX(50%)', opacity: 0 }),
+        animate('300ms ease-out'),
+      ]),
+      transition('* => void', [
+        animate(
+          '250ms ease-in',
+          style({
+            height: 0,
+            opacity: 0,
+            transform: 'translateX(50%)',
+          })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class EmpleadosComponent implements OnInit {
   empleados: Empleado[];
   empleado: Empleado;
   selectedEmpleado: Empleado;
+  selectedEmpleado2: Empleado = {
+    cedula: null,
+    nombres:null,
+    apellidos:null,
+    genero:null,
+    fechaNacimiento:null,
+    direccion:null,
+    telefono:null,
+    eps:null,
+    afp:null,
+    arl:null,
+    cajaComFamiliar:null,
+    alergia:null,
+    medimentos:null,
+    enCasoEmergencia:null,
+    fotoHashCode: null,
+  };
   eps: Eps[];
   selectedFoto: File;
   items: MenuItem[];
   empleadoForm: FormGroup;
-  errorMessage: string = '';
+  errorMessage:'';
   displayModal: boolean = false;
+  displayDetalle: boolean = false;
   generos: any;
   es: any;
 
@@ -175,7 +220,7 @@ export class EmpleadosComponent implements OnInit {
 
   onGuardar() {
     this.empleado = this.empleadoForm.value;
-    console.log(this.empleado)
+    console.log(this.empleado);
     this.guardarEmpleado();
   }
 
@@ -220,6 +265,17 @@ export class EmpleadosComponent implements OnInit {
   seleccionarFoto(event): void {
     this.selectedFoto = event.target.files[0];
     console.info(this.selectedFoto);
+  }
+
+  selectTrabajador(empleado: Empleado) {
+    this.selectedEmpleado2 = null;
+    this.messageService.add({
+      key: 'trabajador',
+      severity: 'info',
+      summary: 'Trabajador Seleccionado',
+      detail: empleado.cedula + ' ' + empleado.nombres,
+    });
+    this.selectedEmpleado2 = empleado;
   }
 
   ngOnInit(): void {

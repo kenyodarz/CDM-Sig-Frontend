@@ -1,0 +1,247 @@
+<div class="p-grid-fluid">
+  <p-panel>
+    <p-header>
+      <div class="p-text-center p-text-bold">Contratos</div>
+    </p-header>
+    <p-menubar [model]="items">
+      <div>
+        <input
+          type="text"
+          pInputText
+          (input)="dt.filterGlobal($event.target.value, 'contains')"
+          placeholder="Buscar"
+        />
+        <button
+          type="button"
+          pButton
+          label="Logout"
+          icon="pi pi-power-off"
+          style="margin-left: 0.25em;"
+        ></button>
+      </div>
+    </p-menubar>
+    <p-table
+      #dt
+      [paginator]="true"
+      selectionMode="single"
+      [(selection)]="selectedContrato"
+      dataKey="idContrato"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 20, 30]"
+      [value]="contratos"
+      [globalFilterFields]="[
+        'idContrato',
+        'tipoContrato',
+        'empleado.nombres',
+        'empleado.apellidos',
+        'empleado.cedula',
+        'salario'
+      ]"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="text-align: center;">Nro Contrato</th>
+          <th style="text-align: center;">Tipo Contrato</th>
+          <th style="text-align: center;">Trabajador</th>
+          <th style="text-align: center;">Fecha Inicio</th>
+          <th style="text-align: center;">Fecha Fin</th>
+          <th style="text-align: center;">Salario</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-contrato>
+        <tr [pSelectableRow]="contrato">
+          <td style="text-align: center;">{{ contrato.idContrato }}</td>
+          <td style="text-align: center;">{{ contrato.tipoContrato }}</td>
+          <td style="text-align: center;">
+            {{ contrato.empleado["nombres"] }}
+            {{ contrato.empleado["apellidos"] }}
+            CC {{ contrato.empleado["cedula"] }}
+          </td>
+          <td style="text-align: center;">{{ contrato.fechaInicio }}</td>
+          <td style="text-align: center;">{{ contrato.fechaFin }}</td>
+          <td style="text-align: center;">{{ contrato.salario }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        Contrato Seleccionado:
+        {{
+          selectedContrato
+            ? selectedContrato.idContrato +
+              " - " +
+              selectedContrato.empleado["nombres"] +
+              " " +
+              selectedContrato.empleado["apellidos"] +
+              " - CC " +
+              selectedContrato.empleado["cedula"]
+            : "Ninguno"
+        }}
+      </ng-template>
+    </p-table>
+  </p-panel>
+</div>
+<!-- 
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ----------------------------------------Modal Detalle-------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+ -->
+<!-- <p-dialog
+  [(visible)]="displayModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000"
+  header="Detalle Contrato"
+></p-dialog> -->
+<p-sidebar [(visible)]="displayModal" [fullScreen]="true">
+  <p-fieldset legend="Detalle Contrato">
+    <form [formGroup]="contratoForm">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Nro Contrato *</div>
+          <input pInputText type="text" readonly formControlName="idContrato" />
+          <p-message
+            severity="error"
+            text="La idContrato Es Requeridd"
+            *ngIf="
+              !contratoForm.controls['idContrato'].valid &&
+              contratoForm.controls['idContrato'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Tipo de Contrato *</div>
+          <p-dropdown
+            [options]="tipoContratos"
+            formControlName="tipoContrato"
+            placeholder="Seleccione el Genero"
+          >
+          </p-dropdown>
+          <p-message
+            severity="error"
+            text="Seleccione un Tipo de Contrato"
+            *ngIf="
+              !contratoForm.controls['tipoContrato'].valid &&
+              contratoForm.controls['tipoContrato'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Trabajador *</div>
+          <p-dropdown
+            [options]="empleados"
+            optionLabel="cedula"
+            dataKey="cedula"
+            placeholder="Seleccione el Empleado"
+            id="empleado"
+            name="empleado"
+            formControlName="empleado"
+            [filter]="true"
+          >
+          </p-dropdown>
+          <p-message
+            severity="error"
+            text="Seleccione un Trabajador"
+            *ngIf="
+              !contratoForm.controls['empleado'].valid &&
+              contratoForm.controls['empleado'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Fecha de Inicio *</div>
+          <p-calendar
+            formControlName="fechaInicio"
+            [locale]="es"
+            dateFormat="yy-mm-dd"
+            dataType="string"
+            [monthNavigator]="true"
+            [yearNavigator]="true"
+            yearRange="1930:2030"
+            showButtonBar="true"
+            placeholder="Seleccione una fecha de Entrada"
+          ></p-calendar>
+          <p-message
+            severity="error"
+            text="Seleccione una fecha"
+            *ngIf="
+              !contratoForm.controls['fechaInicio'].valid &&
+              contratoForm.controls['fechaInicio'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Fecha Fin *</div>
+          <p-calendar
+            formControlName="fechaFin"
+            [locale]="es"
+            dateFormat="yy-mm-dd"
+            dataType="string"
+            [monthNavigator]="true"
+            [yearNavigator]="true"
+            yearRange="1930:2030"
+            showButtonBar="true"
+            placeholder="Seleccione una fecha de Salida"
+          ></p-calendar>
+          <p-message
+            severity="error"
+            text="Seleccione una fecha"
+            *ngIf="
+              !contratoForm.controls['fechaFin'].valid &&
+              contratoForm.controls['fechaFin'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Salario *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="salario"
+            placeholder="Ingrese un Salario"
+          />
+          <p-message
+            severity="error"
+            text="El Campo salario Es Requerido"
+            *ngIf="
+              !contratoForm.controls['salario'].valid &&
+              contratoForm.controls['salario'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+    </form>
+    <p-footer>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-check"
+        (click)="displayModal = false; onGuardar()"
+        label="Aceptar"
+        [disabled]="!contratoForm.valid"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-times"
+        (click)="displayModal = false; contratoForm.reset()"
+        label="Cancelar"
+        class="ui-button-secondary"
+        style="margin-left: 0.25em;"
+      ></button>
+    </p-footer>
+  </p-fieldset>
+</p-sidebar>

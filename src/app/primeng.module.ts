@@ -20,6 +20,8 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { FileUploadModule } from 'primeng/fileupload';
+import { SidebarModule } from 'primeng/sidebar';
+import { FieldsetModule } from 'primeng/fieldset';
 
 const myModule = [
   ToolbarModule,
@@ -40,6 +42,8 @@ const myModule = [
   DropdownModule,
   CalendarModule,
   FileUploadModule,
+  SidebarModule,
+  FieldsetModule,
 ];
 
 

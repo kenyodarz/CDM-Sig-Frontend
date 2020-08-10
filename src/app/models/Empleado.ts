@@ -4,7 +4,7 @@ export class Empleado {
            public nombres: string = null,
            public apellidos: string = null,
            public genero: string = null,
-           public fechaNacimiento: Date = null,
+           public fechaNacimiento: string = null,
            public direccion: string = null,
            public telefono: string = null,
            public eps: string = null,

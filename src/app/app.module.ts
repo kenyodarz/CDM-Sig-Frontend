@@ -21,10 +21,11 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { EmpleadosComponent } from './components/empleados/empleados.component';
+import { ContratosComponent } from './components/contratos/contratos.component';
 
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent, NavigationComponent, EmpleadosComponent],
+  declarations: [AppComponent, LoginComponent, HomeComponent, NavigationComponent, EmpleadosComponent, ContratosComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

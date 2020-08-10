@@ -9,3 +9,33 @@
 :host ::ng-deep .ui-splitbutton button {
   margin-right: 0;
 }
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  text-align: center;
+  padding: 1rem 0rem;
+}
+
+:host ::ng-deep .box {
+  background-color: var(--surface-e);
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+}
+
+:host ::ng-deep .box-stretched {
+  height: 100%;
+}
+
+:host ::ng-deep .vertical-container {
+  margin: 0;
+  height: 200px;
+  background: var(--surface-d);
+  border-radius: 4px;
+}
+
+:host ::ng-deep .nested-grid .p-col-4 {
+  padding-bottom: 1rem;
+}
