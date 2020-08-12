@@ -4,17 +4,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 // Servicio Generico
 import { CommonService } from './common.service';
 // Modelo
-import { Contrato } from '../models/Contrato';
-
+import { Afp } from '../models/Afp';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ContratoService extends CommonService<Contrato, number> {
-  protected API_URL: string = 'http://localhost:8080/api/contratos/';
+export class AfpService extends CommonService<Afp, number>{
+  protected API_URL: string = 'http://localhost:8080/api/afp/';
 
-  constructor(http: HttpClient){
-    super(http)
+  constructor(http: HttpClient) {
+    super(http);
   }
-
 }

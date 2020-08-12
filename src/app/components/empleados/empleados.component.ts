@@ -4,16 +4,23 @@ import { trigger, state, style } from '@angular/animations';
 import { transition, animate } from '@angular/animations';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 // PrimeNG
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
 // Services
-import { AuthService } from 'src/app/services/auth.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { EpsService } from 'src/app/services/eps.service';
+import { ArlService } from 'src/app/services/arl.service';
+import { AfpService } from 'src/app/services/afp.service';
+import { CajaComFamiliarService } from 'src/app/services/caja-com-familiar.service';
 // Modelos
 import { Empleado } from 'src/app/models/Empleado';
 import { Eps } from 'src/app/models/Eps';
+import { Arl } from 'src/app/models/Arl';
+import { Afp } from 'src/app/models/Afp';
+import { CajaComFamiliar } from 'src/app/models/CajaComFamiliar';
 
 @Component({
   selector: 'app-empleados',
@@ -49,28 +56,32 @@ export class EmpleadosComponent implements OnInit {
   empleados: Empleado[];
   empleado: Empleado;
   selectedEmpleado: Empleado;
-  selectedEmpleado2: Empleado = {
+  selectedEmpleado2: Empleado = null;
+  /**selectedEmpleado2: Empleado = {
     cedula: null,
-    nombres:null,
-    apellidos:null,
-    genero:null,
-    fechaNacimiento:null,
-    direccion:null,
-    telefono:null,
-    eps:null,
-    afp:null,
-    arl:null,
-    cajaComFamiliar:null,
-    alergia:null,
-    medimentos:null,
-    enCasoEmergencia:null,
+    nombres: null,
+    apellidos: null,
+    genero: null,
+    fechaNacimiento: null,
+    direccion: null,
+    telefono: null,
+    eps: null,
+    afp: null,
+    arl: null,
+    cajaComFamiliar: null,
+    alergia: null,
+    medimentos: null,
+    enCasoEmergencia: null,
     fotoHashCode: null,
-  };
+  }; */
   eps: Eps[];
+  arl: Arl[];
+  afp: Afp[];
+  caja: CajaComFamiliar[];
   selectedFoto: File;
   items: MenuItem[];
   empleadoForm: FormGroup;
-  errorMessage:'';
+  errorMessage: '';
   displayModal: boolean = false;
   displayDetalle: boolean = false;
   generos: any;
@@ -81,10 +92,14 @@ export class EmpleadosComponent implements OnInit {
   constructor(
     private empleadoService: EmpleadoService,
     private epsService: EpsService,
+    private arlService: ArlService,
+    private afpService: AfpService,
+    private cajaService: CajaComFamiliarService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private authService: AuthService,
-    private fb: FormBuilder
+    private tokenStorageService: TokenStorageService,
+    private fb: FormBuilder,
+    private router: Router
   ) {}
 
   obtenerEmpleados() {
@@ -114,12 +129,81 @@ export class EmpleadosComponent implements OnInit {
   obtenerEPS() {
     this.epsService.getAll().subscribe(
       (result: Eps[]) => {
-        let eps: Eps[] = [];
+        let array: Eps[] = [];
         for (let index = 0; index < result.length; index++) {
           let element = result[index] as Eps;
-          eps.push(element);
+          array.push(element);
         }
-        this.eps = eps.sort(function (a, b) {
+        this.eps = array.sort(function (a, b) {
+          if (a.nombre > b.nombre) {
+            return 1;
+          }
+          if (a.nombre < b.nombre) {
+            return -1;
+          }
+          return 0;
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  obtenerARL() {
+    this.arlService.getAll().subscribe(
+      (result: Arl[]) => {
+        let array: Arl[] = [];
+        for (let index = 0; index < result.length; index++) {
+          let element = result[index] as Arl;
+          array.push(element);
+        }
+        this.arl = array.sort(function (a, b) {
+          if (a.nombre > b.nombre) {
+            return 1;
+          }
+          if (a.nombre < b.nombre) {
+            return -1;
+          }
+          return 0;
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  obtenerAFP() {
+    this.afpService.getAll().subscribe(
+      (result: Afp[]) => {
+        let array: Afp[] = [];
+        for (let index = 0; index < result.length; index++) {
+          let element = result[index] as Afp;
+          array.push(element);
+        }
+        this.arl = array.sort(function (a, b) {
+          if (a.nombre > b.nombre) {
+            return 1;
+          }
+          if (a.nombre < b.nombre) {
+            return -1;
+          }
+          return 0;
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  obtenerCaja() {
+    this.cajaService.getAll().subscribe(
+      (result: CajaComFamiliar[]) => {
+        let array: CajaComFamiliar[] = [];
+        for (let index = 0; index < result.length; index++) {
+          let element = result[index] as CajaComFamiliar;
+          array.push(element);
+        }
+        this.arl = array.sort(function (a, b) {
           if (a.nombre > b.nombre) {
             return 1;
           }
@@ -368,5 +452,22 @@ export class EmpleadosComponent implements OnInit {
       today: 'Hoy',
       clear: 'Borrar',
     };
+  }
+  logout() {
+    this.confirmationService.confirm({
+      message: '¿Esta Seguro que desea cerrar sesion?',
+      header: 'Cerrar Sesion',
+      accept: () => {
+        this.tokenStorageService.signOut();
+        this.irAlInicio();
+        window.location.reload();
+      },
+      reject: () => {
+        this.irAlInicio();
+      },
+    });
+  }
+  irAlInicio() {
+    window.location.replace('#/home');
   }
 }
