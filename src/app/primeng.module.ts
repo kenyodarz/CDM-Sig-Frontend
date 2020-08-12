@@ -22,6 +22,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { FileUploadModule } from 'primeng/fileupload';
 import { SidebarModule } from 'primeng/sidebar';
 import { FieldsetModule } from 'primeng/fieldset';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 const myModule = [
   ToolbarModule,
@@ -44,6 +45,7 @@ const myModule = [
   FileUploadModule,
   SidebarModule,
   FieldsetModule,
+  OverlayPanelModule,
 ];
 
 

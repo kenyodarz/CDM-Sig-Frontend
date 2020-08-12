@@ -1,0 +1,12 @@
+:host ::ng-deep .p-panel-header {
+  display: block;
+}
+
+:host ::ng-deep .p-dialog-content {
+  overflow-y: inherit;
+}
+
+.empleado-image {
+  width: 50px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}

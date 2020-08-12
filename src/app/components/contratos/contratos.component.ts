@@ -40,26 +40,28 @@ export class ContratosComponent implements OnInit {
   ) {}
 
   obtenerContratos() {
-    this.contratoService.getAll().subscribe((result: Contrato[]) => {
-      let contratos: Contrato[] = [];
-      for (let index = 0; index < result.length; index++) {
-        let e = result[index] as Contrato;
-        contratos.push(e);
-      }
-      this.contratos = contratos.sort(function (a, b) {
-        if (a.empleado.apellidos > b.empleado.apellidos) {
-          return 1;
+    this.contratoService.getAll().subscribe(
+      (result: Contrato[]) => {
+        let contratos: Contrato[] = [];
+        for (let index = 0; index < result.length; index++) {
+          let e = result[index] as Contrato;
+          contratos.push(e);
         }
-        if (a.empleado.apellidos < b.empleado.apellidos) {
-          return -1;
-        }
-        return 0;
-      });
-      console.log(contratos);
+        this.contratos = contratos.sort(function (a, b) {
+          if (a.empleado.apellidos > b.empleado.apellidos) {
+            return 1;
+          }
+          if (a.empleado.apellidos < b.empleado.apellidos) {
+            return -1;
+          }
+          return 0;
+        });
+        console.log(contratos);
+      },
       (error) => {
         console.log(error);
-      };
-    });
+      }
+    );
   }
 
   obtenerEmpleados() {
@@ -106,6 +108,8 @@ export class ContratosComponent implements OnInit {
     );
     if (index != -1) {
       this.contratos[index] = contrato;
+    }else {
+      this.contratos.push(contrato)
     }
     this.contratoForm.reset();
   }

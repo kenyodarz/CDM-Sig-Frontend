@@ -22,10 +22,13 @@ import { HomeComponent } from './components/home/home.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { EmpleadosComponent } from './components/empleados/empleados.component';
 import { ContratosComponent } from './components/contratos/contratos.component';
+import { CapacitacionesComponent } from './components/capacitaciones/capacitaciones.component';
+import { AsignarEmpleadosComponent } from './components/capacitaciones/asignar-empleados.component';
+import { EliminarEmpleadosComponent } from './components/capacitaciones/eliminar-empleados.component';
 
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent, NavigationComponent, EmpleadosComponent, ContratosComponent],
+  declarations: [AppComponent, LoginComponent, HomeComponent, NavigationComponent, EmpleadosComponent, ContratosComponent, CapacitacionesComponent, AsignarEmpleadosComponent, EliminarEmpleadosComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

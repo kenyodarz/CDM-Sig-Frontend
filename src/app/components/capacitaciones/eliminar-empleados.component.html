@@ -1,0 +1,100 @@
+<div class="p-grid-fluid">
+  <p-panel>
+    <div class="p-d-flex p-jc-between">
+      <div class="p-mb-3">
+        <p-button
+          type="button"
+          icon="pi pi-chevron-left"
+          *ngIf="!isFirstPage()"
+          (click)="prev()"
+          styleClass="p-button-text"
+        ></p-button>
+        <p-button
+          type="button"
+          icon="pi pi-refresh"
+          (click)="reset()"
+          styleClass="p-button-text"
+        ></p-button>
+        <p-button
+          type="button"
+          icon="pi pi-chevron-right"
+          *ngIf="isLastPage()"
+          (click)="next()"
+          styleClass="p-button-text"
+        ></p-button>
+      </div>
+      <div class="p-d-flex p-jc-end">
+        <input
+          type="text"
+          pInputText
+          (input)="dt.filterGlobal($event.target.value, 'contains')"
+          placeholder="Buscar"
+        />
+        <button
+          type="button"
+          pButton
+          label="Salir"
+          icon="pi pi-angle-double-left"
+          style="margin-left: 0.25em;"
+          (click)="volver()"
+        ></button>
+      </div>
+    </div>
+    <p-table
+      #dt
+      [value]="empleados"
+      [paginator]="true"
+      [rows]="rows"
+      [showCurrentPageReport]="true"
+      [(first)]="first"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      dataKey="cedula"
+      [globalFilterFields]="[
+        'cedula',
+        'apellidos',
+        'nombres',
+        'fechaNacimiento'
+      ]"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="cedula">
+            Cedula<p-sortIcon field="cedula"></p-sortIcon>
+          </th>
+          <th>Image</th>
+          <th pSortableColumn="nombres">
+            Nombres <p-sortIcon field="nombres"></p-sortIcon>
+          </th>
+          <th pSortableColumn="apellidos">
+            Apellidos <p-sortIcon field="apellidos"></p-sortIcon>
+          </th>
+          <th>Eliminar</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-empleado>
+        <tr [pSelectableRow]="rowData">
+          <td>{{ empleado.cedula }}</td>
+          <td>
+            <img
+              [src]="
+                'http://localhost:8080/api/empleados/uploads/img/' +
+                empleado.cedula
+              "
+              class="empleado-image"
+            />
+          </td>
+          <td>{{ empleado.nombres }}</td>
+          <td>{{ empleado.apellidos }}</td>
+          <td>
+            <p-button
+              icon="pi pi-times"
+              (click)="eliminarTrabajador(empleado)"
+              styleClass="p-button-danger"
+            ></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
+</div>
