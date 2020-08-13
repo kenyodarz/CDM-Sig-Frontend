@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-
 // Modulos
 import { AppRoutingModule } from './app-routing.module';
 import { PrimengModule } from './primeng.module';
@@ -26,10 +25,24 @@ import { CapacitacionesComponent } from './components/capacitaciones/capacitacio
 import { AsignarEmpleadosComponent } from './components/capacitaciones/asignar-empleados.component';
 import { EliminarEmpleadosComponent } from './components/capacitaciones/eliminar-empleados.component';
 import { ByempleadosComponent } from './components/capacitaciones/byempleados/byempleados.component';
-
+import { IncapacidadesComponent } from './components/incapacidades/incapacidades.component';
+import { IByempleadoComponent } from './components/incapacidades/i-byempleado/i-byempleado.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent, NavigationComponent, EmpleadosComponent, ContratosComponent, CapacitacionesComponent, AsignarEmpleadosComponent, EliminarEmpleadosComponent, ByempleadosComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    HomeComponent,
+    NavigationComponent,
+    EmpleadosComponent,
+    ContratosComponent,
+    CapacitacionesComponent,
+    AsignarEmpleadosComponent,
+    EliminarEmpleadosComponent,
+    ByempleadosComponent,
+    IncapacidadesComponent,
+    IByempleadoComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

@@ -10,6 +10,8 @@ import { CapacitacionesComponent } from './components/capacitaciones/capacitacio
 import { AsignarEmpleadosComponent } from './components/capacitaciones/asignar-empleados.component';
 import { EliminarEmpleadosComponent } from './components/capacitaciones/eliminar-empleados.component';
 import { ByempleadosComponent } from './components/capacitaciones/byempleados/byempleados.component';
+import { IncapacidadesComponent } from './components/incapacidades/incapacidades.component';
+import { IByempleadoComponent } from './components/incapacidades/i-byempleado/i-byempleado.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -29,6 +31,8 @@ const routes: Routes = [
     path: 'capacitaciones/porempleado',
     component: ByempleadosComponent,
   },
+  { path: 'incapacidades', component: IncapacidadesComponent },
+  { path: 'incapacidades/porempleado', component: IByempleadoComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
 
