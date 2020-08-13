@@ -9,6 +9,7 @@ import { ContratosComponent } from './components/contratos/contratos.component';
 import { CapacitacionesComponent } from './components/capacitaciones/capacitaciones.component';
 import { AsignarEmpleadosComponent } from './components/capacitaciones/asignar-empleados.component';
 import { EliminarEmpleadosComponent } from './components/capacitaciones/eliminar-empleados.component';
+import { ByempleadosComponent } from './components/capacitaciones/byempleados/byempleados.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -24,9 +25,12 @@ const routes: Routes = [
     path: 'capacitaciones/eliminar-empleados/:id',
     component: EliminarEmpleadosComponent,
   },
+  {
+    path: 'capacitaciones/porempleado',
+    component: ByempleadosComponent,
+  },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
-
 
 @NgModule({
   imports: [

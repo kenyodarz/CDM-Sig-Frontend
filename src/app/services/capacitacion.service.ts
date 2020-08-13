@@ -45,4 +45,7 @@ export class CapacitacionService extends CommonService<Capacitacion, number> {
       { headers: headers }
     );
   }
+  buscarEmpleadoPorID(cedula: string): Observable<Capacitacion[]> {
+    return this.http.get<Capacitacion[]>(this.API_URL + 'empleado/' + cedula);
+  }
 }

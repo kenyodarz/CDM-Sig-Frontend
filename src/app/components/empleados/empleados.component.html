@@ -216,6 +216,25 @@
       </div>
       <div class="p-fluid p-formgrid" style="margin: 1em 0;">
         <div>
+          <div>Grupo Sanguineo *</div>
+          <p-dropdown
+            [options]="tipoSangre"
+            formControlName="tipoSangre"
+            placeholder="Seleccione Un Grupo Sanguineo"
+          >
+          </p-dropdown>
+          <p-message
+            severity="error"
+            text="Seleccione Un Grupo Sanguineo"
+            *ngIf="
+              !empleadoForm.controls['tipoSangre'].valid &&
+              empleadoForm.controls['tipoSangre'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
           <div>Direccion *</div>
           <input
             pInputText
@@ -274,12 +293,12 @@
       <div class="p-fluid p-formgrid" style="margin: 1em 0;">
         <div>
           <div>AFP *</div>
-          <input
-            pInputText
-            type="text"
+          <p-dropdown
+            [options]="afp"
             formControlName="afp"
-            placeholder="Requerido"
-          />
+            optionLabel="nombre"
+            placeholder="Seleccione un Fondo de Pensión"
+          ></p-dropdown>
           <p-message
             severity="error"
             text="El Campo AFP Es Requerido"
@@ -293,12 +312,12 @@
       <div class="p-fluid p-formgrid" style="margin: 1em 0;">
         <div>
           <div>ARL *</div>
-          <input
-            pInputText
-            type="text"
+          <p-dropdown
+            [options]="arl"
             formControlName="arl"
-            placeholder="Requerido"
-          />
+            optionLabel="nombre"
+            placeholder="Seleccione una ARL"
+          ></p-dropdown>
           <p-message
             severity="error"
             text="El Campo ARL Es Requerido"
@@ -312,12 +331,12 @@
       <div class="p-fluid p-formgrid" style="margin: 1em 0;">
         <div>
           <div>Caja De Compensacion Familiar *</div>
-          <input
-            pInputText
-            type="text"
+          <p-dropdown
+            [options]="caja"
             formControlName="cajaComFamiliar"
-            placeholder="Requerido"
-          />
+            optionLabel="nombre"
+            placeholder="Seleccione una Caja de Compensacion"
+          ></p-dropdown>
           <p-message
             severity="error"
             text="El Campo cajaComFamiliar Es Requerido"
@@ -386,6 +405,44 @@
         </div>
         <div class="p-fluid p-formgrid" style="margin: 1em 0;">
           <div>
+            <div>Parentesco: *</div>
+            <input
+              pInputText
+              type="text"
+              formControlName="parentesco"
+              placeholder="Requerido"
+            />
+            <p-message
+              severity="error"
+              text="El Campo parentesco Es Requerido"
+              *ngIf="
+                !empleadoForm.controls['parentesco'].valid &&
+                empleadoForm.controls['parentesco'].dirty
+              "
+            ></p-message>
+          </div>
+        </div>
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+          <div>
+            <div>Telefono de Emergencia: *</div>
+            <input
+              pInputText
+              type="text"
+              formControlName="telEmergencia"
+              placeholder="Requerido"
+            />
+            <p-message
+              severity="error"
+              text="El Campo telEmergencia Es Requerido"
+              *ngIf="
+                !empleadoForm.controls['telEmergencia'].valid &&
+                empleadoForm.controls['telEmergencia'].dirty
+              "
+            ></p-message>
+          </div>
+        </div>
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+          <div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroupFileAddon01"
@@ -444,7 +501,7 @@
   <div class="p-grid">
     <div class="p-col-8">
       <div class="p-grid">
-        <div class="p-col-6">
+        <div class="p-col-4">
           <div class="p-fluid">
             <div class="p-field">
               <label for="nombres">Nombres: </label>
@@ -458,7 +515,7 @@
             </div>
           </div>
         </div>
-        <div class="p-col-6">
+        <div class="p-col-4">
           <div class="p-fluid">
             <div class="p-field">
               <label for="apellidos">Apellidos: </label>
@@ -472,7 +529,21 @@
             </div>
           </div>
         </div>
-        <div class="p-col-6">
+        <div class="p-col-4">
+          <div class="p-fluid">
+            <div class="p-field">
+              <label for="edad">Edad: </label>
+              <input
+                id="edad"
+                readonly="true"
+                value="{{ edad }}"
+                type="text"
+                pInputText
+              />
+            </div>
+          </div>
+        </div>
+        <div class="p-col-3">
           <div class="p-fluid">
             <div class="p-field">
               <label for="cedula">Cedula: </label>
@@ -486,7 +557,7 @@
             </div>
           </div>
         </div>
-        <div class="p-col-6">
+        <div class="p-col-3">
           <div class="p-fluid">
             <div class="p-field">
               <label for="fechaNacimiento">Fecha de Nacimiento: </label>
@@ -494,6 +565,34 @@
                 id="fechaNacimiento"
                 readonly="true"
                 value="{{ selectedEmpleado2.fechaNacimiento }}"
+                type="text"
+                pInputText
+              />
+            </div>
+          </div>
+        </div>
+        <div class="p-col-3">
+          <div class="p-fluid">
+            <div class="p-field">
+              <label for="telefono">Telefono: </label>
+              <input
+                id="telefono"
+                readonly="true"
+                value="{{ selectedEmpleado2.telefono }}"
+                type="text"
+                pInputText
+              />
+            </div>
+          </div>
+        </div>
+        <div class="p-col-3">
+          <div class="p-fluid">
+            <div class="p-field">
+              <label for="tipoSangre">Grupo Sanquineo y Rh: </label>
+              <input
+                id="tipoSangre"
+                readonly="true"
+                value="{{ selectedEmpleado2.tipoSangre }}"
                 type="text"
                 pInputText
               />
@@ -517,11 +616,11 @@
         <div class="p-col-6">
           <div class="p-fluid">
             <div class="p-field">
-              <label for="telefono">Telefono: </label>
+              <label for="municipio">Municipio: </label>
               <input
-                id="telefono"
+                id="municipio"
                 readonly="true"
-                value="{{ selectedEmpleado2.telefono }}"
+                value="{{ selectedEmpleado2.municipio }}"
                 type="text"
                 pInputText
               />
@@ -552,6 +651,7 @@
             value="{{ selectedEmpleado2.eps['nombre'] }}"
             type="text"
             pInputText
+            class="p-text-uppercase"
           />
         </div>
       </div>
@@ -561,11 +661,13 @@
         <div class="p-field">
           <label for="afp">Afiliacion a Fondo de Pension: </label>
           <input
+          *ngIf="selectedEmpleado2.cedula !== null"
             id="afp"
             readonly="true"
-            value="{{ selectedEmpleado2.afp }}"
+            value="{{ selectedEmpleado2.afp['nombre'] }}"
             type="text"
             pInputText
+            class="p-text-uppercase"
           />
         </div>
       </div>
@@ -575,11 +677,13 @@
         <div class="p-field">
           <label for="cajaComFamiliar">Caja de Compensacion Familiar: </label>
           <input
+          *ngIf="selectedEmpleado2.cedula !== null"
             id="cajaComFamiliar"
             readonly="true"
-            value="{{ selectedEmpleado2.cajaComFamiliar }}"
+            value="{{ selectedEmpleado2.cajaComFamiliar['nombre'] }}"
             type="text"
             pInputText
+            class="p-text-uppercase"
           />
         </div>
       </div>
@@ -620,6 +724,34 @@
             id="enCasoEmergencia"
             readonly="true"
             value="{{ selectedEmpleado2.enCasoEmergencia }}"
+            type="text"
+            pInputText
+          />
+        </div>
+      </div>
+    </div>
+    <div class="p-col-6">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="parentesco">Parentesco: </label>
+          <input
+            id="parentesco"
+            readonly="true"
+            value="{{ selectedEmpleado2.parentesco }}"
+            type="text"
+            pInputText
+          />
+        </div>
+      </div>
+    </div>
+    <div class="p-col-6">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="telEmergencia">Telefono de Emergencia: </label>
+          <input
+            id="telEmergencia"
+            readonly="true"
+            value="{{ selectedEmpleado2.telEmergencia }}"
             type="text"
             pInputText
           />

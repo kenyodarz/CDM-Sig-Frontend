@@ -56,8 +56,7 @@ export class EmpleadosComponent implements OnInit {
   empleados: Empleado[];
   empleado: Empleado;
   selectedEmpleado: Empleado;
-  selectedEmpleado2: Empleado = null;
-  /**selectedEmpleado2: Empleado = {
+  selectedEmpleado2: Empleado = {
     cedula: null,
     nombres: null,
     apellidos: null,
@@ -72,8 +71,12 @@ export class EmpleadosComponent implements OnInit {
     alergia: null,
     medimentos: null,
     enCasoEmergencia: null,
+    parentesco: null,
+    municipio: null,
+    telEmergencia: null,
+    tipoSangre: null,
     fotoHashCode: null,
-  }; */
+  };
   eps: Eps[];
   arl: Arl[];
   afp: Afp[];
@@ -85,7 +88,9 @@ export class EmpleadosComponent implements OnInit {
   displayModal: boolean = false;
   displayDetalle: boolean = false;
   generos: any;
+  tipoSangre: any;
   es: any;
+  edad: any;
 
   titulo = 'Listado De Trabajadores';
 
@@ -180,7 +185,7 @@ export class EmpleadosComponent implements OnInit {
           let element = result[index] as Afp;
           array.push(element);
         }
-        this.arl = array.sort(function (a, b) {
+        this.afp = array.sort(function (a, b) {
           if (a.nombre > b.nombre) {
             return 1;
           }
@@ -203,7 +208,7 @@ export class EmpleadosComponent implements OnInit {
           let element = result[index] as CajaComFamiliar;
           array.push(element);
         }
-        this.arl = array.sort(function (a, b) {
+        this.caja = array.sort(function (a, b) {
           if (a.nombre > b.nombre) {
             return 1;
           }
@@ -360,14 +365,42 @@ export class EmpleadosComponent implements OnInit {
       detail: empleado.cedula + ' ' + empleado.nombres,
     });
     this.selectedEmpleado2 = empleado;
+    this.calcularEdad(this.selectedEmpleado2.fechaNacimiento)
+  }
+
+  calcularEdad(dateString){
+    let hoy = new Date();
+    let fechaNacimiento = new Date(dateString);
+    let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    let diferenciaMeses = hoy.getMonth() - fechaNacimiento.getMonth();
+    if (
+      diferenciaMeses < 0 ||
+      (diferenciaMeses === 0 && hoy.getDate() < fechaNacimiento.getDate())
+    ) {
+      edad--;
+    }
+    this.edad = edad;
   }
 
   ngOnInit(): void {
     this.obtenerEmpleados();
     this.obtenerEPS();
+    this.obtenerARL();
+    this.obtenerCaja();
+    this.obtenerAFP();
     this.generos = [
       { label: 'Masculino', value: 'Masculino' },
       { label: 'Femenino', value: 'Femenino' },
+    ];
+    this.tipoSangre = [
+      { label: 'O+', value: 'O+' },
+      { label: 'O-', value: 'O-' },
+      { label: 'A+', value: 'A+' },
+      { label: 'A-', value: 'A-' },
+      { label: 'B+', value: 'B+' },
+      { label: 'B-', value: 'B-' },
+      { label: 'AB+', value: 'AB+' },
+      { label: 'AB-', value: 'AB-' },
     ];
     this.empleadoForm = this.fb.group({
       cedula: new FormControl(null, Validators.required),
@@ -375,6 +408,7 @@ export class EmpleadosComponent implements OnInit {
       apellidos: new FormControl(null, Validators.required),
       genero: new FormControl(null, Validators.required),
       fechaNacimiento: new FormControl(null, Validators.required),
+      tipoSangre: new FormControl(null, Validators.required),
       direccion: new FormControl(),
       telefono: new FormControl(null, Validators.required),
       eps: new FormControl(null, Validators.required),
@@ -384,6 +418,8 @@ export class EmpleadosComponent implements OnInit {
       alergia: new FormControl(),
       medimentos: new FormControl(),
       enCasoEmergencia: new FormControl(),
+      parentesco: new FormControl(),
+      telEmergencia: new FormControl(),
     });
     this.selectedEmpleado = null;
     this.items = [

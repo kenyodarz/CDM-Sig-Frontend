@@ -25,10 +25,11 @@ import { ContratosComponent } from './components/contratos/contratos.component';
 import { CapacitacionesComponent } from './components/capacitaciones/capacitaciones.component';
 import { AsignarEmpleadosComponent } from './components/capacitaciones/asignar-empleados.component';
 import { EliminarEmpleadosComponent } from './components/capacitaciones/eliminar-empleados.component';
+import { ByempleadosComponent } from './components/capacitaciones/byempleados/byempleados.component';
 
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent, NavigationComponent, EmpleadosComponent, ContratosComponent, CapacitacionesComponent, AsignarEmpleadosComponent, EliminarEmpleadosComponent],
+  declarations: [AppComponent, LoginComponent, HomeComponent, NavigationComponent, EmpleadosComponent, ContratosComponent, CapacitacionesComponent, AsignarEmpleadosComponent, EliminarEmpleadosComponent, ByempleadosComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

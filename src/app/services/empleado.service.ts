@@ -36,22 +36,25 @@ export class EmpleadoService {
 
   crearConFoto(empleado: Empleado, archivo: File): Observable<Empleado> {
     const formData = new FormData();
-    console.log(empleado);
     formData.append('archivo', archivo);
     formData.append('cedula', empleado.cedula);
     formData.append('nombres', empleado.nombres);
     formData.append('apellidos', empleado.apellidos);
     formData.append('genero', empleado.genero);
     formData.append('fechaNacimiento', empleado.fechaNacimiento);
+    formData.append('tipoSangre', empleado.tipoSangre);
     formData.append('direccion', empleado.direccion);
+    formData.append('municipio', empleado.municipio);
     formData.append('telefono', empleado.telefono);
     formData.append('eps', empleado.eps['nit']);
-    formData.append('afp', empleado.afp);
-    formData.append('arl', empleado.arl);
-    formData.append('cajaComFamiliar', empleado.cajaComFamiliar);
+    formData.append('afp', empleado.afp['nit']);
+    formData.append('arl', empleado.arl['nit']);
+    formData.append('cajaComFamiliar', empleado.cajaComFamiliar['nit']);
     formData.append('alergia', empleado.alergia);
     formData.append('medimentos', empleado.medimentos);
     formData.append('EnCasoEmergencia', empleado.enCasoEmergencia);
+    formData.append('parentesco', empleado.parentesco);
+    formData.append('telEmergencia', empleado.telEmergencia);
     return this.http.post<Empleado>(API_URL + 'save-with-photo', formData);
   }
 
@@ -63,15 +66,19 @@ export class EmpleadoService {
     formData.append('apellidos', empleado.apellidos);
     formData.append('genero', empleado.genero);
     formData.append('fechaNacimiento', empleado.fechaNacimiento);
+    formData.append('tipoSangre', empleado.tipoSangre);
     formData.append('direccion', empleado.direccion);
+    formData.append('municipio', empleado.municipio);
     formData.append('telefono', empleado.telefono);
     formData.append('eps', empleado.eps['nit']);
-    formData.append('afp', empleado.afp);
-    formData.append('arl', empleado.arl);
-    formData.append('cajaComFamiliar', empleado.cajaComFamiliar);
+    formData.append('afp', empleado.afp['nit']);
+    formData.append('arl', empleado.arl['nit']);
+    formData.append('cajaComFamiliar', empleado.cajaComFamiliar['nit']);
     formData.append('alergia', empleado.alergia);
     formData.append('medimentos', empleado.medimentos);
     formData.append('EnCasoEmergencia', empleado.enCasoEmergencia);
+    formData.append('parentesco', empleado.parentesco);
+    formData.append('telEmergencia', empleado.telEmergencia);
     return this.http.put<Empleado>(
       API_URL + `${API_URL}edit-with-photo/${empleado.cedula}`,
       formData

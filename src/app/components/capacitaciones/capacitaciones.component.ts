@@ -237,6 +237,11 @@ export class CapacitacionesComponent implements OnInit {
         icon: 'pi pi-fw pi-refresh',
         command: () => this.obtenerCapacitaciones(),
       },
+      {
+        label: 'Buscar Por Trabajador',
+        icon: 'pi pi-fw pi-search',
+        command: () => this.router.navigateByUrl('/capacitaciones/porempleado'),
+      },
     ];
     this.es = {
       firstDayOfWeek: 1,

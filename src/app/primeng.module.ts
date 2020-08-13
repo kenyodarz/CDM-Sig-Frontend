@@ -24,6 +24,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { FieldsetModule } from 'primeng/fieldset';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TooltipModule } from 'primeng/tooltip';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 const myModule = [
   ToolbarModule,
@@ -48,6 +49,7 @@ const myModule = [
   FieldsetModule,
   OverlayPanelModule,
   TooltipModule,
+  MultiSelectModule,
 ];
 
 
