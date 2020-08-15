@@ -27,6 +27,8 @@ import { EliminarEmpleadosComponent } from './components/capacitaciones/eliminar
 import { ByempleadosComponent } from './components/capacitaciones/byempleados/byempleados.component';
 import { IncapacidadesComponent } from './components/incapacidades/incapacidades.component';
 import { IByempleadoComponent } from './components/incapacidades/i-byempleado/i-byempleado.component';
+import { ExamenesComponent } from './components/examenes/examenes.component';
+import { EByempleadoComponent } from './components/examenes/e-byempleado/e-byempleado.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { IByempleadoComponent } from './components/incapacidades/i-byempleado/i-
     ByempleadosComponent,
     IncapacidadesComponent,
     IByempleadoComponent,
+    ExamenesComponent,
+    EByempleadoComponent,
   ],
   imports: [
     BrowserModule,

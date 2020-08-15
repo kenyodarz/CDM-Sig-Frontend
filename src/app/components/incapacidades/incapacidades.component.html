@@ -1,1 +1,322 @@
-<p>incapacidades works!</p>
+<div class="p-grid-fluid">
+  <p-panel>
+    <p-header>
+      <div class="p-text-center p-text-bold">Incapacidades Registradas</div>
+    </p-header>
+    <p-menubar [model]="items">
+      <div>
+        <input
+          type="text"
+          pInputText
+          (input)="dt.filterGlobal($event.target.value, 'contains')"
+          placeholder="Buscar"
+        />
+        <button
+          type="button"
+          pButton
+          label="Logout"
+          icon="pi pi-power-off"
+          style="margin-left: 0.25em;"
+        ></button>
+      </div>
+    </p-menubar>
+    <p-table
+      #dt
+      [paginator]="true"
+      selectionMode="single"
+      [(selection)]="selectedIncapacidad"
+      dataKey="idCapacidad"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [value]="incapacidades"
+      [globalFilterFields]="[]"
+      sortMode="multiple"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="text-align: center;" pSortableColumn="idIncapacidad">
+            IDIC <p-sortIcon field="idIncapacidad"></p-sortIcon>
+          </th>
+          <th style="text-align: center;" pSortableColumn="empleado">
+            CC Trabajador <p-sortIcon field="empleado"></p-sortIcon>
+          </th>
+          <th style="text-align: center;" pSortableColumn="fechaInicio">
+            Fecha de Inicio <p-sortIcon field="fechaInicio"></p-sortIcon>
+          </th>
+          <th style="text-align: center;" pSortableColumn="fechaFin">
+            Fecha de Fin <p-sortIcon field="fechaFin"></p-sortIcon>
+          </th>
+          <th style="text-align: center;" pSortableColumn="entidad">
+            Entidad <p-sortIcon field="entidad"></p-sortIcon>
+          </th>
+          <th style="text-align: center;" pSortableColumn="enfermedad">
+            Tipo Enfermedad <p-sortIcon field="enfermedad"></p-sortIcon>
+          </th>
+          <th style="text-align: center;" pSortableColumn="cie10">
+            CIE10 <p-sortIcon field="cie10"></p-sortIcon>
+          </th>
+          <th style="text-align: center;" pSortableColumn="estado">
+            Estado <p-sortIcon field="estado"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-incapacidad>
+        <tr [pSelectableRow]="incapacidad">
+          <td style="text-align: center;">{{ incapacidad.idIncapacidad }}</td>
+          <td style="text-align: center;">
+            {{ incapacidad.empleado["cedula"] }}
+          </td>
+          <td style="text-align: center;">{{ incapacidad.fechaInicio }}</td>
+          <td style="text-align: center;">{{ incapacidad.fechaFin }}</td>
+          <td style="text-align: center;">{{ incapacidad.entidad }}</td>
+          <td style="text-align: center;">{{ incapacidad.enfermedad }}</td>
+          <td style="text-align: center;">
+            {{ incapacidad.cie10["idCIE10"] + ' - ' + incapacidad.cie10["descripcion"] }}
+          </td>
+          <td style="text-align: center;">{{ incapacidad.estado }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        Incapacidad Seleccionada:
+        {{
+          selectedIncapacidad
+            ? selectedIncapacidad.idIncapacidad +
+              " - " +
+              selectedIncapacidad.empleado["cedula"] +
+              " - " +
+              selectedIncapacidad.estado
+            : "Ninguna"
+        }}
+      </ng-template>
+    </p-table>
+  </p-panel>
+</div>
+<!-- 
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ---------------------------------------- Modal Nuevo -------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+ -->
+<p-dialog
+  [(visible)]="displayModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000"
+>
+  <p-header>
+    <div class="p-text-center p-text-bold">Detalle Incapacidad</div>
+  </p-header>
+  <p-scrollPanel [style]="{ width: '100%', height: '100%' }">
+    <form [formGroup]="incapacidadForm">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Nro Capacitacion*</div>
+          <input
+            pInputText
+            type="text"
+            readonly
+            formControlName="idIncapacidad"
+          />
+          <p-message
+            severity="error"
+            text="La idContrato Es Requerido"
+            *ngIf="
+              !incapacidadForm.controls['idIncapacidad'].valid &&
+              incapacidadForm.controls['idIncapacidad'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Trabajador *</div>
+          <p-dropdown
+            [options]="empleados"
+            optionLabel="cedula"
+            dataKey="cedula"
+            placeholder="Seleccione el Empleado"
+            id="empleado"
+            name="empleado"
+            formControlName="empleado"
+            [filter]="true"
+          >
+          </p-dropdown>
+          <br />
+          <span *ngIf="incapacidadForm.get('empleado').value != null">
+            {{
+              incapacidadForm.get("empleado").value["nombres"] +
+                " " +
+                incapacidadForm.get("empleado").value["apellidos"]
+            }}
+          </span>
+          <p-message
+            severity="error"
+            text="Seleccione un Trabajador"
+            *ngIf="
+              !incapacidadForm.controls['empleado'].valid &&
+              incapacidadForm.controls['empleado'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Fecha de Inicio *</div>
+          <p-calendar
+            formControlName="fechaInicio"
+            [locale]="es"
+            dateFormat="yy-mm-dd"
+            dataType="string"
+            [monthNavigator]="true"
+            [yearNavigator]="true"
+            yearRange="1930:2030"
+            showButtonBar="true"
+            placeholder="Seleccione la fecha de inicio de la incapacidad"
+          ></p-calendar>
+          <p-message
+            severity="error"
+            text="Seleccione una fecha"
+            *ngIf="
+              !incapacidadForm.controls['fechaInicio'].valid &&
+              incapacidadForm.controls['fechaInicio'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Fecha Fin *</div>
+          <p-calendar
+            formControlName="fechaFin"
+            [locale]="es"
+            dateFormat="yy-mm-dd"
+            dataType="string"
+            [monthNavigator]="true"
+            [yearNavigator]="true"
+            yearRange="1930:2030"
+            showButtonBar="true"
+            placeholder="Seleccione la fecha final de la incapacidad"
+          ></p-calendar>
+          <p-message
+            severity="error"
+            text="Seleccione una fecha"
+            *ngIf="
+              !incapacidadForm.controls['fechaFin'].valid &&
+              incapacidadForm.controls['fechaFin'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Incapacidad Por: *</div>
+          <p-dropdown
+            [options]="entidad"
+            formControlName="entidad"
+            placeholder="Seleccione EPS o ARL segun corresponda"
+          >
+          </p-dropdown>
+          <p-message
+            severity="error"
+            text="Ingrese una Entidad"
+            *ngIf="
+              !incapacidadForm.controls['entidad'].valid &&
+              incapacidadForm.controls['entidad'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Tipo de Enfermedad: *</div>
+          <p-dropdown
+            [options]="enfermedad"
+            formControlName="enfermedad"
+            placeholder="Seleccione un tipo de enfermedad"
+          >
+          </p-dropdown>
+          <p-message
+            severity="error"
+            text="Seleccione el Tipo de enfermedad"
+            *ngIf="
+              !incapacidadForm.controls['enfermedad'].valid &&
+              incapacidadForm.controls['enfermedad'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>CIE10 *</div>
+          <p-dropdown
+            [options]="cie10"
+            optionLabel="descripcion"
+            dataKey="idCIE10"
+            placeholder="Ingrese el Codigo CIE10"
+            id="cie10"
+            name="cie10"
+            formControlName="cie10"
+            [filter]="true"
+            [virtualScroll]="true"
+            [itemSize]="31"
+          >
+          </p-dropdown>
+          <br />
+          <span *ngIf="incapacidadForm.get('cie10').value != null">
+            {{ incapacidadForm.get("cie10").value["idCIE10"] }}
+          </span>
+          <p-message
+            severity="error"
+            text="Ingrese un Codigo CIE10"
+            *ngIf="
+              !incapacidadForm.controls['cie10'].valid &&
+              incapacidadForm.controls['cie10'].dirty
+            "
+          ></p-message>
+        </div>
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+          <div>
+            <div>Estado Actual de la Incapacidad: *</div>
+            <p-dropdown
+              [options]="estado"
+              formControlName="estado"
+              placeholder="Seleccione el estado actual de la incapacidad"
+            >
+            </p-dropdown>
+            <p-message
+              severity="error"
+              text="Debe ingresar un Estado"
+              *ngIf="
+                !incapacidadForm.controls['estado'].valid &&
+                incapacidadForm.controls['estado'].dirty
+              "
+            ></p-message>
+          </div>
+        </div>
+      </div>
+    </form>
+    <p-footer>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-check"
+        (click)="displayModal = false; onGuardar()"
+        label="Aceptar"
+        [disabled]="!incapacidadForm.valid"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-times"
+        (click)="displayModal = false; incapacidadForm.reset()"
+        label="Cancelar"
+        class="ui-button-secondary"
+      ></button>
+    </p-footer>
+  </p-scrollPanel>
+</p-dialog>

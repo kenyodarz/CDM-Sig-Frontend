@@ -10,40 +10,28 @@
     <p-toolbar>
       <div class="p-toolbar-group-left">
         <span class="p-mr-2" [routerLink]="['/home']">{{ appName }}</span>
-        <p-button
-          label="Trabajadores"
-          icon="pi pi-users"
-          class="p-mr-2"
-          routerLink="empleados"
+        <p-splitButton
+          label="Registros"
+          icon="pi pi-bookmark"
+          [model]="itemsRegistros"
           *ngIf="isLoggedIn"
-        ></p-button>
-        <p-button
-          label="Contratos"
-          icon="pi pi-file"
-          class="p-mr-2"
-          routerLink="contratos"
+          styleClass="p-button-primary"
+        ></p-splitButton>
+
+        <p-splitButton
+          label="operaciones"
+          icon="pi pi-briefcase"
+          [model]="itemsOperaciones"
           *ngIf="isLoggedIn"
-        ></p-button>
-        <p-button
-          label="Capacitaciones"
-          icon="pi pi-angle-double-down"
           styleClass="p-button-success"
-          routerLink="capacitaciones"
-          *ngIf="isLoggedIn"
-        ></p-button>
+        ></p-splitButton>
 
         <!-- <i
           class="p-toolbar-separator pi pi-bars p-mr-2"
           style="vertical-align: middle;"
-        ></i>
+        ></i> -->
 
-        <p-splitButton
-          label="Save"
-          icon="pi pi-check"
-          [model]="items"
-          *ngIf="isLoggedIn"
-          styleClass="p-button-warning"
-        ></p-splitButton> -->
+        
       </div>
 
       <div class="p-toolbar-group-right">

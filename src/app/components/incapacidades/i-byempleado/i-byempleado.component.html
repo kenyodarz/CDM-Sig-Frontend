@@ -1,1 +1,103 @@
-<p>i-byempleado works!</p>
+<div class="p-grid-fluid">
+  <p-panel>
+    <p-header>
+      <div class="p-text-center p-text-bold">Incapacidades por Empleado</div>
+    </p-header>
+    <div class="p-grid">
+      <div class="p-col-10">
+        <p-dropdown
+          [options]="empleados"
+          [(ngModel)]="selectedEmpleado"
+          placeholder="--Seleccione un Trabajador--"
+          optionLabel="cedula"
+          class="p-fluid"
+          [filter]="true"
+          [showClear]="true"
+        ></p-dropdown>
+      </div>
+      <div class="p-col-2">
+        <p-button
+          label="Buscar Incapacidades"
+          (click)="buscarIncapacidades()"
+          icon="pi pi-search"
+        ></p-button>
+      </div>
+    </div>
+    <p-footer>
+      <div *ngIf="!(incapacidades.length > 0)">
+        <div class="p-text-center p-text-bold">
+          No Hay Capacitaciones a Mostrar
+        </div>
+      </div>
+      <div *ngIf="incapacidades.length > 0">
+        <div class="p-text-center p-text-bold">
+          {{ selectedEmpleado.nombres }} {{ selectedEmpleado.apellidos }} a
+          tenido un total de {{ incapacidades.length }} incapacidades
+        </div>
+        <br />
+        <p-table
+          #dt
+          [paginator]="true"
+          dataKey="idCapacitacion"
+          [rows]="10"
+          [rowsPerPageOptions]="[10, 25, 50]"
+          [value]="incapacidades"
+          [globalFilterFields]="['idCapacitacion', 'tema', 'fecha']"
+          sortMode="multiple"
+          styleClass="p-datatable-sm"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="text-align: center;" pSortableColumn="idIncapacidad">
+                IDIC <p-sortIcon field="idIncapacidad"></p-sortIcon>
+              </th>
+              <th style="text-align: center;" pSortableColumn="empleado">
+                CC Trabajador <p-sortIcon field="empleado"></p-sortIcon>
+              </th>
+              <th style="text-align: center;" pSortableColumn="fechaInicio">
+                Fecha de Inicio <p-sortIcon field="fechaInicio"></p-sortIcon>
+              </th>
+              <th style="text-align: center;" pSortableColumn="fechaFin">
+                Fecha de Fin <p-sortIcon field="fechaFin"></p-sortIcon>
+              </th>
+              <th style="text-align: center;" pSortableColumn="entidad">
+                Entidad <p-sortIcon field="entidad"></p-sortIcon>
+              </th>
+              <th style="text-align: center;" pSortableColumn="enfermedad">
+                Tipo Enfermedad <p-sortIcon field="enfermedad"></p-sortIcon>
+              </th>
+              <th style="text-align: center;" pSortableColumn="cie10">
+                CIE10 <p-sortIcon field="cie10"></p-sortIcon>
+              </th>
+              <th style="text-align: center;" pSortableColumn="estado">
+                Estado <p-sortIcon field="estado"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-incapacidad>
+            <tr [pSelectableRow]="incapacidad">
+              <td style="text-align: center;">
+                {{ incapacidad.idIncapacidad }}
+              </td>
+              <td style="text-align: center;">
+                {{ incapacidad.empleado["cedula"] }}
+              </td>
+              <td style="text-align: center;">{{ incapacidad.fechaInicio }}</td>
+              <td style="text-align: center;">{{ incapacidad.fechaFin }}</td>
+              <td style="text-align: center;">{{ incapacidad.entidad }}</td>
+              <td style="text-align: center;">{{ incapacidad.enfermedad }}</td>
+              <td style="text-align: center;">
+                {{
+                  incapacidad.cie10["idCIE10"] +
+                    " - " +
+                    incapacidad.cie10["descripcion"]
+                }}
+              </td>
+              <td style="text-align: center;">{{ incapacidad.estado }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </p-footer>
+  </p-panel>
+</div>

@@ -1,4 +1,5 @@
 import { CIE10 } from './CIE10';
+import { Empleado } from './Empleado';
 
 export class Incapacidad {
   constructor(
@@ -8,6 +9,7 @@ export class Incapacidad {
     public entidad: string = null,
     public enfermedad: string = null,
     public cie10: CIE10 = null,
+    public empleado: Empleado = null,
     public estado: string = null
   ) {}
 }

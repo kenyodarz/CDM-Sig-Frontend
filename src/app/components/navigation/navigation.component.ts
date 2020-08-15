@@ -12,7 +12,8 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
   styleUrls: ['./navigation.component.css'],
 })
 export class NavigationComponent implements OnInit {
-  items: MenuItem[];
+  itemsOperaciones: MenuItem[];
+  itemsRegistros: MenuItem[];
   isLoggedIn = false;
   private roles: string[];
   showAdminBoard = false;
@@ -28,24 +29,28 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getUser();
-    this.items = [
+    this.itemsRegistros = [
       {
-        label: 'Update',
-        icon: 'pi pi-refresh',
+        label: 'Trabajadores',
+        icon: 'pi pi-users',
+        command: () => this.router.navigateByUrl('/empleados'),
       },
       {
-        label: 'Delete',
-        icon: 'pi pi-times',
+        label: 'Contratos',
+        icon: 'pi pi-file',
+        command: () => this.router.navigateByUrl('/contratos'),
+      },
+    ];
+    this.itemsOperaciones = [
+      {
+        label: 'Capacitaciones',
+        icon: 'pi pi-angle-double-right',
+        command: () => this.router.navigateByUrl('/capacitaciones'),
       },
       {
-        label: 'Angular Website',
-        icon: 'pi pi-external-link',
-        url: 'http://angular.io',
-      },
-      {
-        label: 'Router',
-        icon: 'pi pi-upload',
-        routerLink: '/fileupload',
+        label: 'Incapacidades',
+        icon: 'pi pi-angle-double-down',
+        command: () => this.router.navigateByUrl('/incapacidades'),
       },
     ];
     this.isLoggedIn = !!this.tokenStorageService.getToken();
