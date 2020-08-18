@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
 // Services
-import { AuthService } from 'src/app/services/auth.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { ContratoService } from 'src/app/services/contrato.service';
 import { ExamenesService } from 'src/app/services/examenes.service';
 // Modelos
@@ -37,7 +37,7 @@ export class ExamenesComponent implements OnInit {
     private examenService: ExamenesService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private authService: AuthService,
+    private tokenStorageService: TokenStorageService,
     private fb: FormBuilder,
     private router: Router
   ) {}
@@ -299,5 +299,22 @@ export class ExamenesComponent implements OnInit {
       { label: 'Egreso', value: 'Egreso' },
       { label: 'PostIncapacidad', value: 'PostIncapacidad' },
     ];
+  }
+  logout() {
+    this.confirmationService.confirm({
+      message: '¿Esta Seguro que desea cerrar sesion?',
+      header: 'Cerrar Sesion',
+      accept: () => {
+        this.tokenStorageService.signOut();
+        this.irAlInicio();
+        window.location.reload();
+      },
+      reject: () => {
+        this.irAlInicio();
+      },
+    });
+  }
+  irAlInicio() {
+    window.location.replace('#/home');
   }
 }

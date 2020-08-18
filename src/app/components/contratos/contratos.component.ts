@@ -6,7 +6,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
 // Services
-import { AuthService } from 'src/app/services/auth.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { ContratoService } from 'src/app/services/contrato.service';
 // Modelos
@@ -35,7 +35,7 @@ export class ContratosComponent implements OnInit {
     private contratoService: ContratoService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private authService: AuthService,
+    private tokenStorageService: TokenStorageService,
     private fb: FormBuilder
   ) {}
 
@@ -108,8 +108,8 @@ export class ContratosComponent implements OnInit {
     );
     if (index != -1) {
       this.contratos[index] = contrato;
-    }else {
-      this.contratos.push(contrato)
+    } else {
+      this.contratos.push(contrato);
     }
     this.contratoForm.reset();
   }
@@ -274,5 +274,22 @@ export class ContratosComponent implements OnInit {
         value: 'Contrato ocasional de trabajo',
       },
     ];
+  }
+  logout() {
+    this.confirmationService.confirm({
+      message: '¿Esta Seguro que desea cerrar sesion?',
+      header: 'Cerrar Sesion',
+      accept: () => {
+        this.tokenStorageService.signOut();
+        this.irAlInicio();
+        window.location.reload();
+      },
+      reject: () => {
+        this.irAlInicio();
+      },
+    });
+  }
+  irAlInicio() {
+    window.location.replace('#/home');
   }
 }

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
 // Services
-import { AuthService } from 'src/app/services/auth.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { CapacitacionService } from 'src/app/services/capacitacion.service';
 // Modelos
@@ -37,7 +37,7 @@ export class CapacitacionesComponent implements OnInit {
     private capacitacionService: CapacitacionService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private authService: AuthService,
+    private tokenStorageService: TokenStorageService,
     private fb: FormBuilder,
     private router: Router
   ) {}
@@ -204,7 +204,6 @@ export class CapacitacionesComponent implements OnInit {
     this.empleados = capacitacion.empleados;
     this.selectedCapacitacion2 = capacitacion;
   }
-  
 
   ngOnInit(): void {
     this.obtenerCapacitaciones();
@@ -287,5 +286,22 @@ export class CapacitacionesComponent implements OnInit {
       today: 'Hoy',
       clear: 'Borrar',
     };
+  }
+  logout() {
+    this.confirmationService.confirm({
+      message: '¿Esta Seguro que desea cerrar sesion?',
+      header: 'Cerrar Sesion',
+      accept: () => {
+        this.tokenStorageService.signOut();
+        this.irAlInicio();
+        window.location.reload();
+      },
+      reject: () => {
+        this.irAlInicio();
+      },
+    });
+  }
+  irAlInicio() {
+    window.location.replace('#/home');
   }
 }

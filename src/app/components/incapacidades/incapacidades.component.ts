@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
 // Services
-import { AuthService } from 'src/app/services/auth.service';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { IncapacidadService } from 'src/app/services/incapacidad.service';
 import { Cie10Service } from 'src/app/services/cie10.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 // Modelos
 import { Empleado } from 'src/app/models/Empleado';
 import { Incapacidad } from 'src/app/models/Incapacidad';
@@ -32,9 +32,9 @@ export class IncapacidadesComponent implements OnInit {
   incapacidadForm: FormGroup;
   displayModal = false;
   es: any;
-  entidad: any
-  enfermedad: any
-  estado: any
+  entidad: any;
+  enfermedad: any;
+  estado: any;
 
   constructor(
     private empleadoService: EmpleadoService,
@@ -42,7 +42,7 @@ export class IncapacidadesComponent implements OnInit {
     private cie10Service: Cie10Service,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private authService: AuthService,
+    private tokenStorageService: TokenStorageService,
     private fb: FormBuilder,
     private router: Router
   ) {}
@@ -299,9 +299,9 @@ export class IncapacidadesComponent implements OnInit {
       clear: 'Borrar',
     };
     this.entidad = [
-      {label:'EPS', value:'EPS'},
-      {label:'ARL', value:'ARL'},
-    ]
+      { label: 'EPS', value: 'EPS' },
+      { label: 'ARL', value: 'ARL' },
+    ];
     this.estado = [
       { label: 'Transcrita', value: 'Transcrita' },
       { label: 'Pendiente', value: 'Pendiente' },
@@ -311,5 +311,22 @@ export class IncapacidadesComponent implements OnInit {
       { label: 'Accidente Laboral', value: 'Accidente Laboral' },
       { label: 'Enfermedad Comun', value: 'Enfermedad Comun' },
     ];
+  }
+  logout() {
+    this.confirmationService.confirm({
+      message: '¿Esta Seguro que desea cerrar sesion?',
+      header: 'Cerrar Sesion',
+      accept: () => {
+        this.tokenStorageService.signOut();
+        this.irAlInicio();
+        window.location.reload();
+      },
+      reject: () => {
+        this.irAlInicio();
+      },
+    });
+  }
+  irAlInicio() {
+    window.location.replace('#/home');
   }
 }
