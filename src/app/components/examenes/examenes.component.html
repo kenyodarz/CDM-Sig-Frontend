@@ -1,1 +1,260 @@
-<p>examenes works!</p>
+<div class="p-grid">
+  <p-panel>
+    <p-header>
+      <div class="p-text-center p-text-bold">Registro total de examenes</div>
+    </p-header>
+    <p-menubar [model]="items">
+      <div>
+        <input
+          type="text"
+          pInputText
+          (input)="dt.filterGlobal($event.target.value, 'contains')"
+          placeholder="Buscar"
+        />
+        <button
+          type="button"
+          pButton
+          label="Logout"
+          icon="pi pi-power-off"
+          style="margin-left: 0.25em;"
+        ></button>
+      </div>
+    </p-menubar>
+    <p-table
+      #dt
+      [value]="examenes"
+      sortField="contrato.idContrato"
+      sortMode="single"
+      (onSort)="onSort()"
+      [globalFilterFields]="[
+        'idExamen',
+        'fecha',
+        'restriccion',
+        'tipoExamen',
+        'contrato.idContrato',
+        'contrato.empleado.cedula',
+        'contrato.empleado.nombres',
+        'contrato.empleado.apellidos'
+      ]"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem;">#</th>
+          <th style="text-align: center;">Nro Contrato - Cedula</th>
+          <th style="text-align: center;">Nro. Examen</th>
+          <th style="text-align: center;">Fecha</th>
+          <th style="text-align: center;">Restriccion</th>
+          <th style="text-align: center;">Tipo de Examen</th>
+          <th style="text-align: center;"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-examen let-rowIndex="rowIndex">
+        <tr>
+          <td style="text-align: center;">{{ rowIndex + 1 }}</td>
+          <td
+            style="text-align: center;"
+            *ngIf="
+              rowGroupMetadata[examen.contrato.idContrato].index === rowIndex
+            "
+            [attr.rowspan]="rowGroupMetadata[examen.contrato.idContrato].size"
+          >
+            <span class="p-text-bold p-ml-2">{{
+              examen.contrato.idContrato +
+                " - " +
+                examen.contrato.empleado.cedula +
+                " - " +
+                examen.contrato.empleado.nombres +
+                " " +
+                examen.contrato.empleado.apellidos
+            }}</span>
+          </td>
+          <td style="text-align: center;">{{ examen.idExamen }}</td>
+          <td style="text-align: center;">{{ examen.fecha }}</td>
+          <td style="text-align: center;">{{ examen.restriccion }}</td>
+          <td style="text-align: center;">{{ examen.tipoExamen }}</td>
+          <td style="text-align: center;">
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success p-mr-2"
+              (click)="onEditar(examen)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="onEliminar(examen)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
+</div>
+
+<p-dialog
+  [(visible)]="displayModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000"
+>
+  <p-header>
+    <div class="p-text-center p-text-bold">Detalle Examen</div>
+  </p-header>
+  <p-panel [style]="{ width: '100%', height: '100%' }">
+    <form [formGroup]="formExamenes">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Nro Interno del Examen*</div>
+          <input pInputText type="text" readonly formControlName="idExamen" />
+          <p-message
+            severity="error"
+            text="La idContrato Es Requerido"
+            *ngIf="
+              !formExamenes.controls['idExamen'].valid &&
+              formExamenes.controls['idExamen'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Nro Contrato *</div>
+          <p-dropdown
+            [options]="contratos"
+            optionLabel="idContrato"
+            dataKey="idContrato"
+            placeholder="Seleccione el contrato"
+            id="contrato"
+            name="contrato"
+            formControlName="contrato"
+            [filter]="true"
+          >
+          </p-dropdown>
+          <p-message
+            severity="error"
+            text="Seleccione un Trabajador"
+            *ngIf="
+              !formExamenes.controls['contrato'].valid &&
+              formExamenes.controls['contrato'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Fecha del Examen *</div>
+          <p-calendar
+            formControlName="fecha"
+            [locale]="es"
+            dateFormat="yy-mm-dd"
+            dataType="string"
+            [monthNavigator]="true"
+            [yearNavigator]="true"
+            yearRange="1930:2030"
+            showButtonBar="true"
+            placeholder="Seleccione una fecha del examen"
+          ></p-calendar>
+          <p-message
+            severity="error"
+            text="Seleccione una fecha"
+            *ngIf="
+              !formExamenes.controls['fecha'].valid &&
+              formExamenes.controls['fecha'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Concepto*</div>
+          <!-- <input pInputText type="text" readonly formControlName="concepto" /> -->
+          <p-inputSwitch formControlName="concepto"></p-inputSwitch>
+          <span
+            style="margin-left: 0.25em;"
+            *ngIf="!formExamenes.get('concepto').value"
+            >Sin Restricción</span
+          >
+
+          <span
+            style="margin-left: 0.25em;"
+            *ngIf="formExamenes.get('concepto').value"
+            >Con Restricción</span
+          >
+          <p-message
+            severity="error"
+            text="El concepto es Requerido"
+            *ngIf="
+              !formExamenes.controls['concepto'].valid &&
+              formExamenes.controls['concepto'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div
+        *ngIf="formExamenes.get('concepto').value"
+        class="p-fluid p-formgrid"
+        style="margin: 1em 0;"
+      >
+        <div>
+          <div>Restricción *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="restriccion"
+            placeholder="Ingrese La Restriccion"
+          />
+          <p-message
+            severity="error"
+            text="El Campo restriccion Es Requerido"
+            *ngIf="
+              !formExamenes.controls['restriccion'].valid &&
+              formExamenes.controls['restriccion'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Tipo de Contrato *</div>
+          <p-dropdown
+            [options]="tipoExamen"
+            formControlName="tipoExamen"
+            placeholder="Seleccione el Genero"
+          >
+          </p-dropdown>
+          <p-message
+            severity="error"
+            text="Seleccione un Tipo de Examen"
+            *ngIf="
+              !formExamenes.controls['tipoExamen'].valid &&
+              formExamenes.controls['tipoExamen'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+    </form>
+    <p-footer>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-check"
+        (click)="displayModal = false; onGuardar()"
+        label="Aceptar"
+        [disabled]="!formExamenes.valid"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-times"
+        (click)="displayModal = false; formExamenes.reset()"
+        label="Cancelar"
+        class="ui-button-secondary"
+        style="margin-left: 0.25em;"
+      ></button>
+    </p-footer>
+  </p-panel>
+</p-dialog>

@@ -130,7 +130,7 @@ export class IncapacidadesComponent implements OnInit {
           detail:
             'La Incapacidad de ' +
             incapacidad.empleado.cedula +
-            ' ha sido guardada correstamente',
+            ' ha sido guardada correctamente',
         });
         this.displayModal = false;
         this.validarIncapadidad(incapacidad);

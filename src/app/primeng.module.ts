@@ -25,6 +25,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TooltipModule } from 'primeng/tooltip';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 const myModule = [
   ToolbarModule,
@@ -50,8 +51,8 @@ const myModule = [
   OverlayPanelModule,
   TooltipModule,
   MultiSelectModule,
+  InputSwitchModule,
 ];
-
 
 @NgModule({
   declarations: [],

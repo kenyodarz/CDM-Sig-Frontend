@@ -40,6 +40,11 @@ export class NavigationComponent implements OnInit {
         icon: 'pi pi-file',
         command: () => this.router.navigateByUrl('/contratos'),
       },
+      {
+        label: 'Examenes',
+        icon: 'pi pi-heart',
+        command: () => this.router.navigateByUrl('/examenes'),
+      },
     ];
     this.itemsOperaciones = [
       {
