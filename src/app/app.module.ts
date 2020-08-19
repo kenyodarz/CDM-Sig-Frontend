@@ -29,6 +29,8 @@ import { IncapacidadesComponent } from './components/incapacidades/incapacidades
 import { IByempleadoComponent } from './components/incapacidades/i-byempleado/i-byempleado.component';
 import { ExamenesComponent } from './components/examenes/examenes.component';
 import { EByempleadoComponent } from './components/examenes/e-byempleado/e-byempleado.component';
+import { DocumentosComponent } from './components/documentos/documentos.component';
+import { DByempleadoComponent } from './components/documentos/d-byempleado/d-byempleado.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { EByempleadoComponent } from './components/examenes/e-byempleado/e-byemp
     IByempleadoComponent,
     ExamenesComponent,
     EByempleadoComponent,
+    DocumentosComponent,
+    DByempleadoComponent,
   ],
   imports: [
     BrowserModule,

@@ -249,12 +249,16 @@ export class EmpleadosComponent implements OnInit {
         });
         this.displayModal = false;
         this.validarEmpleado(result);
+        this.guardarFoto(result, this.selectedFoto);
       });
     }
   }
 
   guardarFoto(empleado: Empleado, archivo: File) {
-    this.fotoService.save(empleado.cedula, archivo);
+    this.fotoService.save(empleado.cedula, archivo).subscribe((result: Foto)=>{
+      console.log(result);
+    });
+    this.selectedFoto = null
   }
 
   editarConFoto() {

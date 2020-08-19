@@ -1,1 +1,82 @@
-<p>e-byempleado works!</p>
+<div class="p-grid-fluid">
+  <p-panel>
+    <p-header>
+      <div class="p-text-center p-text-bold">
+        Exámenes Por Empleados
+      </div>
+    </p-header>
+    <div class="p-grid">
+      <div class="p-col-10">
+        <p-dropdown
+          [options]="empleados"
+          [(ngModel)]="selectedEmpleado"
+          placeholder="--Seleccione un Trabajador--"
+          optionLabel="cedula"
+          class="p-fluid"
+          [filter]="true"
+          [showClear]="true"
+        >
+        </p-dropdown>
+      </div>
+      <div class="p-col-2">
+        <p-button
+          label="Buscar Exámenes"
+          (onClick)="buscarExamenes()"
+          icon="pi pi-search"
+        ></p-button>
+      </div>
+    </div>
+    <p-footer>
+      <div *ngIf="!(examenes.length > 0)">
+        <div class="p-text-center p-text-bold">
+          No Hay Exámenes a Mostrar
+        </div>
+      </div>
+      <div *ngIf="examenes.length > 0">
+        <div class="p-text-center p-text-bold">
+          {{ selectedEmpleado.nombres }} {{ selectedEmpleado.apellidos }} a
+          tenido un total de {{ examenes.length }} exámenes
+        </div>
+        <br />
+        <p-table
+          #dt
+          [paginator]="true"
+          dataKey="idExamen"
+          [rows]="10"
+          [rowsPerPageOptions]="[10, 25, 50]"
+          [value]="examenes"
+          [globalFilterFields]="['idExamen', 'fecha', 'tipoExamen', 'contrato.idContrato']"
+          sortMode="multiple"
+          styleClass="p-datatable-sm"
+        >
+          <ng-template pTemplate="header">
+            <th style="text-align: center;" pSortableColumn="idExamen">
+              Nro. Examen <p-sortIcon field="idExamen"></p-sortIcon>
+            </th>
+            <th style="text-align: center;" pSortableColumn="fecha">
+                Fecha <p-sortIcon field="fecha"></p-sortIcon>
+            </th>
+            <th style="text-align: center;" pSortableColumn="restriccion">
+              Restricción <p-sortIcon field="restriccion"></p-sortIcon>
+            </th>
+            <th style="text-align: center;" pSortableColumn="tipoExamen">
+              Tipo de Examen <p-sortIcon field="tipoExamen"></p-sortIcon>
+            </th>
+            <th style="text-align: center;" pSortableColumn="contrato">
+              Nro Contrato <p-sortIcon field="contrato"></p-sortIcon>
+            </th>
+          </ng-template>
+          <ng-template pTemplate="body" let-examen>
+              <tr [pSelectableRow]="examen">
+                  <td style="text-align: center;">{{ examen.idExamen }}</td>
+                  <td style="text-align: center;">{{ examen.fecha }}</td>
+                  <td style="text-align: center;">{{ examen.restriccion }}</td>
+                  <td style="text-align: center;">{{ examen.tipoExamen }}</td>
+                  <td style="text-align: center;">{{ examen.contrato.idContrato }}</td>
+              </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </p-footer>
+  </p-panel>
+</div>

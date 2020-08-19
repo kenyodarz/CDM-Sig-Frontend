@@ -26,6 +26,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TooltipModule } from 'primeng/tooltip';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { FullCalendarModule } from 'primeng/fullcalendar';
 
 const myModule = [
   ToolbarModule,
@@ -52,6 +53,7 @@ const myModule = [
   TooltipModule,
   MultiSelectModule,
   InputSwitchModule,
+  FullCalendarModule,
 ];
 
 @NgModule({
