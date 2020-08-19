@@ -1,1 +1,120 @@
-<p>documentos works!</p>
+<div class="p-grid-fluid">
+  <p-panel>
+    <p-header>
+      <div class="p-text-center p-text-bold">
+        Documentos: Recuerde que tiene que se en Formato PDF y no pesar mas de
+        2MB
+      </div>
+    </p-header>
+    <p-fieldset>
+      <p-header>Cargue de Documentos</p-header>
+      <form [formGroup]="formDocumento">
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+          <div>
+            <div>Trabajador *</div>
+            <p-dropdown
+              [options]="empleados"
+              optionLabel="cedula"
+              dataKey="cedula"
+              placeholder="Seleccione el Empleado"
+              id="empleado"
+              name="empleado"
+              formControlName="empleado"
+              [filter]="true"
+            >
+            </p-dropdown>
+            <br />
+            <span *ngIf="formDocumento.get('empleado').value != null">
+              {{
+                formDocumento.get("empleado").value["nombres"] +
+                  " " +
+                  formDocumento.get("empleado").value["apellidos"]
+              }}
+            </span>
+            <p-message
+              severity="error"
+              text="Seleccione un Trabajador"
+              *ngIf="
+                !formDocumento.controls['empleado'].valid &&
+                formDocumento.controls['empleado'].dirty
+              "
+            ></p-message>
+          </div>
+        </div>
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+          <div>
+            <div>Tipo de Documento: *</div>
+            <p-dropdown
+              [options]="tipo"
+              formControlName="tipo"
+              placeholder="Seleccione un tipo documento"
+            >
+            </p-dropdown>
+            <p-message
+              severity="error"
+              text="Seleccione un tipo de documento"
+              *ngIf="
+                !formDocumento.controls['tipo'].valid &&
+                formDocumento.controls['tipo'].dirty
+              "
+            ></p-message>
+          </div>
+        </div>
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+          <div>
+            <div>Nombre del Documento*</div>
+            <input pInputText type="text" formControlName="nombre" />
+            <p-message
+              severity="error"
+              text="Es necesario un nombre autodescriptivo del documento"
+              *ngIf="
+                !formDocumento.controls['nombre'].valid &&
+                formDocumento.controls['nombre'].dirty
+              "
+            ></p-message>
+          </div>
+        </div>
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+          <div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFileAddon01"
+                  >Documento</span
+                >
+              </div>
+              <div class="custom-file">
+                <input
+                  (change)="seleccionarArchivo($event)"
+                  type="file"
+                  class="custom-file-input"
+                  accept="application/pdf"
+                  id="inputGroupFile01"
+                  aria-describedby="inputGroupFileAddon01"
+                />
+                <label class="custom-file-label" for="inputGroupFile01"
+                  >Seleccionar Archivo</label
+                >
+              </div>
+            </div>
+              <ul *ngIf="uploadDocumento">
+                <li>
+                  {{ uploadDocumento.name }} - {{ uploadDocumento.size | filesize }}
+                </li>
+              </ul>
+          </div>
+        
+        </div>
+      </form>
+    </p-fieldset>
+    <p-footer>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-check"
+        (click)="onGuardar()"
+        label="Aceptar"
+        [disabled]="!formDocumento.valid"
+      ></button>
+    </p-footer>
+  </p-panel>
+</div>

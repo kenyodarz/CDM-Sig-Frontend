@@ -14,6 +14,9 @@ import { PrimengModule } from './primeng.module';
 import { authInterceptorProviders } from 'src/app/helpers/auth.interceptor';
 import { MessageService, ConfirmationService } from 'primeng/api';
 
+// Pipe
+import { FileSizePipe } from './filesize.pipe';
+
 // Componentes
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -35,6 +38,7 @@ import { DByempleadoComponent } from './components/documentos/d-byempleado/d-bye
 @NgModule({
   declarations: [
     AppComponent,
+    FileSizePipe,
     LoginComponent,
     HomeComponent,
     NavigationComponent,

@@ -20,11 +20,12 @@ export class DocumentosService extends CommonService<Documento, number> {
 
   saveFile(documento: Documento, archivo: File): Observable<Documento> {
     const formData = new FormData();
+    formData.append('archivo', archivo);
     formData.append('tipo', documento.tipo);
     formData.append('nombre', documento.nombre);
     formData.append('empleado', null);
     return this.http.post<Documento>(
-      this.API_URL + '/save-file/' + documento.empleado.cedula,
+      this.API_URL + 'save-file/' + documento.empleado.cedula,
       formData
     );
   }

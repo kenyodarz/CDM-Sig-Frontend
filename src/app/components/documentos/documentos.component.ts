@@ -102,6 +102,8 @@ export class DocumentosComponent implements OnInit {
         });
         this.displayModal = false;
         this.validarEmpleado(documento);
+        this.formDocumento.reset();
+        this.uploadDocumento = null
       });
   }
   validarEmpleado(documento: Documento) {
@@ -161,6 +163,8 @@ export class DocumentosComponent implements OnInit {
   seleccionarArchivo(event) {
     this.uploadDocumento = event.target.files[0];
     console.info(this.uploadDocumento);
+    console.info('size', this.uploadDocumento.size);
+    console.info('type', this.uploadDocumento.type);
   }
 
   ngOnInit(): void {
