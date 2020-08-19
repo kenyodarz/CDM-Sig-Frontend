@@ -54,11 +54,7 @@
           <td style="text-align: center;">{{ empleado.cedula }}</td>
           <td>
             <img
-              *ngIf="empleado.fotoHashCode"
-              [src]="
-                'http://localhost:8080/api/empleados/uploads/img/' +
-                empleado.cedula
-              "
+              [src]="'http://localhost:8080/api/fotos/image/' + empleado.cedula"
               class="img-thumbnail rounded"
               style="width: 128px; cursor: pointer;"
             />
@@ -661,7 +657,7 @@
         <div class="p-field">
           <label for="afp">Afiliacion a Fondo de Pension: </label>
           <input
-          *ngIf="selectedEmpleado2.cedula !== null"
+            *ngIf="selectedEmpleado2.cedula !== null"
             id="afp"
             readonly="true"
             value="{{ selectedEmpleado2.afp['nombre'] }}"
@@ -677,7 +673,7 @@
         <div class="p-field">
           <label for="cajaComFamiliar">Caja de Compensacion Familiar: </label>
           <input
-          *ngIf="selectedEmpleado2.cedula !== null"
+            *ngIf="selectedEmpleado2.cedula !== null"
             id="cajaComFamiliar"
             readonly="true"
             value="{{ selectedEmpleado2.cajaComFamiliar['nombre'] }}"

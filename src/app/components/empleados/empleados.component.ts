@@ -12,6 +12,7 @@ import { MenuItem } from 'primeng/api';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { EpsService } from 'src/app/services/eps.service';
+import { FotosService } from 'src/app/services/fotos.service';
 import { ArlService } from 'src/app/services/arl.service';
 import { AfpService } from 'src/app/services/afp.service';
 import { CajaComFamiliarService } from 'src/app/services/caja-com-familiar.service';
@@ -20,6 +21,7 @@ import { Empleado } from 'src/app/models/Empleado';
 import { Eps } from 'src/app/models/Eps';
 import { Arl } from 'src/app/models/Arl';
 import { Afp } from 'src/app/models/Afp';
+import { Foto } from 'src/app/models/Foto';
 import { CajaComFamiliar } from 'src/app/models/CajaComFamiliar';
 
 @Component({
@@ -99,6 +101,7 @@ export class EmpleadosComponent implements OnInit {
     private epsService: EpsService,
     private arlService: ArlService,
     private afpService: AfpService,
+    private fotoService: FotosService,
     private cajaService: CajaComFamiliarService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
@@ -237,21 +240,21 @@ export class EmpleadosComponent implements OnInit {
         this.validarEmpleado(result);
       });
     } else {
-      this.empleadoService
-        .crearConFoto(this.empleado, this.selectedFoto)
-        .subscribe((result: Empleado) => {
-          this.messageService.add({
-            severity: 'success',
-            summary: '¡Correcto!',
-            detail:
-              'El empleado: ' +
-              result.cedula +
-              ' ha sido guardado correctamente',
-          });
-          this.displayModal = false;
-          this.validarEmpleado(result);
+      this.empleadoService.save(this.empleado).subscribe((result: Empleado) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: '¡Correcto!',
+          detail:
+            'El empleado: ' + result.cedula + ' ha sido guardado correctamente',
         });
+        this.displayModal = false;
+        this.validarEmpleado(result);
+      });
     }
+  }
+
+  guardarFoto(empleado: Empleado, archivo: File) {
+    this.fotoService.save(empleado.cedula, archivo);
   }
 
   editarConFoto() {
@@ -365,10 +368,10 @@ export class EmpleadosComponent implements OnInit {
       detail: empleado.cedula + ' ' + empleado.nombres,
     });
     this.selectedEmpleado2 = empleado;
-    this.calcularEdad(this.selectedEmpleado2.fechaNacimiento)
+    this.calcularEdad(this.selectedEmpleado2.fechaNacimiento);
   }
 
-  calcularEdad(dateString){
+  calcularEdad(dateString) {
     let hoy = new Date();
     let fechaNacimiento = new Date(dateString);
     let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
@@ -505,5 +508,9 @@ export class EmpleadosComponent implements OnInit {
   }
   irAlInicio() {
     window.location.replace('#/home');
+  }
+
+  validarFoto(evento) {
+    console.log();
   }
 }
