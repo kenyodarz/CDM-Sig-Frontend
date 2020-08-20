@@ -29,4 +29,8 @@ export class DocumentosService extends CommonService<Documento, number> {
       formData
     );
   }
+
+  getFilesByEmpleados(cedula: string): Observable<Documento[]>{
+    return this.http.get<Documento[]>(this.API_URL + 'empleado/' + cedula);
+  }
 }

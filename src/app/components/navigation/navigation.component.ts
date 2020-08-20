@@ -25,9 +25,9 @@ export class NavigationComponent implements OnInit {
   username: string;
   currentUser: any;
   appName = 'S.I.G.';
-  calendarVisibleBar = false
-  eventos: any[] //Full Calendar
-  opciones: any // Full Calendar 
+  calendarVisibleBar = false;
+  eventos: any[]; //Full Calendar
+  opciones: any; // Full Calendar
 
   constructor(
     private tokenStorageService: TokenStorageService,
@@ -65,10 +65,16 @@ export class NavigationComponent implements OnInit {
         icon: 'pi pi-angle-double-down',
         command: () => this.router.navigateByUrl('/incapacidades'),
       },
+      { separator: true },
       {
-        label: 'Documentos',
-        icon: 'pi pi-file',
+        label: 'Cargar Documentos',
+        icon: 'pi pi-upload',
         command: () => this.router.navigateByUrl('/documentos'),
+      },
+      {
+        label: 'Documentos por Trabajador',
+        icon: 'pi pi-file',
+        command: () => this.router.navigateByUrl('/documentos/porempleado'),
       },
     ];
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -145,5 +151,22 @@ export class NavigationComponent implements OnInit {
         start: '2020-08-28',
       },
     ];
+  }
+  logout() {
+    this.confirmationService.confirm({
+      message: '¿Esta Seguro que desea cerrar sesion?',
+      header: 'Cerrar Sesion',
+      accept: () => {
+        this.tokenStorageService.signOut();
+        this.irAlInicio();
+        window.location.reload();
+      },
+      reject: () => {
+        this.irAlInicio();
+      },
+    });
+  }
+  irAlInicio() {
+    window.location.replace('#/home');
   }
 }

@@ -168,7 +168,6 @@ export class DocumentosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.obtenerDocumentos();
     this.obtenerEmpleados();
     this.formDocumento = this.fb.group({
       idDocumento: new FormControl(),
