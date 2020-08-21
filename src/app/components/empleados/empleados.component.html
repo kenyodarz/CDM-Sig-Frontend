@@ -250,6 +250,25 @@
       </div>
       <div class="p-fluid p-formgrid" style="margin: 1em 0;">
         <div>
+          <div>Municipio *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="municipio"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="El Campo municipio Es Requerido"
+            *ngIf="
+              !empleadoForm.controls['municipio'].valid &&
+              empleadoForm.controls['municipio'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
           <div>Telefono *</div>
           <input
             pInputText

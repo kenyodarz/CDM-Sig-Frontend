@@ -180,6 +180,46 @@
         </ng-template>
       </p-table>
     </p-tabPanel>
+    <p-tabPanel header="Header V">
+      <ng-template pTemplate="header">
+        <i class="pi pi-check-square"></i>
+        <span>Items</span>
+      </ng-template>
+      <p-table
+        [paginator]="true"
+        selectionMode="single"
+        [(selection)]="selectedItem"
+        dataKey="idItem"
+        [rows]="10"
+        [value]="arrayItems"
+        #dt
+        [globalFilterFields]="['idItem', 'nombre', 'tipo', 'referencia']"
+        styleClass="p-datatable-sm"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="text-align: center;">ID</th>
+            <th style="text-align: center;">Nombre</th>
+            <th style="text-align: center;">Tipo</th>
+            <th style="text-align: center;">Referencia</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+          <tr [pSelectableRow]="rowData">
+            <td style="text-align: center;">{{ rowData.idItem }}</td>
+            <td style="text-align: center;">{{ rowData.nombre }}</td>
+            <td style="text-align: center;">{{ rowData.tipo }}</td>
+            <td style="text-align: center;">{{ rowData.referencia }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{ arrayItems ? arrayItems.length : 0 }} items
+            registrados.
+          </div>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
   </p-tabView>
 </div>
 <!-- 
@@ -296,6 +336,127 @@
       pButton
       icon="pi pi-times"
       (click)="displayModal = false; formVarios.reset()"
+      label="Cancelar"
+      class="ui-button-secondary"
+    ></button>
+  </p-footer>
+</p-dialog>
+
+<!-- 
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ----------------------------------------Modal Item---------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+ -->
+
+ <p-dialog
+  [(visible)]="displayItemModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000"
+>
+  <p-header>
+    <b>Nuevo Registro {{ selectedModel | uppercase }}</b>
+  </p-header>
+  <p-panel>
+    <form [formGroup]="formItems" (submit)="onGuardar()">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>ID *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="idItem"
+            readonly
+            placeholder="ID Elemento"
+          />
+          <p-message
+            severity="error"
+            text="Favor ingrese un idItem"
+            *ngIf="
+              !formItems.controls['idItem'].valid &&
+              formItems.controls['idItem'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Nombre *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="nombre"
+            placeholder="Ingrese el nombre del elemento"
+          />
+          <p-message
+            severity="error"
+            text="Favor ingrese un Nombre"
+            *ngIf="
+              !formItems.controls['nombre'].valid &&
+              formItems.controls['nombre'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Tipo *</div>
+          <p-dropdown
+            [options]="tipoItem"
+            formControlName="tipo"
+            placeholder="Seleccione Un tipo de elemento"
+          >
+          </p-dropdown>
+          <p-message
+            severity="error"
+            text="Favor ingrese un tipo de elemento"
+            *ngIf="
+              !formItems.controls['tipo'].valid &&
+              formItems.controls['tipo'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Referencia *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="referencia"
+            placeholder="Ingrese una Referencia"
+          />
+          <p-message
+            severity="error"
+            text="Favor ingrese una referencia"
+            *ngIf="
+              !formItems.controls['referencia'].valid &&
+              formItems.controls['referencia'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+    </form>
+  </p-panel>
+  <p-footer>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      (click)="displayModal = false; onGuardar()"
+      label="Aceptar"
+      [disabled]="!formItems.valid"
+    ></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      (click)="displayItemModal = false; formItems.reset()"
       label="Cancelar"
       class="ui-button-secondary"
     ></button>

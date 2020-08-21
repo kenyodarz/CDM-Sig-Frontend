@@ -8,8 +8,12 @@
 @import "../node_modules/@fullcalendar/timegrid/main.min.css";
 @import "../node_modules/@fullcalendar/core/main.min.css";
 
-/* html, body {
-    background: url(../src/assets/img/fondoazul.gif) center center fixed;
+html, body {
+    background: url(assets/img/star-sky.jpg) center center fixed;
     background-repeat: no-repeat;
     background-size: 100% 100%;
-} */
+}
+
+ /* html, body{
+     background-color: #3f51b5;
+ } */

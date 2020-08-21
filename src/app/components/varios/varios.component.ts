@@ -8,11 +8,13 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
 // Services
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { ItemsService } from 'src/app/services/items.service';
 import { EpsService } from 'src/app/services/eps.service';
 import { ArlService } from 'src/app/services/arl.service';
 import { AfpService } from 'src/app/services/afp.service';
 import { CajaComFamiliarService } from 'src/app/services/caja-com-familiar.service';
 // Modelos
+import { Item } from 'src/app/models/Item';
 import { Eps } from 'src/app/models/Eps';
 import { Arl } from 'src/app/models/Arl';
 import { Afp } from 'src/app/models/Afp';
@@ -24,10 +26,17 @@ import { CajaComFamiliar } from 'src/app/models/CajaComFamiliar';
   styleUrls: ['./varios.component.css'],
 })
 export class VariosComponent implements OnInit {
+  arrayItems: Item[];
   eps: Eps[];
   arl: Arl[];
   afp: Afp[];
   caja: CajaComFamiliar[];
+  selectedItem: Item = {
+    idItem: null,
+    nombre: null,
+    referencia: null,
+    tipo: null,
+  };
   selectedEps: Eps = {
     nit: null,
     direccion: null,
@@ -52,6 +61,7 @@ export class VariosComponent implements OnInit {
     nombre: null,
     telefono: null,
   };
+  item: Item;
   epsSingle: Eps;
   arlSingle: Arl;
   afpSingle: Afp;
@@ -59,11 +69,15 @@ export class VariosComponent implements OnInit {
   selectedModel: string = null;
 
   formVarios: FormGroup;
+  formItems: FormGroup;
   displayModal = false;
+  displayItemModal = false;
   items: MenuItem[];
   activeIndex: number = 0;
+  tipoItem: any[];
 
   constructor(
+    private itemsService: ItemsService,
     private epsService: EpsService,
     private arlService: ArlService,
     private afpService: AfpService,
@@ -74,6 +88,28 @@ export class VariosComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router
   ) {}
+
+  obtenerItems() {
+    this.itemsService.getAll().subscribe(
+      (array: Item[]) => {
+        let items: Item[] = [];
+        for (let index = 0; index < array.length; index++) {
+          let element = array[index] as Item;
+          items.push(element);
+        }
+        this.arrayItems = items.sort(function (a, b) {
+          if (a.tipo > b.tipo) {
+            return 1;
+          }
+          if (a.tipo < b.tipo) {
+            return -1;
+          }
+          return 0;
+        });
+      },
+      (error) => console.error(error)
+    );
+  }
 
   obtenerEPS() {
     this.epsService.getAll().subscribe(
@@ -168,13 +204,34 @@ export class VariosComponent implements OnInit {
     );
   }
 
+  guardarItem() {
+    this.itemsService.save(this.item).subscribe((item: Item) => {
+      this.messageService.add({
+        severity: 'success',
+        summary: '¡Guardado!',
+        detail: 'El item ' + item.nombre + ' ha sido guardado correctamente',
+      });
+      this.displayItemModal = false;
+      this.selectedModel = null;
+      this.validarItem(item);
+    });
+  }
+  validarItem(item: Item) {
+    let index = this.arrayItems.findIndex((e) => e.idItem === item.idItem);
+    if (index != -1) {
+      this.arrayItems[index] = item;
+    } else {
+      this.arrayItems.push(item);
+    }
+    this.formItems.reset();
+  }
+
   guardarEPS() {
     this.epsService.save(this.epsSingle).subscribe((eps: Eps) => {
       this.messageService.add({
         severity: 'success',
         summary: '¡Guardado!',
-        detail:
-          'La Eps ' + eps.nombre + ' ha sido guardada correctamente',
+        detail: 'La Eps ' + eps.nombre + ' ha sido guardada correctamente',
       });
       this.displayModal = false;
       this.selectedModel = null;
@@ -341,6 +398,24 @@ export class VariosComponent implements OnInit {
         this.displayModal = true;
         break;
       }
+      case 'item': {
+        if (editar) {
+          if (this.selectedItem !== null && this.selectedItem.idItem !== null) {
+            this.formItems.patchValue(this.selectedItem);
+          } else {
+            this.messageService.add({
+              severity: 'warn',
+              summary: '¡¡¡Advertencia!!!',
+              detail: 'Debe Seleccionar un item',
+            });
+            return;
+          }
+        } else {
+          this.item = new Item();
+        }
+        this.displayItemModal = true;
+        break;
+      }
     }
   }
 
@@ -462,6 +537,36 @@ export class VariosComponent implements OnInit {
         });
         break;
       }
+      case 'item': {
+        if (this.selectedItem === null || this.selectedItem.idItem === null) {
+          this.messageService.add({
+            severity: 'warn',
+            summary: '¡¡¡Advertencia!!!',
+            detail: 'Debe Seleccionar un item',
+          });
+          return;
+        }
+        this.confirmationService.confirm({
+          message: '¿Está seguro que desea eliminar el item?',
+          accept: () => {
+            this.itemsService
+              .delete(this.selectedItem.idItem)
+              .subscribe((item: Item) => {
+                this.messageService.add({
+                  severity: 'success',
+                  summary: '¡Correcto!',
+                  detail:
+                    'El item ' +
+                    item.nombre +
+                    ' ha sido eliminado correctamente',
+                });
+                this.obtenerItems();
+                this.selectedModel = null;
+              });
+          },
+        });
+        break;
+      }
     }
   }
 
@@ -487,6 +592,11 @@ export class VariosComponent implements OnInit {
         this.guardarCaja();
         break;
       }
+      case 'item': {
+        this.item = this.formItems.value;
+        this.guardarItem();
+        break;
+      }
     }
   }
   actualizar() {
@@ -494,6 +604,7 @@ export class VariosComponent implements OnInit {
     this.obtenerARL();
     this.obtenerCaja();
     this.obtenerAFP();
+    this.obtenerItems();
   }
 
   ngOnInit(): void {
@@ -504,6 +615,12 @@ export class VariosComponent implements OnInit {
       nombre: new FormControl(null, Validators.required),
       direccion: new FormControl(null, Validators.required),
       telefono: new FormControl(null, Validators.required),
+    });
+    this.formItems = this.fb.group({
+      idItem: new FormControl(),
+      nombre: new FormControl(null, Validators.required),
+      referencia: new FormControl(null, Validators.required),
+      tipo: new FormControl(null, Validators.required),
     });
     this.items = [
       {
@@ -527,6 +644,10 @@ export class VariosComponent implements OnInit {
         command: () => this.actualizar(),
       },
     ];
+    this.tipoItem = [
+      { label: 'Dotacion', value: 'Dotacion' },
+      { label: 'EPP', value: 'EPP' },
+    ];
   }
   logout() {
     this.confirmationService.confirm({
@@ -549,19 +670,23 @@ export class VariosComponent implements OnInit {
     switch (this.activeIndex) {
       case 0:
         this.selectedModel = 'eps';
-        console.info(this.selectedModel);
+        //console.info(this.selectedModel);
         break;
       case 1:
         this.selectedModel = 'arl';
-        console.info(this.selectedModel);
+        //console.info(this.selectedModel);
         break;
       case 2:
         this.selectedModel = 'afp';
-        console.info(this.selectedModel);
+        //console.info(this.selectedModel);
         break;
       case 3:
         this.selectedModel = 'caja';
-        console.info(this.selectedModel);
+        //console.info(this.selectedModel);
+        break;
+      case 4:
+        this.selectedModel = 'item';
+        //console.info(this.selectedModel);
         break;
     }
   }
