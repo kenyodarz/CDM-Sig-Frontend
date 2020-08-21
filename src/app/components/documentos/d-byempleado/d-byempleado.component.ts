@@ -108,6 +108,7 @@ export class DByempleadoComponent implements OnInit {
                 ' ha sido eliminado correctamente',
             });
             this.eliminarDocumento(documento);
+            this.buscaDocumentos()
           });
       },
     });

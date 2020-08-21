@@ -100,43 +100,23 @@ export class DocumentosComponent implements OnInit {
             documento.nombre +
             ' ha sido cargado correctamente',
         });
-        this.displayModal = false;
-        this.validarEmpleado(documento);
         this.formDocumento.reset();
         this.uploadDocumento = null
       });
   }
-  validarEmpleado(documento: Documento) {
-    let index = this.documentos.findIndex(
-      (e) => e.idDocumento === documento.idDocumento
-    );
-    if (index === -1) {
-      this.documentos.push(documento);
-    }
-  }
+
 
   onGuardar() {
     this.documento = this.formDocumento.value;
     this.guardarDocumento();
   }
 
-  eliminar() {
-    if (
-      this.selectedDocumento === null ||
-      this.selectedDocumento.idDocumento === null
-    ) {
-      this.messageService.add({
-        severity: 'warn',
-        summary: '¡¡¡Advertencia!!!',
-        detail: 'Debe Seleccionar un Documento',
-      });
-      return;
-    }
+  eliminar(idDocumento: number) {
     this.confirmationService.confirm({
       message: '¿Esta seguro que desea eliminar el Documento?',
       accept: () => {
         this.documentoService
-          .delete(this.selectedDocumento.idDocumento)
+          .delete(idDocumento)
           .subscribe((documento: Documento) => {
             this.messageService.add({
               severity: 'success',

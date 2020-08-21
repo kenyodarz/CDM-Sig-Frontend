@@ -16,6 +16,7 @@ import { ExamenesComponent } from './components/examenes/examenes.component';
 import { EByempleadoComponent } from './components/examenes/e-byempleado/e-byempleado.component';
 import { DocumentosComponent } from './components/documentos/documentos.component';
 import { DByempleadoComponent } from './components/documentos/d-byempleado/d-byempleado.component';
+import { VariosComponent } from './components/varios/varios.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'examenes/porempleado', component: EByempleadoComponent },
   { path: 'documentos', component: DocumentosComponent },
   { path: 'documentos/porempleado', component: DByempleadoComponent },
+  { path: 'varios', component: VariosComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
 

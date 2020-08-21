@@ -26,6 +26,17 @@
           styleClass="p-button-success"
         ></p-splitButton>
 
+        <button
+          pButton
+          pRipple
+          icon="pi pi-ticket"
+          type="button"
+          label="Varios"
+          *ngIf="isLoggedIn"
+          routerLink="varios"
+          class="p-button-help"
+        ></button>
+
         <!-- <i
           class="p-toolbar-separator pi pi-bars p-mr-2"
           style="vertical-align: middle;"

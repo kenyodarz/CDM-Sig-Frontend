@@ -40,7 +40,7 @@ export class NavigationComponent implements OnInit {
     this.itemsRegistros = [
       {
         label: 'Trabajadores',
-        icon: 'pi pi-users',
+        icon: 'pi pi-id-card',
         command: () => this.router.navigateByUrl('/empleados'),
       },
       {
@@ -50,7 +50,7 @@ export class NavigationComponent implements OnInit {
       },
       {
         label: 'Examenes',
-        icon: 'pi pi-heart',
+        icon: 'pi pi-tags',
         command: () => this.router.navigateByUrl('/examenes'),
       },
     ];
@@ -73,7 +73,7 @@ export class NavigationComponent implements OnInit {
       },
       {
         label: 'Documentos por Trabajador',
-        icon: 'pi pi-file',
+        icon: 'pi pi-file-pdf',
         command: () => this.router.navigateByUrl('/documentos/porempleado'),
       },
     ];

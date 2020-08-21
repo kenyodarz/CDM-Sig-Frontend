@@ -9,7 +9,7 @@ import { Arl } from '../models/Arl';
 @Injectable({
   providedIn: 'root',
 })
-export class ArlService extends CommonService<Arl, number>{
+export class ArlService extends CommonService<Arl, string> {
   protected API_URL: string = 'http://localhost:8080/api/arl/';
 
   constructor(http: HttpClient) {

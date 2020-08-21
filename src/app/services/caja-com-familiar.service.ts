@@ -9,7 +9,10 @@ import { CajaComFamiliar } from '../models/CajaComFamiliar';
 @Injectable({
   providedIn: 'root',
 })
-export class CajaComFamiliarService extends CommonService<CajaComFamiliar, number>{
+export class CajaComFamiliarService extends CommonService<
+  CajaComFamiliar,
+  string
+> {
   protected API_URL: string = 'http://localhost:8080/api/caja/';
 
   constructor(http: HttpClient) {

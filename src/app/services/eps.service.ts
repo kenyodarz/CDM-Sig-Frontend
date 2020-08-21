@@ -26,7 +26,7 @@ export class EpsService {
     });
   }
 
-  delete(id: number): Observable<Eps> {
+  delete(id: string): Observable<Eps> {
     return this.http.get<Eps>(API_URL + 'delete/' + id);
   }
 }

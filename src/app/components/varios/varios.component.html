@@ -1,0 +1,303 @@
+<div class="p-grid-fluid">
+  <p-menubar [model]="items">
+    <div>
+      <input
+        type="text"
+        pInputText
+        (input)="dt.filterGlobal($event.target.value, 'contains')"
+        placeholder="Buscar"
+      />
+      <button
+        type="button"
+        pButton
+        label="Logout"
+        (click)="logout()"
+        icon="pi pi-power-off"
+        style="margin-left: 0.25em;"
+      ></button>
+    </div>
+  </p-menubar>
+  <p-tabView
+    [(activeIndex)]="activeIndex"
+    (activeIndexChange)="selectedTab()"
+    styleClass="tabview-custom"
+  >
+    <p-tabPanel>
+      <ng-template pTemplate="header">
+        <i class="pi pi-heart"></i>
+        <span>EPS</span>
+      </ng-template>
+      <p-table
+        [paginator]="true"
+        selectionMode="single"
+        [(selection)]="selectedEps"
+        dataKey="nit"
+        [rows]="10"
+        [value]="eps"
+        #dt
+        [globalFilterFields]="['nit', 'nombre', 'direccion', 'telefono']"
+        styleClass="p-datatable-sm"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="text-align: center;">Nit</th>
+            <th style="text-align: center;">Nombre</th>
+            <th style="text-align: center;">Direccion</th>
+            <th style="text-align: center;">Telefono</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+          <tr [pSelectableRow]="rowData">
+            <td style="text-align: center;">{{ rowData.nit }}</td>
+            <td style="text-align: center;">{{ rowData.nombre }}</td>
+            <td style="text-align: center;">{{ rowData.direccion }}</td>
+            <td style="text-align: center;">{{ rowData.telefono }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{ eps ? eps.length : 0 }} EPS registradas.
+          </div>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Header II">
+      <ng-template pTemplate="header">
+        <i class="pi pi-thumbs-up"></i>
+        <span>ARL</span>
+      </ng-template>
+      <p-table
+        [paginator]="true"
+        selectionMode="single"
+        [(selection)]="selectedArl"
+        dataKey="nit"
+        [rows]="10"
+        [value]="arl"
+        #dt
+        [globalFilterFields]="['nit', 'nombre', 'direccion', 'telefono']"
+        styleClass="p-datatable-sm"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="text-align: center;">Nit</th>
+            <th style="text-align: center;">Nombre</th>
+            <th style="text-align: center;">Direccion</th>
+            <th style="text-align: center;">Telefono</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+          <tr [pSelectableRow]="rowData">
+            <td style="text-align: center;">{{ rowData.nit }}</td>
+            <td style="text-align: center;">{{ rowData.nombre }}</td>
+            <td style="text-align: center;">{{ rowData.direccion }}</td>
+            <td style="text-align: center;">{{ rowData.telefono }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{ arl ? arl.length : 0 }} ARL registradas.
+          </div>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Header III">
+      <ng-template pTemplate="header">
+        <i class="pi pi-clone"></i>
+        <span>AFP</span>
+      </ng-template>
+      <p-table
+        [paginator]="true"
+        selectionMode="single"
+        [(selection)]="selectedAfp"
+        dataKey="nit"
+        [rows]="10"
+        [value]="afp"
+        #dt
+        [globalFilterFields]="['nit', 'nombre', 'direccion', 'telefono']"
+        styleClass="p-datatable-sm"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="text-align: center;">Nit</th>
+            <th style="text-align: center;">Nombre</th>
+            <th style="text-align: center;">Direccion</th>
+            <th style="text-align: center;">Telefono</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+          <tr [pSelectableRow]="rowData">
+            <td style="text-align: center;">{{ rowData.nit }}</td>
+            <td style="text-align: center;">{{ rowData.nombre }}</td>
+            <td style="text-align: center;">{{ rowData.direccion }}</td>
+            <td style="text-align: center;">{{ rowData.telefono }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{ afp ? afp.length : 0 }} fondos de Pensiones
+            registrados.
+          </div>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Header IV">
+      <ng-template pTemplate="header">
+        <i class="pi pi-users"></i>
+        <span>Caja</span>
+      </ng-template>
+      <p-table
+        [paginator]="true"
+        selectionMode="single"
+        [(selection)]="selectedCaja"
+        dataKey="nit"
+        [rows]="10"
+        [value]="caja"
+        #dt
+        [globalFilterFields]="['nit', 'nombre', 'direccion', 'telefono']"
+        styleClass="p-datatable-sm"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="text-align: center;">Nit</th>
+            <th style="text-align: center;">Nombre</th>
+            <th style="text-align: center;">Direccion</th>
+            <th style="text-align: center;">Telefono</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+          <tr [pSelectableRow]="rowData">
+            <td style="text-align: center;">{{ rowData.nit }}</td>
+            <td style="text-align: center;">{{ rowData.nombre }}</td>
+            <td style="text-align: center;">{{ rowData.direccion }}</td>
+            <td style="text-align: center;">{{ rowData.telefono }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{ caja ? caja.length : 0 }} cajas de compensacion
+            registradas.
+          </div>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+  </p-tabView>
+</div>
+<!-- 
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ----------------------------------------Modal Nuevo---------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+ -->
+
+<p-dialog
+  [(visible)]="displayModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000"
+>
+  <p-header>
+    <b>Nuevo Registro {{ selectedModel | uppercase }}</b>
+  </p-header>
+  <p-panel>
+    <form [formGroup]="formVarios" (submit)="onGuardar()">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>NIT *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="nit"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="Favor ingrese un Nit"
+            *ngIf="
+              !formVarios.controls['nit'].valid &&
+              formVarios.controls['nit'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Nombre *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="nombre"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="Favor ingrese un Nombre"
+            *ngIf="
+              !formVarios.controls['nombre'].valid &&
+              formVarios.controls['nombre'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Direccion *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="direccion"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="Favor ingrese una direccion"
+            *ngIf="
+              !formVarios.controls['direccion'].valid &&
+              formVarios.controls['direccion'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Telefono *</div>
+          <input
+            pInputText
+            type="text"
+            formControlName="telefono"
+            placeholder="Requerido"
+          />
+          <p-message
+            severity="error"
+            text="Favor ingrese un telefono"
+            *ngIf="
+              !formVarios.controls['telefono'].valid &&
+              formVarios.controls['telefono'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+    </form>
+  </p-panel>
+  <p-footer>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      (click)="displayModal = false; onGuardar()"
+      label="Aceptar"
+      [disabled]="!formVarios.valid"
+    ></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      (click)="displayModal = false; formVarios.reset()"
+      label="Cancelar"
+      class="ui-button-secondary"
+    ></button>
+  </p-footer>
+</p-dialog>
