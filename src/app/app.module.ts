@@ -35,6 +35,7 @@ import { EByempleadoComponent } from './components/examenes/e-byempleado/e-byemp
 import { DocumentosComponent } from './components/documentos/documentos.component';
 import { DByempleadoComponent } from './components/documentos/d-byempleado/d-byempleado.component';
 import { VariosComponent } from './components/varios/varios.component';
+import { EntregaComponent } from './components/entrega/entrega.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { VariosComponent } from './components/varios/varios.component';
     DocumentosComponent,
     DByempleadoComponent,
     VariosComponent,
+    EntregaComponent,
   ],
   imports: [
     BrowserModule,

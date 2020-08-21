@@ -1,0 +1,40 @@
+<div class="p-grid-fluid">
+  <p-panel>
+    <p-header>
+      <div class="p-text-center p.text-bold">
+        Registro de Entregas de EPP y Dotacion
+      </div>
+    </p-header>
+    <p-menubar>
+      <div>
+        <input
+          type="text"
+          pInputText
+          (input)="dt.filterGlobal($event.target.value, 'contains')"
+          placeholder="Buscar"
+        />
+        <button
+          type="button"
+          pButton
+          label="Logout"
+          (click)="logout()"
+          icon="pi pi-power-off"
+          style="margin-left: 0.25em;"
+        ></button>
+      </div>
+    </p-menubar>
+    <p-table
+      #dt
+      [paginator]="true"
+      selectionMode="single"
+      [(selection)]="selectedEntrega"
+      dataKey="idEntregaDyE"
+      [rows] = 10
+      [rowsPerPageOptions] = "['10','20','30']"
+      [value] = "entregas"
+      [globalFilterFields] ="[]"
+      sortMode="multiple"
+      styleClass="p-datatable-sm"
+    ></p-table>
+  </p-panel>
+</div>
