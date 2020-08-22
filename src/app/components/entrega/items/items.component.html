@@ -1,0 +1,108 @@
+<p-toolbar>
+  <ng-template pTemplate="left">
+    <button
+      pButton
+      pRipple
+      label="Agregar"
+      icon="pi pi-plus"
+      class="p-button-success p-button-text p-mr-2"
+      (click)="displayModal = true"
+    ></button>
+  </ng-template>
+</p-toolbar>
+<p-table
+  [paginator]="true"
+  [(selection)]="selectedItems"
+  dataKey="idItem"
+  [rows]="10"
+  [rowHover]="true"
+  [value]="arrayItems"
+  #dt
+  [globalFilterFields]="['idItem', 'nombre', 'tipo', 'referencia']"
+  styleClass="p-datatable-sm"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem;">
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+      </th>
+      <th style="text-align: center;">ID</th>
+      <th style="text-align: center;">Nombre</th>
+      <th style="text-align: center;">Tipo</th>
+      <th style="text-align: center;">Referencia</th>
+      <th style="text-align: center;">Eliminar</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData>
+    <tr [pSelectableRow]="rowData">
+      <td>
+        <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+      </td>
+      <td style="text-align: center;">{{ rowData.idItem }}</td>
+      <td style="text-align: center;">{{ rowData.nombre }}</td>
+      <td style="text-align: center;">{{ rowData.tipo }}</td>
+      <td style="text-align: center;">{{ rowData.referencia }}</td>
+      <td style="text-align: center;">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-danger p-button-text"
+          (click)="borrarItem(rowData)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="summary">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      En total hay {{ arrayItems ? arrayItems.length : 0 }} items agregados.
+    </div>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '600px' }"
+  header="Detalle Items"
+  [modal]="true"
+  styleClass="p-fluid"
+  maximizable="true"
+>
+  <ng-template pTemplate="content">
+    <p-pickList
+      [source]="arrayAllItems"
+      sourceHeader="Disponibles"
+      [sourceStyle]="{ height: 'auto' }"
+      [target]="arrayAddItems"
+      [targetStyle]="{ height: 'auto' }"
+      targetHeader="Seleccionados"
+      dragdrop="true"
+    >
+      <ng-template let-item pTemplate="item">
+        <div>
+          <div style="font-size: 14px; float: right; margin: 15px 5px 0 0;">
+            {{ item.nombre }} - {{ item.referencia }}
+          </div>
+        </div>
+      </ng-template>
+    </p-pickList>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancelar"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="displayModal = false"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Guardar"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="agregarItems()"
+    ></button>
+  </ng-template>
+</p-dialog>

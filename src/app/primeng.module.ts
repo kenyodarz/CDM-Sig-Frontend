@@ -27,6 +27,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { FullCalendarModule } from 'primeng/fullcalendar';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { PickListModule } from 'primeng/picklist';
+
 
 const myModule = [
   ToolbarModule,
@@ -54,6 +57,8 @@ const myModule = [
   MultiSelectModule,
   InputSwitchModule,
   FullCalendarModule,
+  DynamicDialogModule,
+  PickListModule,
 ];
 
 @NgModule({

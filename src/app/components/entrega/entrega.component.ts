@@ -5,6 +5,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 // PrimeNG
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 import { MenuItem } from 'primeng/api';
 // Services
 import { EmpleadoService } from 'src/app/services/empleado.service';
@@ -15,6 +16,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { Empleado } from 'src/app/models/Empleado';
 import { EntregaDyE } from 'src/app/models/EntregaDyE';
 import { Item } from 'src/app/models/Item';
+import { ItemsComponent } from './items/items.component';
 
 @Component({
   selector: 'app-entrega',
@@ -40,6 +42,7 @@ export class EntregaComponent implements OnInit {
   formEntrega: FormGroup;
   displayModal = false;
   es: any;
+  tipoEntrega:any[]
 
   constructor(
     private entragaService: EntregaService,
@@ -47,6 +50,7 @@ export class EntregaComponent implements OnInit {
     private empleadoService: EmpleadoService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private dialogService: DialogService,
     private tokenStorageService: TokenStorageService,
     private fb: FormBuilder,
     private router: Router
@@ -60,10 +64,10 @@ export class EntregaComponent implements OnInit {
         entregas.push(element);
       }
       this.entregas = entregas.sort(function (a, b) {
-        if (a.idEntregaDyE > b.idEntregaDyE) {
+        if (a.idEntregaDyE < b.idEntregaDyE) {
           return 1;
         }
-        if (a.idEntregaDyE < b.idEntregaDyE) {
+        if (a.idEntregaDyE > b.idEntregaDyE) {
           return -1;
         }
         return 0;
@@ -219,13 +223,16 @@ export class EntregaComponent implements OnInit {
     this.obtenerItems();
     this.selectedEntrega = null;
     this.formEntrega = this.fb.group({
-      idEntrega: new FormControl(),
+      idEntregaDyE: new FormControl(),
       empleado: new FormControl(null, Validators.required),
       descripcion: new FormControl(null, Validators.required),
       fechaEntregaDyE: new FormControl(null, Validators.required),
-      items: new FormControl(),
       tipo: new FormControl(null, Validators.required),
     });
+      this.tipoEntrega = [
+        { label: 'Dotacion', value: 'Dotacion' },
+        { label: 'EPP', value: 'EPP' },
+      ];
     this.items = [
       {
         label: 'Nuevo',
@@ -250,7 +257,7 @@ export class EntregaComponent implements OnInit {
       {
         label: 'Buscar Por Trabajador',
         icon: 'pi pi-fw pi-search',
-        // command: () => this.router.navigateByUrl('/capacitaciones/porempleado'),
+        command: () => this.router.navigateByUrl('/entregas/porempleado'),
       },
     ];
     this.es = {
@@ -314,5 +321,28 @@ export class EntregaComponent implements OnInit {
   }
   irAlInicio() {
     window.location.replace('#/home');
+  }
+  show(entrega: EntregaDyE) {
+    const ref = this.dialogService.open(ItemsComponent, {
+      header: 'Lista de Items',
+      width: '100%',
+      height: '100%',
+      data: {
+        entrega: entrega
+      },
+    });
+    ref.onClose.subscribe((items: Item[]) => {
+      console.log(items);
+      this.entragaService
+        .agregarItems(entrega, items)
+        .subscribe((nuevaEntrega: EntregaDyE) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Agregado',
+            detail: 'Se ha agregado los itemss con exito',
+          });
+          this.validarEntrega(nuevaEntrega);
+        });
+    });
   }
 }

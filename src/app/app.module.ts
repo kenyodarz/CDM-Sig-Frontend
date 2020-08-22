@@ -13,6 +13,7 @@ import { PrimengModule } from './primeng.module';
 // Servicios
 import { authInterceptorProviders } from 'src/app/helpers/auth.interceptor';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 
 // Pipe
 import { FileSizePipe } from './filesize.pipe';
@@ -36,6 +37,8 @@ import { DocumentosComponent } from './components/documentos/documentos.componen
 import { DByempleadoComponent } from './components/documentos/d-byempleado/d-byempleado.component';
 import { VariosComponent } from './components/varios/varios.component';
 import { EntregaComponent } from './components/entrega/entrega.component';
+import { ItemsComponent } from './components/entrega/items/items.component';
+import { EntregasByEmpleadoComponent } from './components/entrega/entregas-by-empleado/entregas-by-empleado.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +61,8 @@ import { EntregaComponent } from './components/entrega/entrega.component';
     DByempleadoComponent,
     VariosComponent,
     EntregaComponent,
+    ItemsComponent,
+    EntregasByEmpleadoComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +73,12 @@ import { EntregaComponent } from './components/entrega/entrega.component';
     AppRoutingModule,
     PrimengModule,
   ],
-  providers: [MessageService, ConfirmationService, authInterceptorProviders],
+  providers: [
+    MessageService,
+    ConfirmationService,
+    authInterceptorProviders,
+    DialogService,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })

@@ -53,6 +53,11 @@ export class NavigationComponent implements OnInit {
         icon: 'pi pi-tags',
         command: () => this.router.navigateByUrl('/examenes'),
       },
+      {
+        label: 'Entregas EPP y Dotacion',
+        icon: 'pi pi-list',
+        command: () => this.router.navigateByUrl('/entregas'),
+      },
     ];
     this.itemsOperaciones = [
       {

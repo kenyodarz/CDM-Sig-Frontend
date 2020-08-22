@@ -5,7 +5,7 @@
         Registro de Entregas de EPP y Dotacion
       </div>
     </p-header>
-    <p-menubar>
+    <p-menubar [model]="items">
       <div>
         <input
           type="text"
@@ -29,12 +29,221 @@
       selectionMode="single"
       [(selection)]="selectedEntrega"
       dataKey="idEntregaDyE"
-      [rows] = 10
-      [rowsPerPageOptions] = "['10','20','30']"
-      [value] = "entregas"
-      [globalFilterFields] ="[]"
+      [rows]="10"
+      [rowsPerPageOptions]="['10', '20', '30']"
+      [value]="entregas"
+      [globalFilterFields]="[]"
       sortMode="multiple"
       styleClass="p-datatable-sm"
-    ></p-table>
+    >
+      <ng-template pTemplate="header">
+        <th style="text-align: center;" pSortableColumn="idIncapacidad">
+          IDEN <p-sortIcon field="idIncapacidad"></p-sortIcon>
+        </th>
+        <th style="text-align: center;" pSortableColumn="empleado">
+          CC Trabajador <p-sortIcon field="empleado"></p-sortIcon>
+        </th>
+        <th style="text-align: center;" pSortableColumn="fechaInicio">
+          Fecha de Entrega <p-sortIcon field="fechaInicio"></p-sortIcon>
+        </th>
+        <th style="text-align: center;" pSortableColumn="fechaFin">
+          Descripcion <p-sortIcon field="fechaFin"></p-sortIcon>
+        </th>
+        <th style="text-align: center;" pSortableColumn="entidad">
+          Tipo <p-sortIcon field="entidad"></p-sortIcon>
+        </th>
+        <th style="text-align: center;" pSortableColumn="enfermedad">
+          Ver Items
+        </th>
+      </ng-template>
+      <ng-template pTemplate="body" let-entrega>
+        <tr [pSelectableRow]="entrega">
+          <td style="text-align: center;">{{ entrega.idEntregaDyE }}</td>
+          <td style="text-align: center;">{{ entrega.empleado.cedula }}</td>
+          <td style="text-align: center;">{{ entrega.fechaEntregaDyE }}</td>
+          <td style="text-align: center;">{{ entrega.descripcion }}</td>
+          <td style="text-align: center;">{{ entrega.tipo }}</td>
+          <td style="text-align: center;">
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-search"
+              class="p-button-rounded"
+              (click)="show(entrega)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        Registro seleccionado:
+        {{
+          selectedEntrega
+            ? selectedEntrega.idEntregaDyE +
+              " - " +
+              selectedEntrega.empleado.cedula +
+              " - " +
+              selectedEntrega.descripcion +
+              " - " +
+              selectedEntrega.tipo
+            : "Ninguno"
+        }}
+      </ng-template>
+    </p-table>
   </p-panel>
 </div>
+
+<p-dialog
+  [(visible)]="displayModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000"
+>
+  <p-panel>
+    <ng-template pTemplate="header">
+      <div style="text-align: center;">
+        <b>Nuevo Registro</b>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <form [formGroup]="formEntrega" (submit)="onGuardar()">
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+          <div>
+            <div>ID *</div>
+            <input
+              pInputText
+              type="text"
+              formControlName="idEntregaDyE"
+              readonly
+              placeholder="ID Elemento"
+            />
+            <p-message
+              severity="error"
+              text="Favor ingrese un idEntregaDyE"
+              *ngIf="
+                !formEntrega.controls['idEntregaDyE'].valid &&
+                formEntrega.controls['idEntregaDyE'].dirty
+              "
+            ></p-message>
+          </div>
+        </div>
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+          <div>
+            <div>Fecha de Inicio *</div>
+            <p-calendar
+              formControlName="fechaEntregaDyE"
+              [locale]="es"
+              dateFormat="yy-mm-dd"
+              dataType="string"
+              [monthNavigator]="true"
+              [yearNavigator]="true"
+              yearRange="1930:2030"
+              showButtonBar="true"
+              placeholder="Seleccione la fecha de Entrega"
+            ></p-calendar>
+            <p-message
+              severity="error"
+              text="Seleccione una fecha"
+              *ngIf="
+                !formEntrega.controls['fechaEntregaDyE'].valid &&
+                formEntrega.controls['fechaEntregaDyE'].dirty
+              "
+            ></p-message>
+          </div>
+        </div>
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+          <div>
+            <div>Descripcion *</div>
+            <input
+              pInputText
+              type="text"
+              formControlName="descripcion"
+              placeholder="Ingrese una descripcion del elemento"
+            />
+            <p-message
+              severity="error"
+              text="Favor ingrese una descripcion"
+              *ngIf="
+                !formEntrega.controls['descripcion'].valid &&
+                formEntrega.controls['descripcion'].dirty
+              "
+            ></p-message>
+          </div>
+        </div>
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+          <div>
+            <div>Tipo *</div>
+            <p-dropdown
+              [options]="tipoEntrega"
+              formControlName="tipo"
+              placeholder="Seleccione Un tipo de elemento"
+            >
+            </p-dropdown>
+            <p-message
+              severity="error"
+              text="Favor ingrese un tipo de elemento"
+              *ngIf="
+                !formEntrega.controls['tipo'].valid &&
+                formEntrega.controls['tipo'].dirty
+              "
+            ></p-message>
+          </div>
+        </div>
+
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+          <div>
+            <div>Trabajador *</div>
+            <p-dropdown
+              [options]="empleados"
+              optionLabel="cedula"
+              dataKey="cedula"
+              placeholder="Seleccione el Empleado"
+              id="empleado"
+              name="empleado"
+              formControlName="empleado"
+              [filter]="true"
+            >
+            </p-dropdown>
+            <br />
+            <span *ngIf="formEntrega.get('empleado').value != null">
+              {{
+                formEntrega.get("empleado").value["nombres"] +
+                  " " +
+                  formEntrega.get("empleado").value["apellidos"]
+              }}
+            </span>
+            <p-message
+              severity="error"
+              text="Seleccione un Trabajador"
+              *ngIf="
+                !formEntrega.controls['empleado'].valid &&
+                formEntrega.controls['empleado'].dirty
+              "
+            ></p-message>
+          </div>
+        </div>
+
+      </form>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        label="Cancelar"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="displayModal = false"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Guardar"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)="onGuardar()"
+        [disabled]="!formEntrega.valid"
+      ></button>
+    </ng-template>
+  </p-panel>
+</p-dialog>

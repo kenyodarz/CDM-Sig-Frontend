@@ -17,6 +17,8 @@ import { EByempleadoComponent } from './components/examenes/e-byempleado/e-byemp
 import { DocumentosComponent } from './components/documentos/documentos.component';
 import { DByempleadoComponent } from './components/documentos/d-byempleado/d-byempleado.component';
 import { VariosComponent } from './components/varios/varios.component';
+import { EntregaComponent } from './components/entrega/entrega.component';
+import { EntregasByEmpleadoComponent } from './components/entrega/entregas-by-empleado/entregas-by-empleado.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -43,6 +45,8 @@ const routes: Routes = [
   { path: 'documentos', component: DocumentosComponent },
   { path: 'documentos/porempleado', component: DByempleadoComponent },
   { path: 'varios', component: VariosComponent },
+  { path: 'entregas', component: EntregaComponent },
+  { path: 'entregas/porempleado', component: EntregasByEmpleadoComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
 

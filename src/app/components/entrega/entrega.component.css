@@ -12,3 +12,12 @@
 :host ::ng-deep .ui-splitbutton button {
   margin-right: 0;
 }
+
+.p-button.p-button-icon-only.p-button-rounded {
+  height: 2rem;
+  width: 2rem;
+}
+
+:host ::ng-deep .p-dialog-content {
+  overflow-y: inherit;
+}
