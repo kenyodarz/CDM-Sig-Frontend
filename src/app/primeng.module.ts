@@ -29,7 +29,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { PickListModule } from 'primeng/picklist';
-import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 
 const myModule = [
@@ -60,7 +60,7 @@ const myModule = [
   FullCalendarModule,
   DynamicDialogModule,
   PickListModule,
-  TriStateCheckboxModule,
+  ToggleButtonModule,
 ];
 
 @NgModule({

@@ -227,8 +227,14 @@
       <div class="p-fluid p-formgrid" style="margin: 1em 0;">
         <div>
           <div>Contrato Liquidado?</div>
-          <p-triStateCheckbox formControlName="liquidado"></p-triStateCheckbox>
-          <!-- <label>{{ liquidado == null ? "null" : liquidado }}</label> -->
+          <p-toggleButton
+            formControlName="liquidado"
+            onLabel="Liquidado"
+            offLabel="Sin Liquidar"
+            onIcon="pi pi-check"
+            offIcon="pi pi-times"
+            [style]="{ width: '10em' }"
+          ></p-toggleButton>
         </div>
       </div>
     </form>
