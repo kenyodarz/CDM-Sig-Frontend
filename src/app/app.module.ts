@@ -39,6 +39,9 @@ import { VariosComponent } from './components/varios/varios.component';
 import { EntregaComponent } from './components/entrega/entrega.component';
 import { ItemsComponent } from './components/entrega/items/items.component';
 import { EntregasByEmpleadoComponent } from './components/entrega/entregas-by-empleado/entregas-by-empleado.component';
+import { VacacionesByEmpleadoComponent } from './components/vacaciones/vacaciones-by-empleado/vacaciones-by-empleado.component';
+import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
+import { VacacionesPendientesComponent } from './components/vacaciones/vacaciones-pendientes/vacaciones-pendientes.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +66,9 @@ import { EntregasByEmpleadoComponent } from './components/entrega/entregas-by-em
     EntregaComponent,
     ItemsComponent,
     EntregasByEmpleadoComponent,
+    VacacionesByEmpleadoComponent,
+    VacacionesComponent,
+    VacacionesPendientesComponent,
   ],
   imports: [
     BrowserModule,

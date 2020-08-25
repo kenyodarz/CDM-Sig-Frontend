@@ -6,6 +6,7 @@ export class Contrato{
     public fechaInicio: Date = null,
     public fechaFin: Date = null,
     public salario: number = null,
-    public empleado: Empleado = null
+    public empleado: Empleado = null,
+    public liquidado: boolean = null
     ){}
 }

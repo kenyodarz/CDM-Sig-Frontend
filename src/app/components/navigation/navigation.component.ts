@@ -72,6 +72,17 @@ export class NavigationComponent implements OnInit {
       },
       { separator: true },
       {
+        label: 'Vacaciones',
+        icon: 'pi pi-directions',
+        command: () => this.router.navigateByUrl('/vacaciones'),
+      },
+      {
+        label: 'Pendientes',
+        icon: 'pi pi-directions-alt',
+        command: () => this.router.navigateByUrl('/vacaciones/pendientes'),
+      },
+      { separator: true },
+      {
         label: 'Cargar Documentos',
         icon: 'pi pi-upload',
         command: () => this.router.navigateByUrl('/documentos'),

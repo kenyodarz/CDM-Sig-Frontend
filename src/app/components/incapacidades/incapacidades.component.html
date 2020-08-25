@@ -30,7 +30,17 @@
       [rows]="10"
       [rowsPerPageOptions]="[10, 25, 50]"
       [value]="incapacidades"
-      [globalFilterFields]="[]"
+      [globalFilterFields]="[
+        'idIncapacidad',
+        'empleado.cedula',
+        'fechaInicio',
+        'fechaFin',
+        'entidad',
+        'enfermedad',
+        'cie10.idCIE10',
+        'cie10.descripcion',
+        'estado'
+      ]"
       sortMode="multiple"
       styleClass="p-datatable-sm"
     >
@@ -73,7 +83,11 @@
           <td style="text-align: center;">{{ incapacidad.entidad }}</td>
           <td style="text-align: center;">{{ incapacidad.enfermedad }}</td>
           <td style="text-align: center;">
-            {{ incapacidad.cie10["idCIE10"] + ' - ' + incapacidad.cie10["descripcion"] }}
+            {{
+              incapacidad.cie10["idCIE10"] +
+                " - " +
+                incapacidad.cie10["descripcion"]
+            }}
           </td>
           <td style="text-align: center;">{{ incapacidad.estado }}</td>
         </tr>

@@ -32,27 +32,33 @@
       [rows]="10"
       [rowsPerPageOptions]="['10', '20', '30']"
       [value]="entregas"
-      [globalFilterFields]="[]"
+      [globalFilterFields]="[
+        'idEntregaDyE',
+        'empleado.cedula',
+        'fechaEntregaDyE',
+        'descripcion',
+        'tipo'
+      ]"
       sortMode="multiple"
       styleClass="p-datatable-sm"
     >
       <ng-template pTemplate="header">
-        <th style="text-align: center;" pSortableColumn="idIncapacidad">
-          IDEN <p-sortIcon field="idIncapacidad"></p-sortIcon>
+        <th style="text-align: center;" pSortableColumn="idEntregaDyE">
+          IDEN <p-sortIcon field="idEntregaDyE"></p-sortIcon>
         </th>
-        <th style="text-align: center;" pSortableColumn="empleado">
-          CC Trabajador <p-sortIcon field="empleado"></p-sortIcon>
+        <th style="text-align: center;" pSortableColumn="empleado.cedula">
+          CC Trabajador <p-sortIcon field="empleado.cedula"></p-sortIcon>
         </th>
-        <th style="text-align: center;" pSortableColumn="fechaInicio">
-          Fecha de Entrega <p-sortIcon field="fechaInicio"></p-sortIcon>
+        <th style="text-align: center;" pSortableColumn="fechaEntregaDyE">
+          Fecha de Entrega <p-sortIcon field="fechaEntregaDyE"></p-sortIcon>
         </th>
-        <th style="text-align: center;" pSortableColumn="fechaFin">
-          Descripcion <p-sortIcon field="fechaFin"></p-sortIcon>
+        <th style="text-align: center;" pSortableColumn="descripcion">
+          Descripcion <p-sortIcon field="descripcion"></p-sortIcon>
         </th>
-        <th style="text-align: center;" pSortableColumn="entidad">
-          Tipo <p-sortIcon field="entidad"></p-sortIcon>
+        <th style="text-align: center;" pSortableColumn="tipo">
+          Tipo <p-sortIcon field="tipo"></p-sortIcon>
         </th>
-        <th style="text-align: center;" pSortableColumn="enfermedad">
+        <th style="text-align: center;">
           Ver Items
         </th>
       </ng-template>
@@ -223,7 +229,6 @@
             ></p-message>
           </div>
         </div>
-
       </form>
     </ng-template>
     <ng-template pTemplate="footer">

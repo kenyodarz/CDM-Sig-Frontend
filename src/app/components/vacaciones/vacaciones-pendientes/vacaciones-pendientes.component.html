@@ -1,0 +1,70 @@
+<div class="p-grid-fluid">
+  <p-panel>
+    <ng-template pTemplate="header">
+      <div class="p-text-center p-text-bold">
+        Contratos Pendientes por Vacaciones
+      </div>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <p-table
+        #dt
+        [paginator]="true"
+        selectionMode="single"
+        [(selection)]="selectedContrato"
+        dataKey="idContrato"
+        [rows]="10"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [value]="contratos"
+        [globalFilterFields]="[
+          'idContrato',
+          'tipoContrato',
+          'empleado.nombres',
+          'empleado.apellidos',
+          'empleado.cedula',
+          'salario'
+        ]"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="text-align: center;">Nro Contrato</th>
+            <th style="text-align: center;">Trabajador</th>
+            <th style="text-align: center;">Fecha Inicio Contrato</th>
+            <th style="text-align: center;">Ver</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-contrato>
+          <tr [pSelectableRow]="contrato">
+            <td style="text-align: center;">{{ contrato.idContrato }}</td>
+            <td style="text-align: center;">
+              {{ contrato.empleado["nombres"] }}
+              {{ contrato.empleado["apellidos"] }}
+              CC {{ contrato.empleado["cedula"] }}
+            </td>
+            <td style="text-align: center;">{{ contrato.fechaInicio }}</td>
+            <td style="text-align: center;">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-search"
+                class="p-button-rounded p-button-text p-button-success p-mr-2"
+                (click)="op.toggle($event); obtenerCalculos(contrato)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+  </p-panel>
+</div>
+<p-overlayPanel #op>
+  <ng-template pTemplate>
+    <p-panel>
+      <div class="text-primary">Periodos: {{ periodos }}</div>
+      <div class="text-success">Tomadas: {{ vacacionesTomadas.length }}</div>
+      <div *ngIf="periodos - vacacionesTomadas.length > 0" class="text-danger">
+        Pendientes: {{ periodos - vacacionesTomadas.length }}
+      </div>
+    </p-panel>
+  </ng-template>
+</p-overlayPanel>

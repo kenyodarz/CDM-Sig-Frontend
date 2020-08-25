@@ -1,0 +1,109 @@
+<div class="p-grid-fluid">
+  <p-panel>
+    <p-header>
+      <div class="p-text-center p-text-bold">
+        Vacaciones Por Empleados
+      </div>
+    </p-header>
+    <div class="p-grid">
+      <div class="p-col-10">
+        <p-dropdown
+          [options]="empleados"
+          [(ngModel)]="selectedEmpleado"
+          placeholder="--Seleccione un Trabajador--"
+          optionLabel="cedula"
+          class="p-fluid"
+          [filter]="true"
+          [showClear]="true"
+          (onChange)="vacaciones = []"
+        >
+        </p-dropdown>
+      </div>
+      <div class="p-col-2" *ngIf="selectedEmpleado">
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Buscar Vacaciones"
+          class="p-button-outlined"
+          (click)="buscarVacaciones()"
+          icon="pi pi-search"
+        ></button>
+      </div>
+      <div class="p-col-2" *ngIf="!selectedEmpleado">
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Regresar Al Listado"
+          class="p-button-outlined"
+          (click)="regresar()"
+          icon="pi pi-arrow-left"
+        ></button>
+      </div>
+    </div>
+    <p-footer>
+      <div *ngIf="!(vacaciones.length > 0)">
+        <div class="p-text-center p-text-bold">
+          No hay Vacaciones para mostrar
+        </div>
+      </div>
+      <div *ngIf="vacaciones.length > 0">
+        <div class="p-text-center p-text-bold">
+          {{ selectedEmpleado.nombres }} {{ selectedEmpleado.apellidos }} a
+          tomado un total de {{ vacaciones.length }} periodo de Vacaciones
+        </div>
+        <br />
+        <p-table
+          #dt
+          [paginator]="true"
+          dataKey="idVacaciones"
+          [rows]="10"
+          [rowsPerPageOptions]="[10, 25, 50]"
+          [value]="vacaciones"
+          [globalFilterFields]="[
+            'idVacaciones',
+            'fecha',
+            'fechaInicio',
+            'fechaFin',
+            'contrato.idContrato',
+            'contrato.empleado.cedula',
+            'contrato.empleado.nombres',
+            'contrato.empleado.apellidos'
+          ]"
+          sortMode="multiple"
+          styleClass="p-datatable-sm"
+        >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="text-align: center;">IDIV</th>
+            <th style="text-align: center;">Trabajador</th>
+            <th style="text-align: center;">Fecha Inicio</th>
+            <th style="text-align: center;">Fecha Fin</th>
+            <th style="text-align: center;">Cantidad Dias Calendario</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-vacacion>
+          <tr>
+            <td style="text-align: center;">{{ vacacion.idVacaciones }}</td>
+            <td style="text-align: center;">
+              {{
+                vacacion.contrato.empleado.cedula +
+                  " - " +
+                  vacacion.contrato.empleado.nombres +
+                  " " +
+                  vacacion.contrato.empleado.apellidos
+              }}
+            </td>
+            <td style="text-align: center;">{{ vacacion.fechaInicio }}</td>
+            <td style="text-align: center;">{{ vacacion.fechaFin }}</td>
+            <td style="text-align: center;">
+              {{ calcularDias(vacacion.fechaInicio, vacacion.fechaFin) }}
+            </td>
+          </tr>
+        </ng-template>
+    </p-table>
+      </div>
+    </p-footer>
+  </p-panel>
+</div>

@@ -1,0 +1,200 @@
+<div class="p-grid-fluid">
+  <p-panel>
+    <ng-template pTemplate="header">
+      <div class="p-text-center p-text-bold">Registro Total de Vacaciones</div>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <p-menubar [model]="items">
+        <div>
+          <input
+            type="text"
+            pInputText
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+            placeholder="Buscar"
+          />
+          <button
+            type="button"
+            pButton
+            label="Logout"
+            (click)="logout()"
+            icon="pi pi-power-off"
+            style="margin-left: 0.25em;"
+          ></button>
+        </div>
+      </p-menubar>
+      <p-table
+        #dt
+        [value]="vacaciones"
+        [paginator]="true"
+        selectionMode="single"
+        [(selection)]="selectedVacaciones"
+        dataKey="idVacaciones"
+        [rows]="10"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [globalFilterFields]="[
+          'idVacaciones',
+          'fecha',
+          'fechaInicio',
+          'fechaFin',
+          'contrato.idContrato',
+          'contrato.empleado.cedula',
+          'contrato.empleado.nombres',
+          'contrato.empleado.apellidos'
+        ]"
+        styleClass="p-datatable-sm"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="text-align: center;">IDIV</th>
+            <th style="text-align: center;">Trabajador</th>
+            <th style="text-align: center;">Fecha Inicio</th>
+            <th style="text-align: center;">Fecha Fin</th>
+            <th style="text-align: center;">Cantidad Dias Calendario</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-vacacion>
+          <tr [pSelectableRow]="vacacion">
+            <td style="text-align: center;">{{ vacacion.idVacaciones }}</td>
+            <td style="text-align: center;">
+              {{
+                vacacion.contrato.empleado.cedula +
+                  " - " +
+                  vacacion.contrato.empleado.nombres +
+                  " " +
+                  vacacion.contrato.empleado.apellidos
+              }}
+            </td>
+            <td style="text-align: center;">{{ vacacion.fechaInicio }}</td>
+            <td style="text-align: center;">{{ vacacion.fechaFin }}</td>
+            <td style="text-align: center;">
+              {{ calcularDias(vacacion.fechaInicio, vacacion.fechaFin) }}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          Registro Seleccionado:
+          {{ selectedVacaciones ? selectedVacaciones.idVacaciones : "Ninguno" }}
+        </ng-template>
+      </p-table>
+    </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+  </p-panel>
+</div>
+<!--
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ----------------------------------------Modal Nuevo---------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
+ -->
+
+<p-dialog
+  [(visible)]="displayModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000"
+  header="Detalle Vacaciones"
+>
+  <form [formGroup]="formVacaciones" (submit)="onGuardar()">
+    <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+      <div>
+        <div>IDIV *</div>
+        <input pInputText type="text" readonly formControlName="idVacaciones" />
+      </div>
+    </div>
+    <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+      <div>
+        <div>Contrato *</div>
+        <p-dropdown
+          [options]="contratos"
+          optionLabel="idContrato"
+          dataKey="idContrato"
+          placeholder="Seleccione el contrato"
+          id="contrato"
+          name="contrato"
+          formControlName="contrato"
+          [filter]="true"
+        >
+        </p-dropdown>
+        <p-message
+          severity="error"
+          text="Seleccione un Contrato"
+          *ngIf="
+            !formVacaciones.controls['contrato'].valid &&
+            formVacaciones.controls['contrato'].dirty
+          "
+        ></p-message>
+      </div>
+    </div>
+    <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+      <div>
+        <div>Fecha de Inicio del Periodo de Vacaciones *</div>
+        <p-calendar
+          formControlName="fechaInicio"
+          [locale]="es"
+          dateFormat="yy-mm-dd"
+          dataType="string"
+          [monthNavigator]="true"
+          [yearNavigator]="true"
+          yearRange="1930:2030"
+          showButtonBar="true"
+          placeholder="Seleccione una fecha inicial"
+        ></p-calendar>
+        <p-message
+          severity="error"
+          text="Seleccione una fecha"
+          *ngIf="
+            !formVacaciones.controls['fechaInicio'].valid &&
+            formVacaciones.controls['fechaInicio'].dirty
+          "
+        ></p-message>
+      </div>
+    </div>
+    <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+      <div>
+        <div>Fecha de final del Periodo de Vacaciones *</div>
+        <p-calendar
+          formControlName="fechaFin"
+          [locale]="es"
+          dateFormat="yy-mm-dd"
+          dataType="string"
+          [monthNavigator]="true"
+          [yearNavigator]="true"
+          yearRange="1930:2030"
+          showButtonBar="true"
+          placeholder="Seleccione una fecha final"
+        ></p-calendar>
+        <p-message
+          severity="error"
+          text="Seleccione una fecha"
+          *ngIf="
+            !formVacaciones.controls['fechaFin'].valid &&
+            formVacaciones.controls['fechaFin'].dirty
+          "
+        ></p-message>
+      </div>
+    </div>
+  </form>
+  <p-footer>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      (click)="displayModal = false; onGuardar()"
+      label="Aceptar"
+      [disabled]="!formVacaciones.valid"
+    ></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      (click)="displayModal = false; formVacaciones.reset()"
+      label="Cancelar"
+      class="ui-button-secondary"
+      style="margin-left: 0.25em;"
+    ></button>
+  </p-footer>
+</p-dialog>

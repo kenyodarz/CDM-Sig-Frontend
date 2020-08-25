@@ -190,6 +190,7 @@ export class ContratosComponent implements OnInit {
       fechaFin: new FormControl(),
       salario: new FormControl(null, Validators.required),
       empleado: new FormControl(null, Validators.required),
+      liquidado: new FormControl(),
     });
     this.items = [
       {
