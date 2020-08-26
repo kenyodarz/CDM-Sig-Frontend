@@ -308,8 +308,9 @@ export class IncapacidadesComponent implements OnInit {
       { label: 'Pagada', value: 'Pagada' },
     ];
     this.enfermedad = [
-      { label: 'Accidente Laboral', value: 'Accidente Laboral' },
+      { label: 'Accidente Trabajo', value: 'Accidente Trabajo' },
       { label: 'Enfermedad Comun', value: 'Enfermedad Comun' },
+      { label: 'Enfermedad Laboral', value: 'Enfermedad Laboral' },
     ];
   }
   logout() {

@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 // Componentes
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 import { EmpleadosComponent } from './components/empleados/empleados.component';
 import { ContratosComponent } from './components/contratos/contratos.component';
 import { CapacitacionesComponent } from './components/capacitaciones/capacitaciones.component';
@@ -26,6 +27,7 @@ import { VacacionesPendientesComponent } from './components/vacaciones/vacacione
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'perfil', component: PerfilComponent },
   { path: 'empleados', component: EmpleadosComponent },
   { path: 'contratos', component: ContratosComponent },
   { path: 'capacitaciones', component: CapacitacionesComponent },

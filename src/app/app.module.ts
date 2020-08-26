@@ -42,6 +42,7 @@ import { EntregasByEmpleadoComponent } from './components/entrega/entregas-by-em
 import { VacacionesByEmpleadoComponent } from './components/vacaciones/vacaciones-by-empleado/vacaciones-by-empleado.component';
 import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
 import { VacacionesPendientesComponent } from './components/vacaciones/vacaciones-pendientes/vacaciones-pendientes.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { VacacionesPendientesComponent } from './components/vacaciones/vacacione
     VacacionesByEmpleadoComponent,
     VacacionesComponent,
     VacacionesPendientesComponent,
+    PerfilComponent,
   ],
   imports: [
     BrowserModule,
