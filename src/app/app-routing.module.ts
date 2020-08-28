@@ -23,6 +23,8 @@ import { EntregasByEmpleadoComponent } from './components/entrega/entregas-by-em
 import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
 import { VacacionesByEmpleadoComponent } from './components/vacaciones/vacaciones-by-empleado/vacaciones-by-empleado.component';
 import { VacacionesPendientesComponent } from './components/vacaciones/vacaciones-pendientes/vacaciones-pendientes.component';
+import { AusentismoComponent } from './components/ausentismo/ausentismo.component';
+import { RecomendacionesComponent } from './components/recomendaciones/recomendaciones.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -55,6 +57,8 @@ const routes: Routes = [
   { path: 'vacaciones', component: VacacionesComponent },
   { path: 'vacaciones/porempleado', component: VacacionesByEmpleadoComponent },
   { path: 'vacaciones/pendientes', component: VacacionesPendientesComponent },
+  { path: 'ausentismo', component: AusentismoComponent },
+  { path: 'recomendaciones', component: RecomendacionesComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
 

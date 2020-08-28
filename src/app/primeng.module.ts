@@ -30,6 +30,11 @@ import { FullCalendarModule } from 'primeng/fullcalendar';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { PickListModule } from 'primeng/picklist';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { ChartModule } from 'primeng/chart';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { CardModule } from 'primeng/card';
+
+
 
 
 const myModule = [
@@ -61,6 +66,9 @@ const myModule = [
   DynamicDialogModule,
   PickListModule,
   ToggleButtonModule,
+  ChartModule,
+  KeyFilterModule,
+  CardModule,
 ];
 
 @NgModule({

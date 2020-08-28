@@ -19,6 +19,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 export class NavigationComponent implements OnInit {
   itemsOperaciones: MenuItem[];
   itemsRegistros: MenuItem[];
+  itemsReportes: MenuItem[];
   isLoggedIn = false;
   private roles: string[];
   showAdminBoard = false;
@@ -50,8 +51,13 @@ export class NavigationComponent implements OnInit {
       },
       {
         label: 'Examenes',
-        icon: 'pi pi-tags',
+        icon: 'pi pi-tag',
         command: () => this.router.navigateByUrl('/examenes'),
+      },
+      {
+        label: 'Recomendaciones',
+        icon: 'pi pi-tags',
+        command: () => this.router.navigateByUrl('/recomendaciones'),
       },
       {
         label: 'Entregas EPP y Dotacion',

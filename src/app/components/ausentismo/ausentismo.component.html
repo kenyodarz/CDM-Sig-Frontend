@@ -1,0 +1,175 @@
+<div class="p-grid-fluid">
+  <p-panel>
+    <ng-template pTemplate="header">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-6">
+                <label for="" class="p-col-fixed">Dias Laborables: </label>
+                <input
+                  type="text"
+                  pInputText
+                  pKeyFilter="pnum"
+                  [(ngModel)]="diasLaborables"
+                />
+              </div>
+              <div class="col-6">
+                <label for="" class="p-col-fixed">Dias Festivos: </label>
+                <input
+                  type="text"
+                  pInputText
+                  pKeyFilter="pnum"
+                  [(ngModel)]="diasFestivos"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mt-2">
+            <div class="row">
+              <div class="col-10">
+                <p-calendar
+                  [(ngModel)]="fecha"
+                  [locale]="es"
+                  view="month"
+                  dateFormat="MM - yy"
+                  placeholder="Seleccione una fecha de Capacitacion"
+                  class="p-fluid"
+                  (onSelect)="displayGrafico = false; onChange()"
+                ></p-calendar>
+              </div>
+              <div class="col-2">
+                <button
+                  pButton
+                  *ngIf="!displayGrafico"
+                  label="Mostrar Grafico"
+                  class="p-button-text"
+                  (click)="buscarAusentismo(); displayGrafico = true"
+                ></button>
+                <button
+                  *ngIf="displayGrafico"
+                  pButton
+                  label="Recalcular"
+                  class="p-button-text"
+                  (click)="buscarAusentismo()"
+                ></button>
+                <button
+                  *ngIf="displayGrafico"
+                  pButton
+                  icon="pi pi-file-pdf"
+                  class="p-button-rounded p-button-warning p-button-text"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <div class="container-fluid" *ngIf="displayGrafico">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-9 mt-2">
+                <p-card>
+                  <ng-template pTemplate="header">
+                    <div>
+                      <h1>Gráfico de Ausentismo</h1>
+                    </div>
+                  </ng-template>
+                  <ng-template pTemplate="content">
+                    <p-chart type="pie" [data]="data"></p-chart>
+                  </ng-template>
+                  <ng-template pTemplate="footer"></ng-template>
+                </p-card>
+              </div>
+              <div class="col-3 mt-2">
+                <p-card>
+                  <ng-template pTemplate="header">
+                    <div>
+                      <h2 style="text-align: center">Resumen</h2>
+                    </div>
+                  </ng-template>
+                  <ng-template pTemplate="content">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="container">
+                              <label for="promedio">
+                                Promedio de Trabajadores:
+                              </label>
+                              <input
+                                type="text"
+                                pInputText
+                                [(ngModel)]="promedioTrabajadores"
+                                readonly
+                                class="p-inputtext-sm p-field"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="container">
+                              <label for="diasLaborables">
+                                Total de dias Laborales del Mes:
+                              </label>
+                              <input
+                                type="text"
+                                pInputText
+                                [(ngModel)]="diasLaborablesCalculados"
+                                readonly
+                                class="p-inputtext-sm p-field"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="container">
+                              <label for="ausentismo">
+                                Total Incapacidades Mes:
+                              </label>
+                              <input
+                                type="text"
+                                pInputText
+                                [(ngModel)]="incapacidades.length"
+                                readonly
+                                class="p-inputtext-sm p-field"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="container">
+                              <label for="ausentismo">
+                                Total dias de Ausentismo por Incapacidad Mes:
+                              </label>
+                              <input
+                                type="text"
+                                pInputText
+                                [(ngModel)]="ausentismoXIncapacidad"
+                                readonly
+                                class="p-inputtext-sm p-field"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                  <ng-template pTemplate="footer"></ng-template>
+                </p-card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+  </p-panel>
+</div>
