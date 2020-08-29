@@ -1,1 +1,178 @@
-<p>recomendaciones works!</p>
+<div class="p-grid-fluid">
+  <p-panel>
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="row">
+          <div class="col-12 mt-2">
+            <h2 style="text-align: center">
+              Administracion de Recomendaciones
+            </h2>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="content"></ng-template>
+      <ng-template pTemplate="footer"></ng-template>
+    </p-card>
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="row">
+          <div class="col-12">
+            <h3 style="text-align: center">Gestion de Recomendaciones</h3>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="content">
+        <p-menubar [model]="items">
+          <div>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                type="text"
+                pInputText
+                icon="pi pi-search"
+                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                placeholder="Buscar"
+              />
+            </span>
+          </div>
+        </p-menubar>
+        <p-table
+          #dt
+          [value]="recomendaciones"
+          [globalFilterFields]="[
+            'idRecomendaciones',
+            'examen.fecha',
+            'examen.contrato.idContrato',
+            'examen.contrato.empleado.cedula',
+            'examen.contrato.empleado.nombres',
+            'examen.contrato.empleado.apellidos'
+          ]"
+          [paginator]="true"
+          [rows]="10"
+          [rowsPerPageOptions]="['10', '25', '50']"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 3rem">#</th>
+              <th style="text-align: center">Nro Contrato - Cedula</th>
+              <th style="text-align: center">Foto</th>
+              <th style="text-align: center">Recomendacion</th>
+              <th style="text-align: center">Seguimiento 1</th>
+              <th style="text-align: center">Seguimiento 2</th>
+              <th style="text-align: center">Seguimiento 3</th>
+              <th style="width: 9rem"></th>
+            </tr>
+          </ng-template>
+          <ng-template
+            pTemplate="body"
+            let-recomendacion
+            let-rowIndex="rowIndex"
+          >
+            <tr>
+              <td style="text-align: center">{{ rowIndex + 1 }}</td>
+              <td style="text-align: center">
+                {{ recomendacion.examen.contrato.idContrato }} -
+                {{ recomendacion.examen.contrato.empleado.cedula }}
+              </td>
+              <td style="text-align: center">
+                <img
+                  [src]="
+                    'http://localhost:8080/api/fotos/image/' +
+                    recomendacion.examen.contrato.empleado.cedula
+                  "
+                  class="img-thumbnail rounded"
+                  style="width: 128px; cursor: pointer"
+                />
+              </td>
+              <td style="text-align: center">
+                {{ recomendacion.recommendation }}
+              </td>
+              <td style="text-align: center">
+                {{ recomendacion.primeraSeguimiento }}
+              </td>
+              <td style="text-align: center">
+                {{ recomendacion.segundaSeguimiento }}
+              </td>
+              <td style="text-align: center">
+                {{ recomendacion.terceraSeguimiento }}
+              </td>
+              <td style="text-align: center">
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-pencil"
+                  class="p-button-text p-button-rounded p-button-success p-mr-2"
+                  (click)="onEditar(recomendacion)"
+                ></button>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-text p-button-rounded p-button-warning"
+                  (click)="onEliminar(recomendacion)"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </ng-template>
+    </p-card>
+  </p-panel>
+</div>
+
+<p-dialog
+  [visible]="displayModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [maximizable]="true"
+  [baseZIndex]="10000"
+>
+  <ng-template pTemplate="header">
+    <div>
+      <h3 style="text-align: center">Detalle Recomendación</h3>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+      <form [formGroup]="formRecomendacion">
+          <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Nro Interno de la Recomendacion*</div>
+          <input pInputText type="text" readonly formControlName="idRecomendaciones" />
+          <p-message
+            severity="error"
+            text="La idContrato Es Requerido"
+            *ngIf="
+              !formRecomendacion.controls['idRecomendaciones'].valid &&
+              formRecomendacion.controls['idRecomendaciones'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Nro Interno del Examen *</div>
+          <p-dropdown
+            [options]="examenes"
+            optionLabel="idExamen"
+            dataKey="idExamen"
+            placeholder="Seleccione un Examen"
+            id="examen"
+            name="examen"
+            formControlName="examen"
+            [filter]="true"
+          >
+          </p-dropdown>
+          <p-message
+            severity="error"
+            text="Seleccione un Trabajador"
+            *ngIf="
+              !formRecomendacion.controls['examen'].valid &&
+              formRecomendacion.controls['examen'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      </form>
+  </ng-template>
+  <ng-template pTemplate="footer"></ng-template>
+</p-dialog>
