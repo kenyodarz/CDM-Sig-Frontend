@@ -254,11 +254,11 @@ export class EntregaComponent implements OnInit {
         icon: 'pi pi-fw pi-refresh',
         command: () => this.obtenerEntregas(),
       },
-      {
-        label: 'Buscar Por Trabajador',
-        icon: 'pi pi-fw pi-search',
-        command: () => this.router.navigateByUrl('/entregas/porempleado'),
-      },
+      // {
+      //   label: 'Buscar Por Trabajador',
+      //   icon: 'pi pi-fw pi-search',
+      //   command: () => this.router.navigateByUrl('/entregas/porempleado'),
+      // },
     ];
     this.es = {
       firstDayOfWeek: 1,
