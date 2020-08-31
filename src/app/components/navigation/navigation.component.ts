@@ -17,18 +17,13 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
   styleUrls: ['./navigation.component.css'],
 })
 export class NavigationComponent implements OnInit {
-  itemsOperaciones: MenuItem[];
-  itemsRegistros: MenuItem[];
-  itemsReportes: MenuItem[];
+  items: MenuItem[];
   isLoggedIn = false;
   private roles: string[];
   showAdminBoard = false;
   username: string;
   currentUser: any;
-  appName = 'S.I.G.';
   calendarVisibleBar = false;
-  eventos: any[]; //Full Calendar
-  opciones: any; // Full Calendar
 
   constructor(
     private tokenStorageService: TokenStorageService,
@@ -38,141 +33,140 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getUser();
-    this.itemsRegistros = [
-      {
-        label: 'Trabajadores',
-        icon: 'pi pi-id-card',
-        command: () => this.router.navigateByUrl('/empleados'),
-      },
-      {
-        label: 'Contratos',
-        icon: 'pi pi-file',
-        command: () => this.router.navigateByUrl('/contratos'),
-      },
-      {
-        label: 'Examenes',
-        icon: 'pi pi-tag',
-        command: () => this.router.navigateByUrl('/examenes'),
-      },
-      {
-        label: 'Seguimiento',
-        icon: 'pi pi-tags',
-        command: () => this.router.navigateByUrl('/recomendaciones'),
-      },
-      {
-        label: 'Entregas EPP y Dotacion',
-        icon: 'pi pi-list',
-        command: () => this.router.navigateByUrl('/entregas'),
-      },
-    ];
-    this.itemsOperaciones = [
-      {
-        label: 'Capacitaciones',
-        icon: 'pi pi-angle-double-right',
-        command: () => this.router.navigateByUrl('/capacitaciones'),
-      },
-      {
-        label: 'Incapacidades',
-        icon: 'pi pi-angle-double-down',
-        command: () => this.router.navigateByUrl('/incapacidades'),
-      },
-      { separator: true },
-      {
-        label: 'Vacaciones',
-        icon: 'pi pi-directions',
-        command: () => this.router.navigateByUrl('/vacaciones'),
-      },
-      {
-        label: 'Pendientes',
-        icon: 'pi pi-directions-alt',
-        command: () => this.router.navigateByUrl('/vacaciones/pendientes'),
-      },
-      { separator: true },
-      {
-        label: 'Cargar Documentos',
-        icon: 'pi pi-upload',
-        command: () => this.router.navigateByUrl('/documentos'),
-      },
-      {
-        label: 'Documentos por Trabajador',
-        icon: 'pi pi-file-pdf',
-        command: () => this.router.navigateByUrl('/documentos/porempleado'),
-      },
-    ];
     this.isLoggedIn = !!this.tokenStorageService.getToken();
+
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       this.username = user.name;
+      this.items = [
+        {
+          label: 'Registros',
+          icon: 'pi pi-users',
+          items: [
+            {
+              label: 'RRHH',
+              icon: 'pi pi-user',
+              items: [
+                {
+                  label: 'Trabajadores',
+                  icon: 'pi pi-id-card',
+                  command: () => this.router.navigateByUrl('/empleados'),
+                },
+                {
+                  label: 'Contratos',
+                  icon: 'pi pi-file',
+                  command: () => this.router.navigateByUrl('/contratos'),
+                },
+                {
+                  label: 'Entregas EPP y Dotacion',
+                  icon: 'pi pi-list',
+                  command: () => this.router.navigateByUrl('/entregas'),
+                },
+              ],
+            },
+            {
+              label: 'Examenes',
+              icon: 'pi pi-tags',
+              items: [
+                {
+                  label: 'Registro Examen',
+                  icon: 'pi pi-tag',
+                  command: () => this.router.navigateByUrl('/examenes'),
+                },
+                {
+                  label: 'Seguimiento Examen',
+                  icon: 'pi pi-tag',
+                  command: () => this.router.navigateByUrl('/recomendaciones'),
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Operaciones',
+          icon: 'pi pi-user-edit',
+          items: [
+            {
+              label: 'Registro',
+              icon: 'pi pi-angle-double-right',
+              items: [
+                {
+                  label: 'Capacitaciones',
+                  icon: 'pi pi-angle-double-up',
+                  command: () => this.router.navigateByUrl('/capacitaciones'),
+                },
+                {
+                  label: 'Incapacidades',
+                  icon: 'pi pi-angle-double-down',
+                  command: () => this.router.navigateByUrl('/incapacidades'),
+                },
+              ],
+            },
+            { separator: true },
+            {
+              label: 'Vacaciones',
+              icon: 'pi pi-star',
+              items: [
+                {
+                  label: 'Vacaciones',
+                  icon: 'pi pi-directions',
+                  command: () => this.router.navigateByUrl('/vacaciones'),
+                },
+                {
+                  label: 'Pendientes',
+                  icon: 'pi pi-directions-alt',
+                  command: () =>
+                    this.router.navigateByUrl('/vacaciones/pendientes'),
+                },
+              ],
+            },
+            { separator: true },
+            {
+              label: 'Documentos',
+              icon: 'pi pi-file',
+              items: [
+                {
+                  label: 'Cargar Documentos',
+                  icon: 'pi pi-upload',
+                  command: () => this.router.navigateByUrl('/documentos'),
+                },
+                {
+                  label: 'Documentos por Trabajador',
+                  icon: 'pi pi-file-pdf',
+                  command: () =>
+                    this.router.navigateByUrl('/documentos/porempleado'),
+                },
+              ],
+            },
+            { separator: true },
+            {
+              label: 'Estadisticas',
+              icon: 'pi pi-chart-line',
+              items: [
+                {
+                  label: 'Ausentismo',
+                  icon: 'pi pi-chart-bar',
+                  command: () => this.router.navigateByUrl('/ausentismo'),
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Opciones',
+          icon: 'pi pi-cog',
+          items: [
+            {
+              label: 'Varios',
+              icon: 'pi pi-ticket',
+              command: () => this.router.navigateByUrl('/varios'),
+            },
+          ],
+        },
+      ];
     }
-    this.opciones = {
-      plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-      defaultDate: new Date(),
-      locales: [esLocale],
-      header: {
-        left: 'prev,next',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay',
-      },
-      editable: true,
-    };
-    this.eventos = [
-      {
-        title: 'Evento de Todo un dia',
-        start: '2020-08-01',
-      },
-      {
-        title: 'Evento Largo',
-        start: '2020-08-07',
-        end: '2020-08-10',
-      },
-      {
-        id: 999,
-        title: 'Repitiendo Evento',
-        start: '2020-08-09T16:00:00',
-      },
-      {
-        id: 999,
-        title: 'Repitiendo Evento',
-        start: '2020-08-16T16:00:00',
-      },
-      {
-        title: 'Conferencia',
-        start: '2020-08-11',
-        end: '2020-08-13',
-      },
-      {
-        title: 'Reunion',
-        start: '2020-08-12T10:30:00',
-        end: '2020-08-12T12:30:00',
-      },
-      {
-        title: 'Almuerzo',
-        start: '2020-08-12T12:30:00',
-      },
-      {
-        title: 'Reunion',
-        start: '2020-08-12T14:30:00',
-      },
-      {
-        title: 'Hora Feliz',
-        start: '2020-08-12T17:30:00',
-      },
-      {
-        title: 'Cena',
-        start: '2020-08-12T20:00:00',
-      },
-      {
-        title: 'Fiesta de Cumpleaños',
-        start: '2020-08-13T07:00:00',
-      },
-      {
-        title: 'Click para ir a Google',
-        url: 'http://google.com/',
-        start: '2020-08-28',
-      },
-    ];
   }
   logout() {
     this.confirmationService.confirm({
