@@ -39,6 +39,7 @@
           (click)="asignarEmpleados()"
           *ngIf="selectedEmpleados.length > 0"
           [disabled]="selectedEmpleados.length <= 0"
+          class="p-button-text"
         ></button>
         <button
           type="button"
@@ -47,6 +48,7 @@
           icon="pi pi-angle-double-left"
           style="margin-left: 0.25em;"
           (click)="volver()"
+          class="p-button-text"
         ></button>
       </div>
     </div>

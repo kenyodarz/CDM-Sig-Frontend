@@ -13,14 +13,14 @@
           (input)="dt.filterGlobal($event.target.value, 'contains')"
           placeholder="Buscar"
         />
-        <button
+        <!-- <button
           type="button"
           pButton
           label="Logout"
           (click)="logout()"
           icon="pi pi-power-off"
           style="margin-left: 0.25em;"
-        ></button>
+        ></button> -->
       </div>
     </p-menubar>
     <p-table
@@ -75,7 +75,7 @@
               pRipple
               type="button"
               icon="pi pi-search"
-              class="p-button-rounded"
+              class="p-button-rounded p-button-text"
               (click)="show(entrega)"
             ></button>
           </td>

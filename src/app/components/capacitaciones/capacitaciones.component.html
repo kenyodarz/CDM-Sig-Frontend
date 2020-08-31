@@ -11,14 +11,14 @@
           (input)="dt.filterGlobal($event.target.value, 'contains')"
           placeholder="Buscar"
         />
-        <button
+        <!-- <button
           type="button"
           pButton
           label="Logout"
           (click)="logout()"
           icon="pi pi-power-off"
           style="margin-left: 0.25em;"
-        ></button>
+        ></button> -->
       </div>
     </p-menubar>
     <p-table
@@ -59,7 +59,7 @@
               pButton
               icon="pi pi-search"
               (click)="asignarEmpleados(capacitacion)"
-              class="p-button-success"
+              class="p-button-success p-button-text"
             ></button>
             <button
               type="button"
@@ -68,6 +68,7 @@
               style="margin-left: 0.25em;"
               (click)="op.toggle($event); cargarTabla(capacitacion)"
               [disabled]="capacitacion.empleados.length <= 0"
+              class="p-button-text"
             ></button>
             <button
               type="button"
@@ -76,7 +77,7 @@
               (click)="eliminarEmpleados(capacitacion)"
               [disabled]="capacitacion.empleados.length <= 0"
               style="margin-left: 0.25em;"
-              class="p-button-danger"
+              class="p-button-danger p-button-text"
             ></button>
           </td>
         </tr>
