@@ -192,6 +192,7 @@ export class RecomendacionesComponent implements OnInit {
     this.formRecomendacion = this.fb.group({
       idRecomendaciones: new FormControl(),
       examen: new FormControl(null, Validators.required),
+      recommendation: new FormControl(null, Validators.required),
       primeraSeguimiento: new FormControl(),
       segundaSeguimiento: new FormControl(),
       terceraSeguimiento: new FormControl(),

@@ -121,9 +121,10 @@
 </div>
 
 <p-dialog
-  [visible]="displayModal"
+  [(visible)]="displayModal"
   [modal]="true"
-  [style]="{ width: '50vw' }"
+  [closeOnEscape]="true"
+  [closable]="true"
   [maximizable]="true"
   [baseZIndex]="10000"
 >
@@ -133,11 +134,16 @@
     </div>
   </ng-template>
   <ng-template pTemplate="content">
-      <form [formGroup]="formRecomendacion">
-          <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+    <form [formGroup]="formRecomendacion">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0">
         <div>
           <div>Nro Interno de la Recomendacion*</div>
-          <input pInputText type="text" readonly formControlName="idRecomendaciones" />
+          <input
+            pInputText
+            type="text"
+            readonly
+            formControlName="idRecomendaciones"
+          />
           <p-message
             severity="error"
             text="La idContrato Es Requerido"
@@ -148,7 +154,7 @@
           ></p-message>
         </div>
       </div>
-        <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0">
         <div>
           <div>Nro Interno del Examen *</div>
           <p-dropdown
@@ -164,7 +170,7 @@
           </p-dropdown>
           <p-message
             severity="error"
-            text="Seleccione un Trabajador"
+            text="Seleccione un examen"
             *ngIf="
               !formRecomendacion.controls['examen'].valid &&
               formRecomendacion.controls['examen'].dirty
@@ -172,7 +178,107 @@
           ></p-message>
         </div>
       </div>
-      </form>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0">
+        <div>
+          <div>Recomendacion *</div>
+          <input
+            pInputText
+            type="text"
+            readonly
+            formControlName="recommendation"
+          />
+          <p-message
+            severity="error"
+            text="La idContrato Es Requerido"
+            *ngIf="
+              !formRecomendacion.controls['recommendation'].valid &&
+              formRecomendacion.controls['recommendation'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0">
+        <div>
+          <div>Primer Seguimiento *</div>
+          <textarea
+            rows="5"
+            cols="30"
+            pInputTextarea
+            autoResize="autoResize"
+            formControlName="primeraSeguimiento"
+            style="width: 100%;"
+          ></textarea>
+          <p-message
+            severity="error"
+            text="La Primera Recomendacion"
+            *ngIf="
+              !formRecomendacion.controls['primeraSeguimiento'].valid &&
+              formRecomendacion.controls['primeraSeguimiento'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0">
+        <div>
+          <div>Segundo Seguimiento *</div>
+          <textarea
+            rows="5"
+            cols="30"
+            pInputTextarea
+            autoResize="autoResize"
+            formControlName="segundaSeguimiento"
+            style="width: 100%;"
+          ></textarea>
+          <p-message
+            severity="error"
+            text="La Segunda Recomendacion"
+            *ngIf="
+              !formRecomendacion.controls['segundaSeguimiento'].valid &&
+              formRecomendacion.controls['segundaSeguimiento'].dirty
+            "
+          ></p-message>
+        </div>
+        <div class="p-fluid p-formgrid" style="margin: 1em 0">
+          <div>
+            <div>Tercer Seguimiento *</div>
+            <textarea
+              rows="5"
+              cols="30"
+              pInputTextarea
+              autoResize="autoResize"
+              formControlName="terceraSeguimiento"
+              style="width: 100%;"
+            ></textarea>
+            <p-message
+              severity="error"
+              text="La Tercera Recomendacion"
+              *ngIf="
+                !formRecomendacion.controls['terceraSeguimiento'].valid &&
+                formRecomendacion.controls['terceraSeguimiento'].dirty
+              "
+            ></p-message>
+          </div>
+        </div>
+      </div>
+    </form>
   </ng-template>
-  <ng-template pTemplate="footer"></ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      (click)="displayModal = false; onGuardar()"
+      label="Aceptar"
+      [disabled]="!formRecomendacion.valid"
+    ></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      (click)="displayModal = false; formRecomendacion.reset()"
+      label="Cancelar"
+      class="ui-button-secondary"
+      style="margin-left: 0.25em"
+    ></button>
+  </ng-template>
 </p-dialog>

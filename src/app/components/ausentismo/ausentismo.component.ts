@@ -316,4 +316,40 @@ export class AusentismoComponent implements OnInit {
       clear: 'Borrar',
     };
   }
+  exportPdf() {
+    let documento = document.getElementById('dt');
+    let opciones = {
+      margin: [2.54, 2.54, 2.54, 2.54],
+      filename: 'Informe.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: {
+        unit: 'cm',
+        format: 'letter',
+        orientation: 'landscape',
+      },
+    };
+    html2pdf()
+      .from(documento)
+      .set(opciones)
+      .toPdf()
+      .get('pdf')
+      .then(function (pdf) {
+        // Colocamos en el Pie de Pagina # de la pagina
+        var totalPages = pdf.internal.getNumberOfPages();
+        for (let index = 0; index < totalPages; index++) {
+          pdf.setPage(index);
+          pdf.setFontSize(10);
+          pdf.setTextColor(0);
+          console.log(totalPages - index);
+          pdf.text(
+            'Pagina ' + (totalPages - index) + ' de ' + totalPages,
+            pdf.internal.pageSize.getWidth() -
+              pdf.internal.pageSize.getWidth() / 2,
+            pdf.internal.pageSize.getHeight() - 0.5
+          );
+        }
+      })
+      .save();
+  }
 }

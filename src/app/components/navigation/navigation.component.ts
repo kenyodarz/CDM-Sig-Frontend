@@ -55,7 +55,7 @@ export class NavigationComponent implements OnInit {
         command: () => this.router.navigateByUrl('/examenes'),
       },
       {
-        label: 'Recomendaciones',
+        label: 'Seguimiento',
         icon: 'pi pi-tags',
         command: () => this.router.navigateByUrl('/recomendaciones'),
       },
