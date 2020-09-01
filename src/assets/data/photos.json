@@ -1,0 +1,16 @@
+{
+    "data":[
+        {
+            "previewImageSrc":   "assets/img/galeria/fabricacion-de-transformadores.jpg",
+            "thumbnailImageSrc": "assets/img/galeria/fabricacion-de-transformadores.jpg",
+            "alt": "Description for Image 1",
+            "title": "Promocion"
+        },
+        {
+            "previewImageSrc": "assets/img/galeria/transformadores-de-distribucion.jpg",
+            "thumbnailImageSrc": "assets/img/galeria/transformadores-de-distribucion.jpg",
+            "alt": "Description for Image 2",
+            "title": "Mejoramiento Continuo"
+        }
+    ]
+}

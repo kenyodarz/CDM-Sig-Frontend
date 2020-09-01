@@ -33,6 +33,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ChartModule } from 'primeng/chart';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { CardModule } from 'primeng/card';
+import { GalleriaModule } from 'primeng/galleria';
 
 
 
@@ -69,6 +70,7 @@ const myModule = [
   ChartModule,
   KeyFilterModule,
   CardModule,
+  GalleriaModule,
 ];
 
 @NgModule({

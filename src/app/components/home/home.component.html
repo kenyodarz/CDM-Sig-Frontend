@@ -12,12 +12,11 @@
 </div> -->
 <div class="p-d-flex">
   <body>
-    <header class="masthead text-white text-center">
-      <div class="overlay"></div>
+    <header class="text-white text-center">
       <div class="container">
         <div class="row">
           <div class="col-xl-9 mx-auto">
-            <h1 class="mb-5">
+            <h1 class="mt-2 mb-2">
               <br /><strong>TRANSFORMADORES CDM LTDA</strong>., es una empresa
               dedicada a la fabricación y comercialización, servicios de
               reconstrucción, reparación y mantenimiento de transformadores, y
@@ -92,45 +91,71 @@
         </div>
       </div>
     </section>
-    <section class="showcase">
-      <div class="container-fluid p-0">
-        <div class="row no-gutters">
-          <div
-            class="col-lg-6 order-lg-2 text-white showcase-img"
-            style="
-              background-image: url('assets/img/transformadores-de-distribucion.jpg');
-            "
+    <section>
+      <div class="container-fluid p-card">
+        <div class="p-card">
+          <p-galleria
+            [(value)]="images"
+            [responsiveOptions]="responsiveOptions"
+            [containerStyle]="{ 'max-width': '100%'}"
+            [numVisible]="5"
+            [circular]="true"
+            [autoPlay]="true"
+            [showThumbnailNavigators]="false"
+            [showThumbnails]="false"
+            [transitionInterval]="2000"
           >
-            <span></span>
-          </div>
-          <div class="col-lg-6 my-auto order-lg-1 showcase-text">
-            <h2 style="text-align: center">Política de Promoción</h2>
-            <p class="lead mb-0" style="margin: 0.5em; text-align: justify;">
-              Fomentar la toma de conciencia de los colaboradores mediante su
-              participación activa y consulta en el Sistema de Gestión Integral
-              con el fin de alcanzar los objetivos establecidos.<br />
-            </p>
-          </div>
+            <ng-template pTemplate="item" let-item>
+              <img
+                [src]="item.previewImageSrc"
+                class="img-fluid"
+              />
+            </ng-template>
+          </p-galleria>
         </div>
-        <div class="row no-gutters">
-          <div
-            class="col-lg-6 text-white showcase-img"
-            style="
-              background-image: url('assets/img/reparacion-mantenimiento-transformadores.jpg');
-            "
-          >
-            <span></span>
+      </div>
+    </section>
+    <section>
+      <div class="container-fluid p-card">
+        <div class="row">
+          <div class="col-lg-6 mt-5">
+            <div class="mx-auto features-icons-item mb-5 mb-lg-0 mb-lg-3">
+              <div class="d-flex features-icons-icon">
+                <i
+                  class="pi pi-thumbs-up m-auto text-primary"
+                  data-bs-hover-animate="pulse"
+                  style="font-size: 2rem"
+                ></i>
+              </div>
+              <h3 style="text-align: center">Política de Promoción</h3>
+              <p class="lead mb-0 p-text-justify">
+                Fomentar la toma de conciencia de los colaboradores mediante su
+                participación activa y consulta en el Sistema de Gestión
+                Integral con el fin de alcanzar los objetivos establecidos.<br />
+              </p>
+            </div>
           </div>
-          <div class="col-lg-6 my-auto order-lg-1 showcase-text">
-            <h2 style="text-align: center">Política de Mejoramiento Continuo</h2>
-            <p class="lead mb-0"style="margin: 0.5em; text-align: justify;">
-              Identificar y evaluar los requisitos legales y otros aplicables
-              para asegurar su cumplimiento y el mejoramiento continuo del
-              sistema integrado de gestión.<br />Esta política integrada será
-              divulgada a todas las partes interesadas pertinentes de la
-              organización y será revisada como mínimo una vez al año y de
-              requerirse actualizada con la normatividad legal vigente.<br />
-            </p>
+          <div class="col-lg-6 mt-5">
+            <div class="mx-auto features-icons-item mb-5 mb-lg-0 mb-lg-3">
+              <div class="d-flex features-icons-icon">
+                <i
+                  class="pi pi-globe m-auto text-primary"
+                  data-bs-hover-animate="pulse"
+                  style="font-size: 2rem"
+                ></i>
+              </div>
+              <h3 style="text-align: center">
+                Política de Mejoramiento Continuo
+              </h3>
+              <p class="lead mb-0 p-text-justify">
+                Identificar y evaluar los requisitos legales y otros aplicables
+                para asegurar su cumplimiento y el mejoramiento continuo del
+                sistema integrado de gestión.<br />Esta política integrada será
+                divulgada a todas las partes interesadas pertinentes de la
+                organización y será revisada como mínimo una vez al año y de
+                requerirse actualizada con la normatividad legal vigente.<br />
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -141,7 +166,7 @@
           <div class="col-lg-8 my-auto h-100 text-justify text-lg-left">
             <p class="text-muted small mb-4 mb-lg-0">
               © CDMTransformadores 2020. Derechos Reservados. Design
-              @Alfredo-Barajas. Development @byKenyoDarz 
+              @Alfredo-Barajas. Development @byKenyoDarz
             </p>
           </div>
           <div class="col-lg-4 my-auto h-100 text-center text-lg-right">
