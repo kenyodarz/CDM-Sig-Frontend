@@ -197,6 +197,25 @@
           ></p-message>
         </div>
       </div>
+      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+        <div>
+          <div>Tipo de Seguimiento *</div>
+          <p-dropdown
+            [options]="tipoSeguimiento"
+            formControlName="tipoSeguimiento"
+            placeholder="Seleccione Tipo de Seguimiento"
+          >
+          </p-dropdown>
+          <p-message
+            severity="error"
+            text="Seleccione un Tipo de seguimiento"
+            *ngIf="
+              !formRecomendacion.controls['tipoSeguimiento'].valid &&
+              formRecomendacion.controls['tipoSeguimiento'].dirty
+            "
+          ></p-message>
+        </div>
+      </div>
       <div class="p-fluid p-formgrid" style="margin: 1em 0">
         <div>
           <div>Primer Seguimiento *</div>

@@ -4,6 +4,7 @@ export class Recomendacion {
     public idRecomendaciones: number = null,
     public examen: Examen = null,
     public recommendation: string = null,
+    public tipoSeguimien: string= null,
     public primeraSeguimiento: string = null,
     public segundaSeguimiento: string = null,
     public terceraSeguimiento: string = null

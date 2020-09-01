@@ -8,11 +8,14 @@
     <ng-template pTemplate="content">
       <p-table
         #dt
+        id="dt"
         [paginator]="true"
         selectionMode="single"
         [(selection)]="selectedContrato"
         dataKey="idContrato"
         [rows]="10"
+        sortMode="single"
+        (onSort)="onSort()"
         [rowsPerPageOptions]="[10, 20, 30]"
         [value]="contratos"
         [globalFilterFields]="[
@@ -26,29 +29,119 @@
       >
         <ng-template pTemplate="header">
           <tr>
-            <th style="text-align: center;">Nro Contrato</th>
-            <th style="text-align: center;">Trabajador</th>
-            <th style="text-align: center;">Fecha Inicio Contrato</th>
-            <th style="text-align: center;">Ver</th>
+            <th>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt.filter($event.target.value, 'idContrato', 'startsWith')
+                "
+                placeholder="Buscar por contrato"
+                class="p-column-filter p-inputtext-sm"
+              />
+            </th>
+            <th>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt.filter(
+                    $event.target.value,
+                    'empleado.cedula',
+                    'startsWith'
+                  )
+                "
+                placeholder="Buscar por cedula"
+                class="p-column-filter p-inputtext-sm"
+              />
+            </th>
+            <th>
+              <p-calendar
+                (onSelect)="onDateSelect($event)"
+                (onClearClick)="dt.filter('', 'fechaInicio', 'equals')"
+                [showButtonBar]="true"
+                [monthNavigator]="true"
+                [yearNavigator]="true"
+                yearRange="1930:2030"
+                styleClass="p-column-filter, p-inputtext-sm"
+                placeholder="Fecha del Contrato"
+                [readonlyInput]="true"
+                dateFormat="yy-mm-dd"
+              ></p-calendar>
+            </th>
+            <th>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt.filter(
+                    $event.target.value,
+                    'empleado.nombres',
+                    'startsWith'
+                  )
+                "
+                placeholder="Buscar por nombres"
+                class="p-column-filter p-inputtext-sm"
+              />
+            </th>
+            <th>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt.filter(
+                    $event.target.value,
+                    'empleado.apellidos',
+                    'startsWith'
+                  )
+                "
+                placeholder="Buscar por apellidos"
+                class="p-column-filter p-inputtext-sm"
+              />
+            </th>
+            <th style="text-align: center">
+              <p-button
+                icon="pi pi-file-excel"
+                label="Generar Excel"
+                styleClass="p-button-text p-button-success"
+                (click)="GenerarExcel()"
+              ></p-button>
+            </th>
+          </tr>
+          <tr>
+            <th style="text-align: center">Nro Contrato</th>
+            <th style="text-align: center">Trabajador</th>
+            <th style="text-align: center">Fecha Inicio Contrato</th>
+            <th style="text-align: center">Periodos</th>
+            <th style="text-align: center">Tomadas</th>
+            <th style="text-align: center">Pendientes</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-contrato>
-          <tr [pSelectableRow]="contrato">
-            <td style="text-align: center;">{{ contrato.idContrato }}</td>
-            <td style="text-align: center;">
+          <tr
+            [pSelectableRow]="contrato"
+            [ngClass]="{
+              'row-pendientes':
+                rowGroupMetadata[contrato.empleado.cedula].pendientes > 0,
+              'row-aldia':
+                rowGroupMetadata[contrato.empleado.cedula].pendientes <= 0
+            }"
+          >
+            <td style="text-align: center">{{ contrato.idContrato }}</td>
+            <td style="text-align: center">
               {{ contrato.empleado["nombres"] }}
               {{ contrato.empleado["apellidos"] }}
               CC {{ contrato.empleado["cedula"] }}
             </td>
-            <td style="text-align: center;">{{ contrato.fechaInicio }}</td>
-            <td style="text-align: center;">
-              <button
-                pButton
-                pRipple
-                icon="pi pi-search"
-                class="p-button-rounded p-button-text p-button-success p-mr-2"
-                (click)="op.toggle($event); obtenerCalculos(contrato)"
-              ></button>
+            <td style="text-align: center">{{ contrato.fechaInicio }}</td>
+            <td style="text-align: center" class="text-primary">
+              {{ rowGroupMetadata[contrato.empleado.cedula].periodo }}
+            </td>
+            <td style="text-align: center" class="text-success">
+              {{ rowGroupMetadata[contrato.empleado.cedula].tomadas }}
+            </td>
+            <td style="text-align: center" class="text-danger">
+              {{ rowGroupMetadata[contrato.empleado.cedula].pendientes }}
             </td>
           </tr>
         </ng-template>

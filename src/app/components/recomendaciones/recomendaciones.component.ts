@@ -25,6 +25,7 @@ export class RecomendacionesComponent implements OnInit {
   selectedRecomendacion: Recomendacion;
   examenes: Examen[];
   formRecomendacion: FormGroup;
+  tipoSeguimiento: any[]
 
   items: MenuItem[];
   displayModal = false;
@@ -193,6 +194,7 @@ export class RecomendacionesComponent implements OnInit {
       idRecomendaciones: new FormControl(),
       examen: new FormControl(null, Validators.required),
       recommendation: new FormControl(null, Validators.required),
+      tipoSeguimiento: new FormControl(null, Validators.required),
       primeraSeguimiento: new FormControl(),
       segundaSeguimiento: new FormControl(),
       terceraSeguimiento: new FormControl(),
@@ -218,6 +220,10 @@ export class RecomendacionesComponent implements OnInit {
         icon: 'pi pi-fw pi-refresh',
         command: () => this.obtenerRecomendaciones(),
       },
+    ];
+    this.tipoSeguimiento = [
+      { label: 'Por recomendación', value: 'Recomendacion' },
+      { label: 'Por restricción', value: 'Restriccion' },
     ];
   }
 }

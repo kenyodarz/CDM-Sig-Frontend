@@ -1,0 +1,6 @@
+:host ::ng-deep .row-pendientes {
+  background-color: rgba(255, 0, 0, 0.15) !important;
+}
+:host ::ng-deep .row-aldia {
+  background-color: rgba(0, 255, 0, 0.15) !important;
+}
