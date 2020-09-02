@@ -34,6 +34,7 @@ import { ChartModule } from 'primeng/chart';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { CardModule } from 'primeng/card';
 import { GalleriaModule } from 'primeng/galleria';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 
@@ -71,6 +72,7 @@ const myModule = [
   KeyFilterModule,
   CardModule,
   GalleriaModule,
+  InputNumberModule,
 ];
 
 @NgModule({

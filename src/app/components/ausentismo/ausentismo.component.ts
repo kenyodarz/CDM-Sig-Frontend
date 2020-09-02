@@ -8,6 +8,7 @@ import { Contrato } from 'src/app/models/Contrato';
 import { Incapacidad } from 'src/app/models/Incapacidad';
 // Utilidades
 import * as html2pdf from 'html2pdf.js';
+import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
 
 @Component({
   selector: 'app-ausentismo',
@@ -25,6 +26,7 @@ export class AusentismoComponent implements OnInit {
   diasLaborablesCalculados: number;
   diasFestivos: number;
   ausentismoXIncapacidad: number;
+  frecuenciaAccidentabilidad: number = 0;
   displayGrafico = false;
   constructor(
     private incapacidadService: IncapacidadService,
@@ -103,13 +105,13 @@ export class AusentismoComponent implements OnInit {
           (contratosInicioMes.length + contratosFinalMes.length) / 2;
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   }
   obtenerIncapacidades(fechaInicial: Date, fechaFinal: Date) {
-    console.log('fecha Inicial: ' + fechaInicial);
-    console.log('fecha Final: ' + fechaFinal);
+    // console.log('fecha Inicial: ' + fechaInicial);
+    // console.log('fecha Final: ' + fechaFinal);
     this.incapacidadService.getAll().subscribe(
       (array: Incapacidad[]) => {
         let incapacidades: Incapacidad[] = [];
@@ -202,17 +204,18 @@ export class AusentismoComponent implements OnInit {
           return 0;
         });
         this.ausentismoXIncapacidad = diasAusente;
-        console.log(this.ausentismoXIncapacidad);
-        console.log(this.incapacidades);
+        // console.log(this.ausentismoXIncapacidad);
+        // console.log(this.incapacidades);
+        this.calcularFrecuenciaAccidentabilidad();
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   }
 
   onChange() {
-    console.log('cambio');
+    // console.log('cambio');
     this.promedioTrabajadores = 0;
     this.ausentismoXIncapacidad = 0;
   }
@@ -237,8 +240,14 @@ export class AusentismoComponent implements OnInit {
   generarGrafico() {
     this.data = {
       labels: [
-        'Dias Laborales ' + this.diasLaborablesCalculados,
-        'Ausentismo Laboral ' + this.ausentismoXIncapacidad,
+        'Dias Laborales ' +
+          ((this.diasLaborablesCalculados - this.ausentismoXIncapacidad) /
+            this.diasLaborablesCalculados) *
+            100 +
+          '%',
+        'Ausentismo Laboral ' +
+          (this.ausentismoXIncapacidad / this.diasLaborablesCalculados) * 100 +
+          '%',
       ],
       datasets: [
         {
@@ -259,6 +268,19 @@ export class AusentismoComponent implements OnInit {
     let dif = finDate.getTime() - inicioDate.getTime();
     let dias = Math.round(dif / (1000 * 60 * 60 * 24));
     return dias;
+  }
+
+  calcularFrecuenciaAccidentabilidad() {
+    let incapacidadesxAccidentes: Incapacidad[] = [];
+    for (let index = 0; index < this.incapacidades.length; index++) {
+      const element = this.incapacidades[index] as Incapacidad;
+      if (element.enfermedad === 'Accidente Trabajo') {
+        incapacidadesxAccidentes.push(element);
+      }
+    }
+    console.log(incapacidadesxAccidentes.length);
+    this.frecuenciaAccidentabilidad =
+      (incapacidadesxAccidentes.length / this.promedioTrabajadores) * 100;
   }
 
   ngOnInit(): void {
@@ -341,7 +363,7 @@ export class AusentismoComponent implements OnInit {
           pdf.setPage(index);
           pdf.setFontSize(10);
           pdf.setTextColor(0);
-          console.log(totalPages - index);
+          // console.log(totalPages - index);
           pdf.text(
             'Pagina ' + (totalPages - index) + ' de ' + totalPages,
             pdf.internal.pageSize.getWidth() -

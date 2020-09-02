@@ -7,6 +7,7 @@ export class Recomendacion {
     public tipoSeguimien: string= null,
     public primeraSeguimiento: string = null,
     public segundaSeguimiento: string = null,
-    public terceraSeguimiento: string = null
+    public terceraSeguimiento: string = null,
+    public createAt: Date = null
   ) {}
 }

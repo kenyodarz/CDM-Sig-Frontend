@@ -1,6 +1,6 @@
 <div class="p-grid-fluid">
   <p-panel>
-    <p-card>
+    <!-- <p-card>
       <ng-template pTemplate="header">
         <div class="row">
           <div class="col-12 mt-2">
@@ -12,7 +12,7 @@
       </ng-template>
       <ng-template pTemplate="content"></ng-template>
       <ng-template pTemplate="footer"></ng-template>
-    </p-card>
+    </p-card> -->
     <p-card>
       <ng-template pTemplate="header">
         <div class="row">
@@ -57,6 +57,7 @@
               <th style="text-align: center">Nro Contrato - Cedula</th>
               <th style="text-align: center">Foto</th>
               <th style="text-align: center">Recomendacion</th>
+              <th style="text-align: center">Fecha Inicio Seguimiento</th>
               <th style="text-align: center">Seguimiento 1</th>
               <th style="text-align: center">Seguimiento 2</th>
               <th style="text-align: center">Seguimiento 3</th>
@@ -86,6 +87,9 @@
               </td>
               <td style="text-align: center">
                 {{ recomendacion.recommendation }}
+              </td>
+              <td style="text-align: center">
+                {{ recomendacion.createAt | date: 'yyyy-MM-dd' }}
               </td>
               <td style="text-align: center">
                 {{ recomendacion.primeraSeguimiento }}
@@ -184,7 +188,6 @@
           <input
             pInputText
             type="text"
-            readonly
             formControlName="recommendation"
           />
           <p-message

@@ -16,7 +16,9 @@
             "allowedCommonJsDependencies": [
               "primeng/primeng",
               "primeicons",
-              "chart.js"
+              "chart.js",
+              "file-saver",
+              "html2pdf.js","xlsx","jspdf"
             ],
             "outputPath": "dist/CDM-Sig-Frontend",
             "index": "src/index.html",

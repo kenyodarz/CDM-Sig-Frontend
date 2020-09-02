@@ -86,6 +86,15 @@
                   <ng-template pTemplate="footer"></ng-template>
                 </p-card>
               </div>
+              <!-- 
+                --------------------------------------------------------------------
+                --------------------------------------------------------------------
+                --------------------------------------------------------------------
+                ----------------------------  Resumen  -----------------------------
+                --------------------------------------------------------------------
+                --------------------------------------------------------------------
+                --------------------------------------------------------------------
+               -->
               <div class="col-3 mt-2">
                 <p-card>
                   <ng-template pTemplate="header">
@@ -116,15 +125,16 @@
                           <div class="col-12">
                             <div class="container">
                               <label for="diasLaborables">
-                                Total de dias Laborales del Mes:
+                                Frecuencia de Accidentabilidad:
                               </label>
-                              <input
-                                type="text"
-                                pInputText
-                                [(ngModel)]="diasLaborablesCalculados"
+                              <p-inputNumber
+                              [(ngModel)]="frecuenciaAccidentabilidad"
+                                inputId="percent"
+                                suffix="%"
                                 readonly
                                 class="p-inputtext-sm p-field"
-                              />
+                              >
+                              </p-inputNumber>
                             </div>
                           </div>
                         </div>
