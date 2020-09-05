@@ -18,16 +18,25 @@
               "primeicons",
               "chart.js",
               "file-saver",
-              "html2pdf.js","xlsx","jspdf"
+              "html2pdf.js",
+              "xlsx",
+              "jspdf"
             ],
-            "outputPath": "dist/CDM-Sig-Frontend",
+            "outputPath": "dist/sigtransformadores",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.css"],
+            "styles": [
+              "src/styles.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/primeflex/primeflex.css",
+              "./node_modules/primeicons/primeicons.css",
+              "./node_modules/primeng/resources/primeng.css",
+              "./node_modules/primeng/resources/themes/md-light-indigo/theme.css"
+            ],
             "scripts": ["./node_modules/chart.js/dist/Chart.js"]
           },
           "configurations": {
