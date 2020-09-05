@@ -10,7 +10,9 @@ import { Item } from '../models/Item';
   providedIn: 'root',
 })
 export class ItemsService extends CommonService<Item, number> {
-  protected API_URL: string = 'http://localhost:8080/api/items/';
+  protected API_URL: string =
+    'http://app.cdmservicios.com/sigcdm-backend/api/items/';
+  // protected API_URL: string = 'http://localhost:8080/api/items/';
   constructor(http: HttpClient) {
     super(http);
   }

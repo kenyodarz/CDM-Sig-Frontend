@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
 // Modelo
 import { Foto } from '../models/Foto';
 
-const API_URL: string = 'http://localhost:8080/api/fotos/';
+const API_URL: string = 'http://app.cdmservicios.com/sigcdm-backend/api/fotos/';
+// const API_URL: string = 'http://localhost:8080/api/fotos/';
 
 @Injectable({
   providedIn: 'root',

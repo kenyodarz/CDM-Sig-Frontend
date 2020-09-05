@@ -12,7 +12,9 @@ import { Documento } from '../models/Documento';
   providedIn: 'root',
 })
 export class DocumentosService extends CommonService<Documento, number> {
-  protected API_URL: string = 'http://localhost:8080/api/documentos/';
+  protected API_URL: string =
+    'http://app.cdmservicios.com/sigcdm-backend/api/documentos/';
+  // protected API_URL: string = 'http://localhost:8080/api/documentos/';
 
   constructor(http: HttpClient) {
     super(http);
@@ -30,7 +32,7 @@ export class DocumentosService extends CommonService<Documento, number> {
     );
   }
 
-  getFilesByEmpleados(cedula: string): Observable<Documento[]>{
+  getFilesByEmpleados(cedula: string): Observable<Documento[]> {
     return this.http.get<Documento[]>(this.API_URL + 'empleado/' + cedula);
   }
 }

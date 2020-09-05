@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 
 // Contante que lleva la URL de la API_REST
 // const AUTH_API: string = 'http://152.200.130.126/sig/api/auth/';
-const AUTH_API: string = 'http://localhost:8080/api/auth/';
+const AUTH_API: string = 'http://app.cdmservicios.com/sigcdm-backend/api/auth/';
+// const AUTH_API: string = 'http://localhost:8080/api/auth/';
 // Contante que nos permite enviar el encabezado de los datos como JSON usando HttpHeaders
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

@@ -383,19 +383,19 @@
       </div>
       <div class="p-fluid p-formgrid" style="margin: 1em 0;">
         <div>
-          <div>Medimentos *</div>
+          <div>Medicamentos *</div>
           <input
             pInputText
             type="text"
-            formControlName="medimentos"
+            formControlName="medicamentos"
             placeholder="Requerido"
           />
           <p-message
             severity="error"
             text="El Campo medimentos Es Requerido"
             *ngIf="
-              !empleadoForm.controls['medimentos'].valid &&
-              empleadoForm.controls['medimentos'].dirty
+              !empleadoForm.controls['medicamentos'].valid &&
+              empleadoForm.controls['medicamentos'].dirty
             "
           ></p-message>
         </div>
@@ -720,11 +720,11 @@
     <div class="p-col-6">
       <div class="p-fluid">
         <div class="p-field">
-          <label for="medimentos">Medimentos: </label>
+          <label for="medimentos">Medicamentos: </label>
           <input
-            id="medimentos"
+            id="medicamentos"
             readonly="true"
-            value="{{ selectedEmpleado2.medimentos }}"
+            value="{{ selectedEmpleado2.medicamentos }}"
             type="text"
             pInputText
           />

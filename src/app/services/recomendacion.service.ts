@@ -12,8 +12,10 @@ import { Recomendacion } from '../models/Recomendacion';
   providedIn: 'root',
 })
 export class RecomendacionService extends CommonService<Recomendacion, number> {
-  protected API_URL: string = 'http://localhost:8080/api/recomendaciones/';
+  protected API_URL: string =
+    'http://app.cdmservicios.com/sigcdm-backend/api/recomendaciones/';
+  // protected API_URL: string = 'http://localhost:8080/api/recomendaciones/';
   constructor(http: HttpClient) {
-    super(http)
+    super(http);
   }
 }

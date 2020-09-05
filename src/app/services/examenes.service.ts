@@ -12,7 +12,9 @@ import { Examen } from '../models/Examen';
   providedIn: 'root',
 })
 export class ExamenesService extends CommonService<Examen, number> {
-  protected API_URL: string = 'http://localhost:8080/api/examenes/';
+  protected API_URL: string =
+    'http://app.cdmservicios.com/sigcdm-backend/api/examenes/';
+  // protected API_URL: string = 'http://localhost:8080/api/examenes/';
   constructor(http: HttpClient) {
     super(http);
   }

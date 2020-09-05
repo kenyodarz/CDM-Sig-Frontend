@@ -12,7 +12,9 @@ import { Contrato } from '../models/Contrato';
   providedIn: 'root',
 })
 export class VacacionesService extends CommonService<Vacaciones, number> {
-  protected API_URL: string = 'http://localhost:8080/api/vacaciones/';
+  protected API_URL: string =
+    'http://app.cdmservicios.com/sigcdm-backend/api/vacaciones/';
+  // protected API_URL: string = 'http://localhost:8080/api/vacaciones/';
   constructor(http: HttpClient) {
     super(http);
   }

@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
 // Modelo
 import { Eps } from '../models/Eps'
 
-const API_URL: string = 'http://localhost:8080/api/eps/';
+const API_URL: string = 'http://app.cdmservicios.com/sigcdm-backend/api/eps/';
+// const API_URL: string = 'http://localhost:8080/api/eps/';
 
 @Injectable({
   providedIn: 'root',

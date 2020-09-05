@@ -9,8 +9,10 @@ import { Afp } from '../models/Afp';
 @Injectable({
   providedIn: 'root',
 })
-export class AfpService extends CommonService<Afp, string>{
-  protected API_URL: string = 'http://localhost:8080/api/afp/';
+export class AfpService extends CommonService<Afp, string> {
+  protected API_URL: string =
+    'http://app.cdmservicios.com/sigcdm-backend/api/afp/';
+  // protected API_URL: string = 'http://localhost:8080/api/afp/';
 
   constructor(http: HttpClient) {
     super(http);

@@ -10,7 +10,9 @@ import { CIE10 } from '../models/CIE10';
   providedIn: 'root',
 })
 export class Cie10Service extends CommonService<CIE10, string> {
-  protected API_URL: string = 'http://localhost:8080/api/cie10/';
+  protected API_URL: string =
+    'http://app.cdmservicios.com/sigcdm-backend/api/cie10/';
+  // protected API_URL: string = 'http://localhost:8080/api/cie10/';
   constructor(http: HttpClient) {
     super(http);
   }

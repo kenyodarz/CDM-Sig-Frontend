@@ -11,10 +11,11 @@ import { Contrato } from '../models/Contrato';
   providedIn: 'root',
 })
 export class ContratoService extends CommonService<Contrato, number> {
-  protected API_URL: string = 'http://localhost:8080/api/contratos/';
+  protected API_URL: string =
+    'http://app.cdmservicios.com/sigcdm-backend/api/contratos/';
+  // protected API_URL: string = 'http://localhost:8080/api/contratos/';
 
-  constructor(http: HttpClient){
-    super(http)
+  constructor(http: HttpClient) {
+    super(http);
   }
-
 }

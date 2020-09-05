@@ -13,7 +13,9 @@ import { Empleado } from '../models/Empleado';
   providedIn: 'root',
 })
 export class CapacitacionService extends CommonService<Capacitacion, number> {
-  protected API_URL: string = 'http://localhost:8080/api/capacitaciones/';
+  protected API_URL: string =
+    'http://app.cdmservicios.com/sigcdm-backend/api/capacitaciones/';
+  // protected API_URL: string = 'http://localhost:8080/api/capacitaciones/';
   constructor(http: HttpClient) {
     super(http);
   }

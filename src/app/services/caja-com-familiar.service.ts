@@ -13,7 +13,9 @@ export class CajaComFamiliarService extends CommonService<
   CajaComFamiliar,
   string
 > {
-  protected API_URL: string = 'http://localhost:8080/api/caja/';
+  protected API_URL: string =
+    'http://app.cdmservicios.com/sigcdm-backend/api/caja/';
+  // protected API_URL: string = 'http://localhost:8080/api/caja/';
 
   constructor(http: HttpClient) {
     super(http);

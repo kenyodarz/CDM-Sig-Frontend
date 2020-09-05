@@ -13,7 +13,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class EntregaService extends CommonService<EntregaDyE, number> {
-  protected API_URL: string = 'http://localhost:8080/api/entregas/';
+  protected API_URL: string =
+    'http://app.cdmservicios.com/sigcdm-backend/api/entregas/';
+  // protected API_URL: string = 'http://localhost:8080/api/entregas/';
   constructor(http: HttpClient) {
     super(http);
   }

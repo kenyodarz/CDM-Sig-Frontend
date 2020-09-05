@@ -6,7 +6,9 @@ import { Observable } from 'rxjs';
 // Modelo
 import { Empleado } from '../models/Empleado';
 
-const API_URL: string = 'http://localhost:8080/api/empleados/';
+const API_URL: string =
+  'http://app.cdmservicios.com/sigcdm-backend/api/empleados/';
+// const API_URL: string = 'http://localhost:8080/api/empleados/';
 
 @Injectable({
   providedIn: 'root',
@@ -51,7 +53,7 @@ export class EmpleadoService {
     formData.append('arl', empleado.arl['nit']);
     formData.append('cajaComFamiliar', empleado.cajaComFamiliar['nit']);
     formData.append('alergia', empleado.alergia);
-    formData.append('medimentos', empleado.medimentos);
+    formData.append('medimentos', empleado.medicamentos);
     formData.append('EnCasoEmergencia', empleado.enCasoEmergencia);
     formData.append('parentesco', empleado.parentesco);
     formData.append('telEmergencia', empleado.telEmergencia);
@@ -75,7 +77,7 @@ export class EmpleadoService {
     formData.append('arl', empleado.arl['nit']);
     formData.append('cajaComFamiliar', empleado.cajaComFamiliar['nit']);
     formData.append('alergia', empleado.alergia);
-    formData.append('medimentos', empleado.medimentos);
+    formData.append('medimentos', empleado.medicamentos);
     formData.append('EnCasoEmergencia', empleado.enCasoEmergencia);
     formData.append('parentesco', empleado.parentesco);
     formData.append('telEmergencia', empleado.telEmergencia);
