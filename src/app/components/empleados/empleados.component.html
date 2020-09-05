@@ -54,7 +54,7 @@
           <td style="text-align: center;">{{ empleado.cedula }}</td>
           <td>
             <img
-              [src]="'http://localhost:8080/api/fotos/image/' + empleado.cedula"
+              [src]="'http://app.cdmservicios.com/sigcdm-backend/api/fotos/image/' + empleado.cedula"
               class="img-thumbnail rounded"
               style="width: 128px; cursor: pointer;"
             />
@@ -648,7 +648,7 @@
       <img
         *ngIf="selectedEmpleado2.cedula !== null"
         [src]="
-          'http://localhost:8080/api/fotos/image/' +
+          'http://app.cdmservicios.com/sigcdm-backend/api/fotos/image/' +
           selectedEmpleado2.cedula
         "
         class="img-thumbnail rounded"
