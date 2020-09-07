@@ -184,7 +184,7 @@ export class VacacionesPendientesComponent implements OnInit {
   }
 
   GenerarExcel() {
-    console.log('Generando excel');
+    // console.log('Generando excel');
     import('xlsx').then((xlsx) => {
       const worksheet = xlsx.utils.table_to_sheet(
         document.getElementById('dt')

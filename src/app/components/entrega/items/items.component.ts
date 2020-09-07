@@ -34,7 +34,7 @@ export class ItemsComponent implements OnInit {
 
   obtenerItems() {
     this.arrayItems = this.config.data.entrega.items;
-    console.log(this.arrayItems);
+    // console.log(this.arrayItems);
   }
   obtenerTodosItems() {
     this.itemsService.getAll().subscribe(
@@ -66,7 +66,7 @@ export class ItemsComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerItems();
     this.obtenerTodosItems();
-    console.log(this.config.data.entrega);
+    // console.log(this.config.data.entrega);
   }
 
   agregarItems() {
@@ -74,7 +74,7 @@ export class ItemsComponent implements OnInit {
   }
 
   borrarItem(item: Item) {
-    console.log(item);
+    // console.log(item);
     let entrega = this.config.data.entrega as EntregaDyE;
     this.confirmationService.confirm({
       message: '¿Está seguro que desea eliminar el item?',

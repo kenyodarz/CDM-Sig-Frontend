@@ -91,7 +91,7 @@ export class EntregaComponent implements OnInit {
           }
           return 0;
         });
-        console.log(this.empleados);
+        // console.log(this.empleados);
       },
       (error) => {
         console.error(error);
@@ -332,7 +332,7 @@ export class EntregaComponent implements OnInit {
       },
     });
     ref.onClose.subscribe((items: Item[]) => {
-      console.log(items);
+      // console.log(items);
       this.entragaService
         .agregarItems(entrega, items)
         .subscribe((nuevaEntrega: EntregaDyE) => {

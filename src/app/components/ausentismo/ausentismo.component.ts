@@ -278,7 +278,7 @@ export class AusentismoComponent implements OnInit {
         incapacidadesxAccidentes.push(element);
       }
     }
-    console.log(incapacidadesxAccidentes.length);
+    // console.log(incapacidadesxAccidentes.length);
     this.frecuenciaAccidentabilidad =
       (incapacidadesxAccidentes.length / this.promedioTrabajadores) * 100;
   }

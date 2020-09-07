@@ -35,7 +35,7 @@ export class EliminarEmpleadosComponent implements OnInit {
     this.capacitacionService
       .ver(idCapacitacion)
       .subscribe((capacitacion: Capacitacion) => {
-        console.log(capacitacion);
+        // console.log(capacitacion);
         this.capacitacion = capacitacion;
         this.empleados = capacitacion.empleados;
       });

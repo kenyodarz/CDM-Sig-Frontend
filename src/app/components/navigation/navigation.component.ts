@@ -3,11 +3,6 @@ import { Router } from '@angular/router';
 // PrimeNG
 import { ConfirmationService } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
-// PrimeNG FullCalendar
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import esLocale from '@fullcalendar/core/locales/es';
 // Servicios
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 

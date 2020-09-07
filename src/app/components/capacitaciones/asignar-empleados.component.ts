@@ -36,7 +36,7 @@ export class AsignarEmpleadosComponent implements OnInit {
     this.capacitacionService
       .ver(idCapacitacion)
       .subscribe((capacitacion: Capacitacion) => {
-        console.log(capacitacion);
+        // console.log(capacitacion);
         this.capacitacion = capacitacion;
       });
   }
@@ -63,10 +63,10 @@ export class AsignarEmpleadosComponent implements OnInit {
           }
           return 0;
         });
-        console.log(this.empleados);
+        // console.log(this.empleados);
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   }
@@ -93,8 +93,6 @@ export class AsignarEmpleadosComponent implements OnInit {
   }
 
   asignarEmpleados() {
-    console.log(this.selectedEmpleados);
-    console.log(this.capacitacion);
     this.capacitacionService
       .asignarEmpleados(this.capacitacion, this.selectedEmpleados)
       .subscribe((capacitacion: Capacitacion) => {
@@ -106,7 +104,6 @@ export class AsignarEmpleadosComponent implements OnInit {
             capacitacion.tema +
             ' se ha guardado correctamente',
         });
-        console.log(capacitacion);
       });
     this.router.navigateByUrl('/capacitaciones');
   }

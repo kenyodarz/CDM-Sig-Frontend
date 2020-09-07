@@ -26,7 +26,6 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TooltipModule } from 'primeng/tooltip';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { FullCalendarModule } from 'primeng/fullcalendar';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { PickListModule } from 'primeng/picklist';
 import { ToggleButtonModule } from 'primeng/togglebutton';
@@ -64,7 +63,6 @@ const myModule = [
   TooltipModule,
   MultiSelectModule,
   InputSwitchModule,
-  FullCalendarModule,
   DynamicDialogModule,
   PickListModule,
   ToggleButtonModule,

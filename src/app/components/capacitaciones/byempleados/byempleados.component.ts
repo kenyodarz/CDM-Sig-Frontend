@@ -47,10 +47,10 @@ export class ByempleadosComponent implements OnInit {
           }
           return 0;
         });
-        console.log(this.capacitaciones);
+        // console.log(this.capacitaciones);
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   }
@@ -71,10 +71,10 @@ export class ByempleadosComponent implements OnInit {
           }
           return 0;
         });
-        console.log(this.empleados);
+        // console.log(this.empleados);
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   }

@@ -127,10 +127,10 @@ export class EmpleadosComponent implements OnInit {
           }
           return 0;
         });
-        console.log(this.empleados);
+        // console.log(this.empleados);
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   }
@@ -153,7 +153,7 @@ export class EmpleadosComponent implements OnInit {
         });
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   }
@@ -176,7 +176,7 @@ export class EmpleadosComponent implements OnInit {
         });
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   }
@@ -199,7 +199,7 @@ export class EmpleadosComponent implements OnInit {
         });
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   }
@@ -222,7 +222,7 @@ export class EmpleadosComponent implements OnInit {
         });
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   }
@@ -316,7 +316,7 @@ export class EmpleadosComponent implements OnInit {
 
   onGuardar() {
     this.empleado = this.empleadoForm.value;
-    console.log(this.empleado);
+    // console.log(this.empleado);
     this.guardarEmpleado();
   }
 
@@ -513,9 +513,5 @@ export class EmpleadosComponent implements OnInit {
   }
   irAlInicio() {
     window.location.replace('#/home');
-  }
-
-  validarFoto(evento) {
-    console.log();
   }
 }

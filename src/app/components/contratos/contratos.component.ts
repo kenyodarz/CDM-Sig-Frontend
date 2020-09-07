@@ -56,10 +56,10 @@ export class ContratosComponent implements OnInit {
           }
           return 0;
         });
-        console.log(contratos);
+        // console.log(contratos);
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   }
@@ -81,10 +81,10 @@ export class ContratosComponent implements OnInit {
           }
           return 0;
         });
-        console.log(this.empleados);
+        // console.log(this.empleados);
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   }
@@ -135,7 +135,7 @@ export class ContratosComponent implements OnInit {
 
   onGuardar() {
     this.contrato = this.contratoForm.value;
-    console.log(this.contrato);
+    // console.log(this.contrato);
     this.guardarContrato();
   }
 

@@ -80,7 +80,7 @@ export class DocumentosComponent implements OnInit {
           }
           return 0;
         });
-        console.log(this.empleados);
+        // console.log(this.empleados);
       },
       (error) => {
         console.error(error);

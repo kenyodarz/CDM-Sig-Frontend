@@ -163,13 +163,13 @@ export class ExamenesComponent implements OnInit {
   onEliminar(examen: Examen) {
     this.selectedExamen = null;
     this.selectedExamen = examen;
-    console.log(this.selectedExamen);
+    // console.log(this.selectedExamen);
     this.eliminar();
   }
   onEditar(examen: Examen) {
     this.selectedExamen = null;
     this.selectedExamen = examen;
-    console.log(this.selectedExamen);
+    // console.log(this.selectedExamen);
     this.mostrarDialogoGuardar(true);
   }
 
