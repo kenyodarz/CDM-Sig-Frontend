@@ -417,7 +417,7 @@ export class EmpleadosComponent implements OnInit {
       fechaNacimiento: new FormControl(null, Validators.required),
       tipoSangre: new FormControl(null, Validators.required),
       direccion: new FormControl(),
-      municipio: new FormControl(),
+      municipio: new FormControl(null, Validators.required),
       telefono: new FormControl(null, Validators.required),
       eps: new FormControl(null, Validators.required),
       afp: new FormControl(),
