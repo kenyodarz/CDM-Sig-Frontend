@@ -45,6 +45,8 @@ import { VacacionesPendientesComponent } from './components/vacaciones/vacacione
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { AusentismoComponent } from './components/ausentismo/ausentismo.component';
 import { RecomendacionesComponent } from './components/recomendaciones/recomendaciones.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -84,6 +86,7 @@ import { RecomendacionesComponent } from './components/recomendaciones/recomenda
     HttpClientModule,
     AppRoutingModule,
     PrimengModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     MessageService,
