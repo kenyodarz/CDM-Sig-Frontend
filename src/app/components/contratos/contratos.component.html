@@ -41,26 +41,38 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th style="text-align: center;">Nro Contrato</th>
-          <th style="text-align: center;">Tipo Contrato</th>
-          <th style="text-align: center;">Trabajador</th>
-          <th style="text-align: center;">Fecha Inicio</th>
-          <th style="text-align: center;">Fecha Fin</th>
-          <th style="text-align: center;">Salario</th>
+          <th style="text-align: center" pSortableColumn="idContrato">
+            Nro Contrato<p-sortIcon field="idContrato"></p-sortIcon>
+          </th>
+          <th style="text-align: center" pSortableColumn="tipoContrato">
+            Tipo Contrato<p-sortIcon field="tipoContrato"></p-sortIcon>
+          </th>
+          <th style="text-align: center" pSortableColumn="">
+            Trabajador<p-sortIcon field="code"></p-sortIcon>
+          </th>
+          <th style="text-align: center" pSortableColumn="fechaInicio">
+            Fecha Inicio<p-sortIcon field="fechaInicio"></p-sortIcon>
+          </th>
+          <th style="text-align: center" pSortableColumn="fechaFin">
+            Fecha Fin<p-sortIcon field="fechaFin"></p-sortIcon>
+          </th>
+          <th style="text-align: center" pSortableColumn="salario">
+            Salario<p-sortIcon field="salario"></p-sortIcon>
+          </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-contrato>
         <tr [pSelectableRow]="contrato">
-          <td style="text-align: center;">{{ contrato.idContrato }}</td>
-          <td style="text-align: center;">{{ contrato.tipoContrato }}</td>
-          <td style="text-align: center;">
+          <td style="text-align: center">{{ contrato.idContrato }}</td>
+          <td style="text-align: center">{{ contrato.tipoContrato }}</td>
+          <td style="text-align: center">
             {{ contrato.empleado["nombres"] }}
             {{ contrato.empleado["apellidos"] }}
             CC {{ contrato.empleado["cedula"] }}
           </td>
-          <td style="text-align: center;">{{ contrato.fechaInicio }}</td>
-          <td style="text-align: center;">{{ contrato.fechaFin }}</td>
-          <td style="text-align: center;">{{ contrato.salario }}</td>
+          <td style="text-align: center">{{ contrato.fechaInicio }}</td>
+          <td style="text-align: center">{{ contrato.fechaFin }}</td>
+          <td style="text-align: center">{{ contrato.salario }}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="summary">
@@ -100,7 +112,7 @@
 <p-sidebar [(visible)]="displayModal" [fullScreen]="true">
   <p-fieldset legend="Detalle Contrato">
     <form [formGroup]="contratoForm">
-      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0">
         <div>
           <div>Nro Contrato *</div>
           <input pInputText type="text" readonly formControlName="idContrato" />
@@ -114,7 +126,7 @@
           ></p-message>
         </div>
       </div>
-      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0">
         <div>
           <div>Tipo de Contrato *</div>
           <p-dropdown
@@ -133,7 +145,7 @@
           ></p-message>
         </div>
       </div>
-      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0">
         <div>
           <div>Trabajador *</div>
           <p-dropdown
@@ -157,7 +169,7 @@
           ></p-message>
         </div>
       </div>
-      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0">
         <div>
           <div>Fecha de Inicio *</div>
           <p-calendar
@@ -181,7 +193,7 @@
           ></p-message>
         </div>
       </div>
-      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0">
         <div>
           <div>Fecha Fin *</div>
           <p-calendar
@@ -205,7 +217,7 @@
           ></p-message>
         </div>
       </div>
-      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0">
         <div>
           <div>Salario *</div>
           <input
@@ -224,7 +236,7 @@
           ></p-message>
         </div>
       </div>
-      <div class="p-fluid p-formgrid" style="margin: 1em 0;">
+      <div class="p-fluid p-formgrid" style="margin: 1em 0">
         <div>
           <div>Contrato Liquidado?</div>
           <p-toggleButton
@@ -254,7 +266,7 @@
         (click)="displayModal = false; contratoForm.reset()"
         label="Cancelar"
         class="ui-button-secondary"
-        style="margin-left: 0.25em;"
+        style="margin-left: 0.25em"
       ></button>
     </p-footer>
   </p-fieldset>

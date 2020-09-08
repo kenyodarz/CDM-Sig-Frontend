@@ -49,10 +49,10 @@ export class VacacionesComponent implements OnInit {
           vacaciones.push(element);
         }
         this.vacaciones = vacaciones.sort(function (a, b) {
-          if (a.idVacaciones > b.idVacaciones) {
+          if (a.idVacaciones < b.idVacaciones) {
             return 1;
           }
-          if (a.idVacaciones < b.idVacaciones) {
+          if (a.idVacaciones > b.idVacaciones) {
             return -1;
           }
           return 0;

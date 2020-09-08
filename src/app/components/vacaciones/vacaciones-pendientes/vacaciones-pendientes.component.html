@@ -55,7 +55,7 @@
                 class="p-column-filter p-inputtext-sm"
               />
             </th>
-            <th>
+            <!-- <th>
               <p-calendar
                 (onSelect)="onDateSelect($event)"
                 (onClearClick)="dt.filter('', 'fechaInicio', 'equals')"
@@ -68,7 +68,7 @@
                 [readonlyInput]="true"
                 dateFormat="yy-mm-dd"
               ></p-calendar>
-            </th>
+            </th> -->
             <th>
               <input
                 pInputText
@@ -105,6 +105,14 @@
                 label="Generar Excel"
                 styleClass="p-button-text p-button-success"
                 (click)="GenerarExcel()"
+              ></p-button>
+            </th>
+            <th style="text-align: center">
+              <p-button
+                icon="pi pi-refresh"
+                label="Recalcular"
+                styleClass="p-button-text p-button-info"
+                (click)="recalcular()"
               ></p-button>
             </th>
           </tr>

@@ -19,8 +19,8 @@ import { Vacaciones } from 'src/app/models/Vacaciones';
   styleUrls: ['./vacaciones-pendientes.component.css'],
 })
 export class VacacionesPendientesComponent implements OnInit {
-  vacaciones: Vacaciones[];
-  totalVacaciones: Vacaciones[];
+  vacaciones: Vacaciones[]=[];
+  totalVacaciones: Vacaciones[]=[];
   contratos: Contrato[];
   selectedVacaciones: Vacaciones;
   vacacionesTomadas: number[] = [];
@@ -45,7 +45,7 @@ export class VacacionesPendientesComponent implements OnInit {
       (array: Vacaciones[]) => {
         let vacaciones: Vacaciones[] = [];
         for (let index = 0; index < array.length; index++) {
-          let element = array[index];
+          let element = array[index] as Vacaciones;
           vacaciones.push(element);
         }
         this.totalVacaciones = vacaciones.sort(function (a, b) {
@@ -57,7 +57,8 @@ export class VacacionesPendientesComponent implements OnInit {
           }
           return 0;
         });
-        this.updateRowGroupMetaData();
+        return this.totalVacaciones;
+        // this.updateRowGroupMetaData();
       },
       (error) => {
         console.error(error);
@@ -86,6 +87,7 @@ export class VacacionesPendientesComponent implements OnInit {
           }
           return 0;
         });
+        this.updateRowGroupMetaData();
       },
       (error) => {
         console.error(error);
@@ -109,10 +111,14 @@ export class VacacionesPendientesComponent implements OnInit {
   }
   calcularVacacionesTomadas(contrato: Contrato) {
     let tomadas: number = 0;
-    for (let index = 0; index < this.totalVacaciones.length; index++) {
-      const element = this.totalVacaciones[index];
-      if (element.contrato.idContrato === contrato.idContrato) {
-        tomadas++;
+    this.obtenerVacaciones();
+    // console.log(this.totalVacaciones);
+    if (this.totalVacaciones) {
+      for (let index = 0; index < this.totalVacaciones.length; index++) {
+        const element = this.totalVacaciones[index];
+        if (element.contrato.idContrato === contrato.idContrato) {
+          tomadas++;
+        }
       }
     }
     return tomadas;
@@ -125,6 +131,7 @@ export class VacacionesPendientesComponent implements OnInit {
   }
 
   onSort() {
+    console.log('onSort');
     this.updateRowGroupMetaData();
   }
 
@@ -145,8 +152,8 @@ export class VacacionesPendientesComponent implements OnInit {
               this.calcularVacacionesTomadas(rowData),
           };
         } else {
-          let previousRowData = this.totalVacaciones[i - 1];
-          let previousRowGroup = previousRowData.contrato.empleado.cedula;
+          let previousRowData = this.contratos[i - 1];
+          let previousRowGroup = previousRowData.empleado.cedula;
           if (cedulaEmpleado === previousRowGroup) {
             this.rowGroupMetadata[cedulaEmpleado].size++;
           } else {
@@ -163,6 +170,8 @@ export class VacacionesPendientesComponent implements OnInit {
         }
       }
     }
+    console.log('Resultado: ');
+    console.log(this.rowGroupMetadata);
   }
 
   onDateSelect(value) {
@@ -210,6 +219,10 @@ export class VacacionesPendientesComponent implements OnInit {
         fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
       );
     });
+  }
+
+  recalcular(){
+    this.onSort();
   }
 
   ngOnInit(): void {
